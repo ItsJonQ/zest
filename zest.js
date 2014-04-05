@@ -3,7 +3,7 @@
     /**
      * @constants
      */
-    var _window = this;
+    var _window = window;
     var _document = document;
 
 
@@ -16,7 +16,6 @@
      * @namespace  _z
      *
      * @param { string } [ selectors ] Selector(s) to be used to retrieve elements with from the DOM
-     *
      */
     var _z = function(selectors) {
         // Creates and returns a new Zest object
@@ -53,7 +52,6 @@
      *
      * @param { string } [ selectors ] Selector to retrieve from the DOM
      * @returns { object } Returns the Zest object class
-     *
      */
     Zest.prototype.construct = function(selectors) {
         // Defining the Zest object's original selectors
@@ -79,7 +77,6 @@
      *
      * @param { string } [ selectors ] Selector to retrieve from the DOM
      * @returns { object } Returns a nodeList
-     *
      */
     Zest.prototype.parseSelector = function(selector) {
         // Return if the selector is not defined
@@ -157,7 +154,6 @@
      * @param { string } [ item ] Item/subject to convert
      * @param { string } [ type ] Type of item to convert to
      * @returns { object } Returns whatever is specified by the type @param
-     *
      */
     Zest.prototype.parseTo = function(item, type) {
         // Return false if item or type is not defined
@@ -197,6 +193,7 @@
      * @private
      *
      * @param { string } [ className ] The class name to be added to the element
+     * @returns { object } Returns the Zest object class
      */
     Zest.prototype._addClass = function(className) {
         // Return "this" if className is not defined
@@ -252,6 +249,29 @@
         return this;
 
     };
+
+    /**
+     * _visible
+     * Private method to check if an element is visible in the DOM
+     *
+     * @private
+     *
+     * @param { string } [ className ] The class name to be removed from the element
+     * @source: http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
+     */
+    Zest.prototype._visible = function() {
+        // Defining the coordinates of the element
+        var coordinates = this.getBoundingClientRect();
+
+        // Returning the calculations
+        return (
+            coordinates.top >= 0 &&
+            coordinates.left >= 0 &&
+            coordinates.bottom <= (_window.innerHeight || _document.documentElement.clientHeight) &&
+            coordinates.right <= (_window.innerWidth || _document.documentElement.clientWidth)
+        );
+    };
+
 
 
     /**
@@ -323,7 +343,7 @@
      */
     Zest.prototype.addClass = function(className) {
         // Return Zest if className is not defined
-        if(!className) {
+        if(!className || typeof className !== 'string') {
             return this;
         }
 
@@ -345,6 +365,25 @@
     };
 
     /**
+     * hasClass
+     * Checking to see if the first element has a certain class
+     *
+     * @public
+     *
+     * @param { string } [ className ] Checking the el for this class
+     * @returns { boolean } Returns either true or false, whether or not the el has the class
+     */
+    Zest.prototype.hasClass = function(className) {
+        // Return Zest if className is not defined
+        if(!className || typeof className !== 'string') {
+            return this;
+        }
+
+        // Returning hasClass status (true or false)
+        return this._el[0].classList.contains(className);
+    };
+
+    /**
      * removeClass
      * Removing a class (or multiple classes) to the element(s) in _el
      *
@@ -354,9 +393,8 @@
      * @returns { object } Returns the Zest object class
      */
     Zest.prototype.removeClass = function(className) {
-
         // Return Zest if className is not defined
-        if(!className) {
+        if(!className || typeof className !== 'string') {
             return this;
         }
 
@@ -387,21 +425,86 @@
      * @returns { object } Returns the Zest object class
      */
     Zest.prototype.toggleClass = function(className) {
-
         // Return Zest if className is not defined
-        if(!className) {
+        if(!className || typeof className !== 'string') {
             return this;
         }
 
         // Looping through all the els
-        this.forEach(function(el) {
+        this.each(function() {
             // If the el has the class of className
-            if(el.classList.contains(className)) {
+            if(this.classList.contains(className)) {
                 // remove the class
-                el.classList.remove(className);
+                this.classList.remove(className);
             } else {
                 // add the class
-                el.classList.add(className);
+                this.classList.add(className);
+            }
+        });
+
+        // Returning Zest
+        return this;
+
+    };
+
+    /**
+     * show
+     * Showing all the elements in the DOM
+     *
+     * @public
+     *
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.show = function() {
+        // Looping through all the els
+        this.each(function() {
+            // Setting all the els to display: block
+            this.style.display = 'block';
+        });
+
+        // Returning Zest
+        return this;
+
+    };
+
+    /**
+     * hide
+     * Hiding all the elements in the DOM
+     *
+     * @public
+     *
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.hide = function() {
+        // Looping through all the els
+        this.each(function() {
+            // Setting all the els to display: block
+            this.style.display = 'none';
+        });
+
+        // Returning Zest
+        return this;
+
+    };
+
+    /**
+     * Toggle
+     * Toggling the visibility of the elements in the DOM
+     *
+     * @public
+     *
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.toggle = function() {
+        // Looping through all the els
+        this.forEach(function(el) {
+            // If the element is visible
+            if(el.clientHeight > 0) {
+                // Setting the element as display: none
+                el.style.display = 'none';
+            } else {
+                // Setting the element as display: block
+                el.style.display = 'block';
             }
         });
 
@@ -442,7 +545,6 @@
      * @returns { object } Returns the Zest object class
      */
     Zest.prototype.combine = function() {
-
         // Slicing arguments into workable array
         var args = Array.prototype.slice.call(arguments);
         // Defining the combined array were node elements will be pushed
