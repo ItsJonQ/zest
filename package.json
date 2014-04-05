@@ -1,0 +1,30 @@
+{
+  "name": "zest",
+  "version": "0.0.1",
+  "description": "A tiny DOM JS library!",
+  "main": "zest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ItsJonQ/Zest.git"
+  },
+  "keywords": [
+    "zest, zestjs, javascript, jquery, alternative, DOM, fast"
+  ],
+  "author": "Jon Q",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ItsJonQ/Zest/issues"
+  },
+  "homepage": "https://github.com/ItsJonQ/Zest",
+  "devDependencies": {
+    "grunt-cli": "~0.1.13",
+    "grunt": "~0.4.4",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-jshint": "~0.10.0"
+  }
+}
