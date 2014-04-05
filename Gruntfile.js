@@ -13,7 +13,7 @@ module.exports = function(grunt) {
             }
         },
         jshint: {
-            files: ['src'],
+            files: ['src/**/*.js'],
             options: {
                 strict: true,
                 globals: {
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         },
         watch: {
             scripts: {
-                files: ['src'],
+                files: ['src/**/*.js'],
                 tasks: ['jshint', 'concat']
             }
         }
