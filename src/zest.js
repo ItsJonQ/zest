@@ -372,6 +372,38 @@
             this._removeClass.call(el, className);
         });
 
+        // Returning Zest
+        return this;
+
+    };
+
+    /**
+     * toggleClass
+     * Toggling a class for the element(s) in _el
+     *
+     * @public
+     *
+     * @param { string } [ className ] The class to be toggled
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.toggleClass = function(className) {
+
+        // Return Zest if className is not defined
+        if(!className) {
+            return this;
+        }
+
+        // Looping through all the els
+        this.forEach(function(el) {
+            // If the el has the class of className
+            if(el.classList.contains(className)) {
+                // remove the class
+                el.classList.remove(className);
+            } else {
+                // add the class
+                el.classList.add(className);
+            }
+        });
 
         // Returning Zest
         return this;
@@ -866,8 +898,9 @@
 
 // TEST STUFF
 
-// window.a = _z('article');
-// a.addClass('okay not-okay bbbb');
+window.a = _z('article');
+a.addClass('okay not-okay bbbb');
+a.toggleClass('okay');
 // a.removeClass('bbbb');
 // console.log(a.asArray());
 // window.b = a.find('h2');
