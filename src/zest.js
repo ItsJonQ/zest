@@ -21,11 +21,11 @@
      *
      * @category class
      *
-     * @namespace  _z
+     * @namespace  _Z
      *
      * @param { string } [ selector ] Selector(s) to be used to retrieve elements with from the DOM
      */
-    var _z = function(selector) {
+    var _Z = function(selector) {
         // Creates and returns a new Zest object
         return new Zest(selector);
     };
@@ -500,7 +500,7 @@
      */
     Zest.prototype.clone = function() {
         // Defining the cloned Zest object
-        var clone = _z(this._el);
+        var clone = _Z(this._el);
         // Cloning the selector
         clone.selector = this.selector;
 
@@ -737,7 +737,7 @@
         });
 
         // Defining the results with a new Zest object containing the findings
-        var results = _z(findings);
+        var results = _Z(findings);
         // Updating the results.selector
         if(parentSelector) {
             results.selector = parentSelector + " " + selectors;
@@ -759,7 +759,7 @@
      */
     Zest.prototype.first = function() {
         // Creating a new Zest object with the first Node
-        var first = _z(this._el[0]);
+        var first = _Z(this._el[0]);
         // Passing the selector to the first.Selector
         first.selector = this.selector;
 
@@ -928,7 +928,7 @@
      */
     Zest.prototype.last = function() {
         // Creating a new Zest object with the last Node
-        var last = _z(this._el[this.length - 1]);
+        var last = _Z(this._el[this.length - 1]);
         // Passing the selector to the last.Selector
         last.selector = this.selector;
 
@@ -972,7 +972,7 @@
      */
     Zest.prototype.parent = function() {
         // Returning the new Zest object with parent Nodes
-        return _z(this.parentEl());
+        return _Z(this.parentEl());
     };
 
     /**
@@ -985,7 +985,7 @@
      */
     Zest.prototype.parents = function() {
         // Returning the new Zest object with parent Nodes
-        return _z(this.parentsEl());
+        return _Z(this.parentsEl());
     };
 
     /**
@@ -1362,9 +1362,9 @@
      * Adding Zest to the global window
      */
 
-    // Adding Zest's _z namespace to global window
-    if(!window._z) {
-        window._z = _z;
+    // Adding Zest's _Z namespace to global window
+    if(!window._Z) {
+        window._Z = _Z;
     }
 
     // Adding Zest to global window
@@ -1372,6 +1372,6 @@
         window.Zest = Zest;
     }
 
-    return _z;
+    return _Z;
 
 })();

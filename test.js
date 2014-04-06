@@ -3,18 +3,18 @@
 
 // TEST STUFF
 
-// window.a = _z('article');
+// window.a = _Z('article');
 // a.addClass('okay not-okay bbbb');
 // a.toggleClass('okay');
 
-// window.ul = _z('ul');
+// window.ul = _Z('ul');
 // console.log(ul.els());
 // ul.filter(function(el){
 //     return el.classList.contains('nav');
 // });
 // console.log(ul.els());
 
-window.x = _z('ul.column-list');
+window.x = _Z('ul.column-list');
 console.log('OK',x.els());
 
 window.y = x.find('li');
@@ -45,6 +45,6 @@ b.innerHTML = 'ENYA';
 // console.log(b.parent());
 
 
-// window.c = _z('#sticky');
+// window.c = _Z('#sticky');
 
 })();
