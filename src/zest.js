@@ -661,6 +661,34 @@
     };
 
     /**
+     * contains
+     * Returns a boolean on whether or not the el contains a selector
+     *
+     * @public
+     *
+     * @param { string } [ selector ] Selector to check for
+     * @returns { boolean } Returns true/false depending on whether or not the selector exists within el
+     */
+    Zest.prototype.contains = function(selector) {
+        // Return false if item or type is not defined
+        if(!selector || typeof selector !== "string") {
+            return false;
+        }
+
+        // Defining the status
+        var status = false;
+
+        // Check the el for the selector
+        if(this.firstEl().querySelector(selector)) {
+            // if true, update the status
+            status = true;
+        }
+
+        // Returning the status
+        return status;
+    };
+
+    /**
      * each
      * Looping through each element, where "this" represents the element within the callback function
      *
