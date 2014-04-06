@@ -15,11 +15,11 @@
      *
      * @namespace  _z
      *
-     * @param { string } [ selectors ] Selector(s) to be used to retrieve elements with from the DOM
+     * @param { string } [ selector ] Selector(s) to be used to retrieve elements with from the DOM
      */
-    var _z = function(selectors) {
+    var _z = function(selector) {
         // Creates and returns a new Zest object
-        return new Zest(selectors);
+        return new Zest(selector);
     };
 
     /**
@@ -27,16 +27,16 @@
      *
      * @namespace  Zest
      *
-     * @param { string } [ selectors ] Selector(s) to be used to retrieve elements with from the DOM
+     * @param { string } [ selector ] Selector(s) to be used to retrieve elements with from the DOM
      */
-    var Zest = function(selectors) {
-        // Return false if selectors is not defined
-        if(!selectors) {
+    var Zest = function(selector) {
+        // Return false if selector is not defined
+        if(!selector) {
             return false;
         }
 
-        // Construct the Zest object with the defined selectors
-        this._construct(selectors);
+        // Construct the Zest object with the defined selector
+        this._construct(selector);
 
         // Returning the Zest object
         return this;
@@ -50,14 +50,38 @@
      * @private
      * @category util
      *
-     * @param { string } [ selectors ] Selector to retrieve from the DOM
+     * @param { string } [ selector ] Selector to retrieve from the DOM
      * @returns { object } Returns the Zest object class
      */
-    Zest.prototype._construct = function(selectors) {
-        // Defining the Zest object's original selectors
-        this.selectors = selectors;
+    Zest.prototype._construct = function(selector) {
+        // Defining the Zest object's original selector
+        this.selector = selector;
+
         // Defining Zest's _el (elements)
-        this._el = this._parseSelector(selectors);
+        if(typeof selector === "string") {
+            // Parse the selector
+            this._el = this._parseSelector(selector);
+        }
+        // Check to see if the selector is an instance of Zest
+        else if(selector instanceof Zest) {
+            // Get the els from the Zest object
+            this._el = selector.els();
+        }
+        // Check to see if the selector is an array of DOM elements
+        else if(selector instanceof Array) {
+            // Define the loop variables
+            var i = -1;
+            var length = selector.length;
+            // Loop through the array
+            while(++i < length){
+                // If the selector is a node object
+                if(selector[i].nodeType === 1) {
+                    // Push it to the _el array
+                    this._el.push(selector[i]);
+                }
+            }
+        }
+
         // Defining the length (count) of elements
         this.length = this._el.length;
 
@@ -75,7 +99,7 @@
      * @private
      * @category util
      *
-     * @param { string } [ selectors ] Selector to retrieve from the DOM
+     * @param { string } [ selector ] Selector to retrieve from the DOM
      * @returns { object } Returns a nodeList
      */
     Zest.prototype._parseSelector = function(selector) {
@@ -1094,7 +1118,7 @@
 
     // Adding Zest to global window
     if(!window.Zest) {
-        window.Zest = _z;
+        window.Zest = Zest;
     }
 
     return _z;
