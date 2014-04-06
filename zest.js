@@ -1090,27 +1090,27 @@
     };
 
     /**
-     * parent
+     * parentEl
      * Returning the parent node element from the first Element in _el
      *
      * @public
      *
      * @returns { DOM element } Returns the parent DOM element of the first element
      */
-    Zest.prototype.parent = function() {
+    Zest.prototype.parentEl = function() {
         // Returning the parents array
-        return this._el[0].parentNode;
+        return this.firstEl().parentNode;
     };
 
     /**
-     * parents
+     * parentsEl
      * Returning the parent node element from the Element(s)
      *
      * @public
      *
      * @returns { array } Returns an array of parent DOM elements
      */
-    Zest.prototype.parents = function() {
+    Zest.prototype.parentsEl = function() {
         // Creating an empty array to return
         var parents = [];
         // Looping through the _el nodeList
@@ -1120,6 +1120,32 @@
 
         // Returning the parents array
         return parents;
+    };
+
+    /**
+     * parentEl
+     * Returning the parent node of the first Element as a new Zest object
+     *
+     * @public
+     *
+     * @returns { object } Returning the parent node elements as a new Zest object
+     */
+    Zest.prototype.parent = function() {
+        // Returning the new Zest object with parent Nodes
+        return _z(this.parentEl());
+    };
+
+    /**
+     * parents
+     * Returning the parent node elements of all elements as a new Zest object
+     *
+     * @public
+     *
+     * @returns { object } Returning the parent node elements as a new Zest object
+     */
+    Zest.prototype.parents = function() {
+        // Returning the new Zest object with parent Nodes
+        return _z(this.parentsEl());
     };
 
     /**
