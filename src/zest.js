@@ -319,6 +319,18 @@
     };
 
     /**
+     * toArray
+     * @alias of the asArray method
+     *
+     * @public
+     *
+     * @return { array } Returns the _el nodeList as an array
+     */
+    Zest.prototype.toArray = function() {
+        return this.asArray();
+    };
+
+    /**
      * array
      * @alias of the asArray method
      *
@@ -848,24 +860,34 @@
      */
     Zest.prototype.inViewport = function() {
 
-        // Definining the Viewport and element coordinates
-        var html = _document.documentElement;
-        var coordinates = this.clientRect();
-
         // Returning true/false if element is visible
-        return (!!coordinates && coordinates.bottom > 0 && coordinates.right > 0 && coordinates.top < html.clientHeight && coordinates.left < html.clientWidth);
+        return this._visible();
 
     };
 
     /**
      * parent
+     * Returning the parent node element from the first Element in _el
+     *
+     * @public
+     *
+     * @returns { DOM element } Returns the parent DOM element of the first element
+     */
+    Zest.prototype.parent = function() {
+        // Returning the parents array
+        return this._el[0].parentNode;
+
+    };
+
+    /**
+     * parents
      * Returning the parent node element from the Element(s)
      *
      * @public
      *
      * @returns { array } Returns an array of parent DOM elements
      */
-    Zest.prototype.parent = function() {
+    Zest.prototype.parents = function() {
         // Creating an empty array to return
         var parents = [];
         // Looping through the _el nodeList
