@@ -22,6 +22,10 @@ module.exports = function(grunt) {
             }
         },
         uglify: {
+            options: {
+                banner: '/**\n * Zest v<%= pkg.version %>\n * Copyright 2014. <%= pkg.author %>\n * <%= pkg.homepage %>\n' +
+        ' * <%= grunt.template.today("yyyy-mm-dd") %>\n */\n'
+            },
             script: {
                 files: {
                     'zest.min.js': ['zest.js']
