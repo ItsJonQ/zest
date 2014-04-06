@@ -180,6 +180,7 @@
      * @param { string } [ item ] Item/subject to convert
      * @param { string } [ type ] Type of item to convert to
      * @returns { object } Returns whatever is specified by the type @param
+     * @perf: Switch vs if-else - http://jsperf.com/switch-if-else/33
      */
     Zest.prototype._parseTo = function(item, type) {
         // Return false if item or type is not defined
@@ -193,19 +194,16 @@
         // Defining the output
         var output;
 
-        // Switchcase the type
-        switch(type)
-        {
-            // if the type is an array
-            case "array":
-                // split the item by " " (spaces) and redefine output with array
-                output = item.split(" ");
-                break;
-
-            default:
-                // output false (default)
-                output = false;
-            }
+        // If type is "array"
+        if(type === "array") {
+            // split the item by " " (spaces) and redefine output with array
+            output = item.split(" ");
+        }
+        // Default
+        else {
+            // output false (default)
+            output = false;
+        }
 
         // Return the output
         return output;
