@@ -54,21 +54,24 @@
      * @returns { object } Returns the Zest object class
      */
     Zest.prototype._construct = function(selector) {
-        // Defining the Zest object's original selector
-        this.selector = selector;
+
+        // Defining Zest's _el array
+        this._el = [];
 
         // Defining Zest's _el (elements)
         if(typeof selector === "string") {
             // Parse the selector
             this._el = this._parseSelector(selector);
+            // Defining the Zest object's original selector
+            this.selector = selector;
         }
         // Check to see if the selector is an instance of Zest
-        else if(selector instanceof Zest) {
+        if(selector instanceof Zest) {
             // Get the els from the Zest object
             this._el = selector.els();
         }
         // Check to see if the selector is an array of DOM elements
-        else if(selector instanceof Array) {
+        if(selector instanceof Array) {
             // Define the loop variables
             var i = -1;
             var length = selector.length;
@@ -100,13 +103,16 @@
      * @category util
      *
      * @param { string } [ selector ] Selector to retrieve from the DOM
+     * @param { string } [ parent ] Parent node element to search
      * @returns { object } Returns a nodeList
      */
-    Zest.prototype._parseSelector = function(selector) {
+    Zest.prototype._parseSelector = function(selector, parent) {
         // Return if the selector is not defined
         if(!selector) {
             return false;
         }
+
+        var _dom = parent ? parent : _document;
 
         // Defining els to set/return
         var els;
@@ -118,9 +124,9 @@
         if(/( )/i.test(selector)) {
 
             // Return a querySelector
-            els = _document.querySelectorAll(selector);
+            els = _dom.querySelectorAll(selector);
 
-        // Does not contain spaces. Might qualify for the fast _document.getElement method
+        // Does not contain spaces. Might qualify for the fast _dom.getElement method
         } else {
 
             // Check if the selector contains combined selectors
@@ -130,7 +136,7 @@
             // If string contains "#" or "."
             if(hasId && hasClass) {
                 // Return a querySelector
-                els = _document.querySelectorAll(selector);
+                els = _dom.querySelectorAll(selector);
             }
             // Test for tagName
             // If string doesn't start with # or .
@@ -138,29 +144,29 @@
                 // But, if string contains # or .
                 if(hasId || hasClass) {
                     // Return a querySelector
-                    els = _document.querySelectorAll(selector);
+                    els = _dom.querySelectorAll(selector);
                 } else {
-                    els = _document.getElementsByTagName(selector);
+                    els = _dom.getElementsByTagName(selector);
                 }
             }
-            // Otherwise, good to go with _document.getElement(s)By method
+            // Otherwise, good to go with _dom.getElement(s)By method
             else {
                 // Get by ID (#)
                 if(hasId) {
                     selector = selector.replace("#", "");
-                    els = _document.getElementById(selector);
+                    els = _dom.getElementById(selector);
                 }
 
                 // Get by ClassName
                 else if(hasClass) {
                     selector = selector.replace(".", "");
-                    els = _document.getElementsByClassName(selector);
+                    els = _dom.getElementsByClassName(selector);
                 }
 
                 // Get by TagName
                 else {
 
-                    els = _document.getElementsByTagName(selector);
+                    els = _dom.getElementsByTagName(selector);
                 }
             }
 
@@ -891,8 +897,36 @@
             return this;
         }
 
+        // Defining the parent Selector
+        var parentSelector = this.selector;
+
+        // Create an empty array for findings
+        var findings = [];
+
+        // Looping through each of the elements
+        this.forEach(function(el) {
+            // Finding the children elements of the element
+            var children = this._parseSelector(selectors, el);
+            // Looping through all the children
+            var i = -1;
+            var length = children.length;
+            while( ++i < length ) {
+                // Adding them to the findings array
+                findings.push(children[i]);
+            }
+        });
+
+        // Defining the results with a new Zest object containing the findings
+        var results = _z(findings);
+        // Updating the results.selector
+        if(parentSelector) {
+            results.selector = parentSelector + " " + selectors;
+        } else {
+            results.selector = selectors;
+        }
+
         // Return a new Zest() with the original selectors + find selectors
-        return _z(this.selectors + ' ' + selectors);
+        return results;
 
     };
 

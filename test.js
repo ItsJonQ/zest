@@ -17,6 +17,9 @@
 window.x = _z('ul.column-list');
 console.log('OK',x.els());
 
+window.y = x.find('li');
+console.log(y);
+
 window.b = document.createElement('li');
 b.innerHTML = 'ENYA';
 
