@@ -99,7 +99,11 @@
         // Defining the length (count) of elements
         this.length = this._el.length;
 
+        // Defining the events of the Zest object
         this._events = {};
+
+        // Defining the memoized info of the Zest object
+        this._memo = {};
 
         // Returning the Zest object
         return this;
