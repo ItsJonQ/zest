@@ -341,6 +341,32 @@
     };
 
     /**
+     * firstEl
+     * Returns the first element from the _el nodeList
+     *
+     * @public
+     *
+     * @return { DOM element }
+     */
+    Zest.prototype.firstEl = function() {
+        // Return the first item in the ._el array
+        return this.el();
+    };
+
+    /**
+     * lastEl
+     * Returns the last element from the _el nodeList
+     *
+     * @public
+     *
+     * @return { DOM element }
+     */
+    Zest.prototype.lastEl = function() {
+        // Return the last item in the ._el array
+        return this._el[this.length - 1];
+    };
+
+    /**
      * els
      * Returns the _el nodeList
      *
