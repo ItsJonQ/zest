@@ -928,19 +928,23 @@
      * @public
      *
      * @returns { object } Returns the Zest object class
+     * @perf: while loop with shift method - http://jsperf.com/array-destroy/32
      */
     Zest.prototype.remove = function() {
         // Looping through the element(s)
-        this.forEach(function(el){
+        this.forEach(function(el, i){
             // Remove all events from the Zest object
             this.removeAllEvents();
             // Removing the el from the DOM
-            // el.parentNode.removeChild(el);
-            console.log(this._el);
+            el.parentNode.removeChild(el);
         });
 
+        // Removing the elements from the _el array
+        while (this._el.length > 0) {
+            this._el.shift();
+        }
         // Updating the length
-        this.length = this._el.length;
+        this.length = 0;
 
         // Return Zest
         return this;
