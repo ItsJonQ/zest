@@ -1273,6 +1273,18 @@
         return this;
     };
 
+    /**
+     * text
+     * Getting the text content of the first element
+     *
+     * @public
+     *
+     * @returns { string } Returns the text content
+     */
+    Zest.prototype.text = function() {
+        // Returning the textContent
+        return this.firstEl().textContent;
+    };
 
 
     /**
