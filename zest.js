@@ -50,6 +50,9 @@
         return this;
     };
 
+    /**
+     * Private(ish) Methods
+     */
 
     /**
      * _construct
@@ -99,9 +102,44 @@
         // Defining the length (count) of elements
         this.length = this._el.length;
 
+        // Defining the events of the Zest object
         this._events = {};
 
+        // Defining the memoized info of the Zest object
+        this._memo = {};
+
         // Returning the Zest object
+        return this;
+    };
+
+    /**
+     * _addClass
+     * Private method to add class to a DOM element (this)
+     *
+     * @private
+     *
+     * @param { string } [ className ] The class name to be added to the element
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype._addClass = function(className) {
+        // Return "this" if className is not defined
+        if(!className) {
+            return this;
+        }
+
+        // If classes are an array (multiple classes)
+        if(className instanceof Array) {
+            // Loop through the classNames
+            for(var i = 0, len = className.length; i < len; i++) {
+                // Add the classNames to "this" (el)
+                this.classList.add(className[i]);
+            }
+        } else {
+            // Add the individual className to "this" (el)
+            this.classList.add(className);
+        }
+
+        // Return "this" (el)
         return this;
     };
 
@@ -226,38 +264,6 @@
     };
 
     /**
-     * _addClass
-     * Private method to add class to a DOM element (this)
-     *
-     * @private
-     *
-     * @param { string } [ className ] The class name to be added to the element
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype._addClass = function(className) {
-        // Return "this" if className is not defined
-        if(!className) {
-            return this;
-        }
-
-        // If classes are an array (multiple classes)
-        if(className instanceof Array) {
-            // Loop through the classNames
-            for(var i = 0, len = className.length; i < len; i++) {
-                // Add the classNames to "this" (el)
-                this.classList.add(className[i]);
-            }
-        } else {
-            // Add the individual className to "this" (el)
-            this.classList.add(className);
-        }
-
-        // Return "this" (el)
-        return this;
-    };
-
-
-    /**
      * _removeClass
      * Private method to remove class from a DOM element (this)
      *
@@ -310,7 +316,6 @@
         return array;
     };
 
-
     /**
      * _visible
      * Private method to check if an element is visible in the DOM
@@ -336,93 +341,31 @@
 
 
     /**
-     * el
-     * Returns the first element from the _el nodeList
+     * Public Methods
      *
-     * @public
+     * ------------
      *
-     * @param { number } [ index ] If defined, return the specific el within the _els array
-     * @return { DOM element }
+     * Chainable Methods
+     * These methods return either the same Zest object, or a new Zest
+     * object (depending on the method)
+     *
+     * 'addClass', 'addEvent', append', 'clone', 'combine', 'each', 'empty',
+     * 'filter', 'find', 'first', 'hide', 'last', 'parent', 'parents', 'remove',
+     * 'removeAllEvents', 'removeAttribute', 'removeClass', 'removeEvent',
+     * 'show', 'toggle', 'toggleClass'
+     *
+     * ------------
+     *
+     * Non-Chainable Methods
+     * These methods typically return booleans or data (in the form of strings,
+     * objects, arrays, etc...). Some non-chainable methods perform actions
+     * within the DOM.
+     *
+     * 'clientRect', 'contains', el', 'els', 'firstEl', 'getAttribute',
+     * 'innerHTML', 'inViewport', 'hasClass', 'html', 'lastEl', 'outerHTML',
+     * 'parentEl', 'parentsEl', 'setAttribute', 'scrollIntoView', 'text'
+     *
      */
-    Zest.prototype.el = function(index) {
-        // If index is defined and valid
-        if(index && typeof index === "number" && index <= this.length - 1) {
-            return this._el[index];
-        }
-        // Return the first item in the ._el array
-        return this._el[0];
-    };
-
-    /**
-     * firstEl
-     * Returns the first element from the _el nodeList
-     *
-     * @public
-     *
-     * @return { DOM element }
-     */
-    Zest.prototype.firstEl = function() {
-        // Return the first item in the ._el array
-        return this.el();
-    };
-
-    /**
-     * lastEl
-     * Returns the last element from the _el nodeList
-     *
-     * @public
-     *
-     * @return { DOM element }
-     */
-    Zest.prototype.lastEl = function() {
-        // Return the last item in the ._el array
-        return this._el[this.length - 1];
-    };
-
-    /**
-     * els
-     * Returns the _el nodeList
-     *
-     * @public
-     *
-     * @param { number } [ index ] If defined, return the specific el within the _els array
-     * @return { nodeList }
-     */
-    Zest.prototype.els = function(index) {
-        // If index is defined and valid
-        if(index && typeof index === "number" && index <= this.length - 1) {
-            return this._el[index];
-        }
-        // Return the full ._el array
-        return this._el;
-    };
-
-    /**
-     * append
-     * Method to append/add elements to the element(s) in _e;
-     *
-     * @public
-     *
-     * @param { DOM element } [ element ] DOM element(s) to inject
-     * @return { nodeList }
-     */
-    Zest.prototype.append = function(element) {
-        // Return Zest if element is not defined or valid
-        if(!element || typeof element !== 'object') {
-            return this;
-        }
-
-        // Looping through all the els
-        this.each(function() {
-            // Clone the element (Necessary for injection multiple)
-            var child = element.cloneNode(true);
-            // Append the new child element to the parent (el)
-            this.appendChild(child);
-        });
-
-        // Returning Zest
-        return this;
-    };
 
     /**
      * addClass
@@ -456,143 +399,70 @@
     };
 
     /**
-     * hasClass
-     * Checking to see if the first element has a certain class
+     * addEvent
+     * Adding events to the element(s)
      *
      * @public
      *
-     * @param { string } [ className ] Checking the el for this class
-     * @returns { boolean } Returns either true or false, whether or not the el has the class
-     */
-    Zest.prototype.hasClass = function(className) {
-        // Return Zest if className is not defined
-        if(!className || typeof className !== 'string') {
-            return this;
-        }
-
-        // Returning hasClass status (true or false)
-        return this._el[0].classList.contains(className);
-    };
-
-    /**
-     * removeClass
-     * Removing a class (or multiple classes) to the element(s) in _el
-     *
-     * @public
-     *
-     * @param { string } [ className ] The class to be removed to the element(s)
+     * @param  { event } [ event ] The name of the event (eg. 'click', 'mouseenter', etc..)
+     * @param  { string } [ handler ] The callback function for the event
+     * @param  { boolean } [ capture ] The capture status (true or false)
      * @returns { object } Returns the Zest object class
      */
-    Zest.prototype.removeClass = function(className) {
-        // Return Zest if className is not defined
-        if(!className || typeof className !== 'string') {
-            return this;
-        }
-
-        // Parse: String to array if className contains a space
-        // This indicates that there are multiple classes to apply
-        if(/( )/i.test(className)) {
-            // redefine className with the parse [array] version
-            className = this.parseTo(className, "array");
-        }
-
-        // Looping through all the els
-        this.forEach(function(el) {
-            this._removeClass.call(el, className);
-        });
-
-        // Returning Zest
-        return this;
-    };
-
-    /**
-     * toggleClass
-     * Toggling a class for the element(s) in _el
-     *
-     * @public
-     *
-     * @param { string } [ className ] The class to be toggled
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype.toggleClass = function(className) {
-        // Return Zest if className is not defined
-        if(!className || typeof className !== 'string') {
+    Zest.prototype.addEvent = function(event, handler, capture) {
+        // Return Zest if event or handler is invalid
+        if( !event || typeof event !== 'string' ||
+            !handler || typeof handler !== 'function')
+        {
             return this;
         }
 
         // Looping through all the els
-        this.each(function() {
-            // If the el has the class of className
-            if(this.classList.contains(className)) {
-                // remove the class
-                this.classList.remove(className);
-            } else {
-                // add the class
-                this.classList.add(className);
+        this.forEach(function(el){
+
+            // Add el to _events if not present
+            if(!(el in this._events)) {
+                this._events[el] = {};
             }
-        });
 
-        // Returning Zest
-        return this;
-    };
-
-    /**
-     * show
-     * Showing all the elements in the DOM
-     *
-     * @public
-     *
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype.show = function() {
-        // Looping through all the els
-        this.each(function() {
-            // Setting all the els to display: block
-            this.style.display = 'block';
-        });
-
-        // Returning Zest
-        return this;
-    };
-
-    /**
-     * hide
-     * Hiding all the elements in the DOM
-     *
-     * @public
-     *
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype.hide = function() {
-        // Looping through all the els
-        this.each(function() {
-            // Setting all the els to display: block
-            this.style.display = 'none';
-        });
-
-        // Returning Zest
-        return this;
-    };
-
-    /**
-     * Toggle
-     * Toggling the visibility of the elements in the DOM
-     *
-     * @public
-     *
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype.toggle = function() {
-        // Looping through all the els
-        this.forEach(function(el) {
-            // If the element is visible
-            if(el.clientHeight > 0) {
-                // Setting the element as display: none
-                el.style.display = 'none';
-            } else {
-                // Setting the element as display: block
-                el.style.display = 'block';
+            // Add "event" to _events if not present (as an array)
+            if(!(event in this._events[el])) {
+                this._events[el][event] = [];
             }
+
+            // Pusing the event handler and capture to the new "event" within the _events array
+            this._events[el][event].push([handler, capture]);
+
+            // Assign the event listener of the "event" to the el
+            el.addEventListener(event, handler, capture);
+
+        });
+
+        // Return Zest
+        return this;
+    };
+
+    /**
+     * append
+     * Method to append/add elements to the element(s) in _e;
+     *
+     * @public
+     *
+     * @param { DOM element } [ element ] DOM element(s) to inject
+     * @return { nodeList }
+     */
+    Zest.prototype.append = function(element) {
+        // Return Zest if element is not defined or valid
+        if(!element || typeof element !== 'object') {
+            return this;
+        }
+
+        // Looping through all the els
+        this.each(function() {
+            // Clone the element (Necessary for injection multiple)
+            var child = element.cloneNode(true);
+            // Append the new child element to the parent (el)
+            this.appendChild(child);
         });
 
         // Returning Zest
@@ -638,7 +508,6 @@
         return clone;
     };
 
-    // Public: Combining multiple nodeLists together
     /**
      * combine
      * Combining multiple nodeLists together
@@ -696,6 +565,8 @@
         // Defining the status
         var status = false;
 
+        // TODO: Update method to check for all els, not just first
+        // TODO: Don't rely on querySelector
         // Check the el for the selector
         if(this.firstEl().querySelector(selector)) {
             // if true, update the status
@@ -739,34 +610,59 @@
     };
 
     /**
-     * forEach
-     * Looping through each element
+     * el
+     * Returns the first element from the _el nodeList
      *
      * @public
      *
-     * @param  { function } [ callback ] The callback function
+     * @param { number } [ index ] If defined, return the specific el within the _els array
+     * @return { DOM element }
+     */
+    Zest.prototype.el = function(index) {
+        // If index is defined and valid
+        if(index && typeof index === "number" && index <= this.length - 1) {
+            return this._el[index];
+        }
+        // Return the first item in the ._el array
+        return this._el[0];
+    };
+
+    /**
+     * els
+     * Returns the _el nodeList
+     *
+     * @public
+     *
+     * @param { number } [ index ] If defined, return the specific el within the _els array
+     * @return { nodeList }
+     */
+    Zest.prototype.els = function(index) {
+        // If index is defined and valid
+        if(index && typeof index === "number" && index <= this.length - 1) {
+            return this._el[index];
+        }
+        // Return the full ._el array
+        return this._el;
+    };
+
+    /**
+     * empty
+     * Empty / remove all the elements from the _el node elements
+     *
+     * @public
+     *
      * @returns { object } Returns the Zest object class
      */
-    Zest.prototype.forEach = function(callback) {
-        // Return Zest if callback is invalid
-        if(!callback || typeof callback !== 'function') {
-            return this;
-        }
+    Zest.prototype.empty = function() {
+        // Looping through the element(s)
+        this.forEach(function(el){
+            // Looping through all the element's child nodes
+            while(el.firstChild) {
+                el.removeChild(el.firstChild);
+            }
+        });
 
-        // Defining variables for loop
-        var i = -1;
-        var len = this.length;
-        // Loop through the elements
-        while( ++i < len ) {
-            // Fire the callback
-            // Params: {
-            //     this._el[i]: the element as "this"
-            //     i: the index of the element within the loop
-            // }
-            callback.call(this, this._el[i], i);
-        }
-
-        // Returning Zest
+        // Return Zest
         return this;
     };
 
@@ -807,153 +703,6 @@
         this.length = this._el.length;
 
         // Returning Zest
-        return this;
-    };
-
-    /**
-     * addEvent
-     * Adding events to the element(s)
-     *
-     * @public
-     *
-     * @param  { event } [ event ] The name of the event (eg. 'click', 'mouseenter', etc..)
-     * @param  { string } [ handler ] The callback function for the event
-     * @param  { boolean } [ capture ] The capture status (true or false)
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype.addEvent = function(event, handler, capture) {
-        // Return Zest if event or handler is invalid
-        if( !event || typeof event !== 'string' ||
-            !handler || typeof handler !== 'function')
-        {
-            return this;
-        }
-
-        // Looping through all the els
-        this.forEach(function(el){
-
-            // Add el to _events if not present
-            if(!(el in this._events)) {
-                this._events[el] = {};
-            }
-
-            // Add "event" to _events if not present (as an array)
-            if(!(event in this._events[el])) {
-                this._events[el][event] = [];
-            }
-
-            // Pusing the event handler and capture to the new "event" within the _events array
-            this._events[el][event].push([handler, capture]);
-
-            // Assign the event listener of the "event" to the el
-            el.addEventListener(event, handler, capture);
-
-        });
-
-        // Return Zest
-        return this;
-    };
-
-    /**
-     * removeEvent
-     * Removing events from the element(s)
-     *
-     * @public
-     *
-     * @param  { event } [ event ] The name of the event (eg. 'click', 'mouseenter', etc..)
-     * @param  { string } [ handler ] The callback function for the event
-     * @param  { boolean } [ capture ] The capture status (true or false)
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype.removeEvent = function(event, handler, capture) {
-        // Return Zest if event or handler is invalid
-        if(!event || typeof event !== 'string') {
-            return this;
-        }
-
-        // Defining self
-        var self = this;
-
-        // Looping through all the els
-        this.forEach(function(el){
-            // if the el is in _events
-            if(el in this._events) {
-                // Define events from _events of el
-                var events = this._events[el];
-                // if the event argument is in events(_events)
-                if(event in events) {
-                    // Define handlers from events
-                    var handlers = events[event];
-                    // Loop through all the handlers
-                    for(var i = handlers.length; i--;) {
-
-                        // Define the individual handler
-                        var eventHandler = handlers[i];
-
-                        // Defining handler from argument (or _events array)
-                        handler = handler ? handler: eventHandler[0];
-                        // Defining capture from argument (or _events array)
-                        capture = capture ? capture : eventHandler[1];
-
-                        // Remove the event eventHandler from the el node
-                        el.removeEventListener(event, handler, capture);
-
-                        // // Remove the handler from the event handlers list
-                        // handlers.splice(i, 1);
-
-                    }
-                    // Delete the event key from _events
-                    setTimeout(function(){
-                        delete self._events[el][event];
-                    }, 16);
-                }
-            }
-
-        });
-
-        // Return Zest
-        return this;
-    };
-
-    /**
-     * removeAllEvent
-     * Removing all the events from the element(s)
-     *
-     * @public
-     *
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype.removeAllEvents = function() {
-        // Looping through events
-        for(var event in this._events) {
-            for(var key in this._events[event]) {
-                // Removing events
-                this.removeEvent(key);
-            }
-        }
-
-        // Return Zest
-        return this;
-    };
-
-    /**
-     * empty
-     * Empty / remove all the elements from the _el node elements
-     *
-     * @public
-     *
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype.empty = function() {
-        // Looping through the element(s)
-        this.forEach(function(el){
-            // Looping through all the element's child nodes
-            while(el.firstChild) {
-                el.removeChild(el.firstChild);
-            }
-        });
-
-        // Return Zest
         return this;
     };
 
@@ -1023,23 +772,134 @@
     };
 
     /**
-     * last
-     * Returning the last element in _el is a Zest object
+     * firstEl
+     * Returns the first element from the _el nodeList
      *
      * @public
      *
-     * @returns { object } Returns a new Zest object of the last El in _el
+     * @return { DOM element }
      */
-    Zest.prototype.last = function() {
-        // Creating a new Zest object with the last Node
-        var last = _z(this._el[this.length - 1]);
-        // Passing the selector to the last.Selector
-        last.selector = this.selector;
-
-        // Returning the new last Zest object
-        return last;
+    Zest.prototype.firstEl = function() {
+        // Return the first item in the ._el array
+        return this.el();
     };
 
+    /**
+     * forEach
+     * Looping through each element
+     *
+     * @public
+     *
+     * @param  { function } [ callback ] The callback function
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.forEach = function(callback) {
+        // Return Zest if callback is invalid
+        if(!callback || typeof callback !== 'function') {
+            return this;
+        }
+
+        // Defining variables for loop
+        var i = -1;
+        var len = this.length;
+        // Loop through the elements
+        while( ++i < len ) {
+            // Fire the callback
+            // Params: {
+            //     this._el[i]: the element as "this"
+            //     i: the index of the element within the loop
+            // }
+            callback.call(this, this._el[i], i);
+        }
+
+        // Returning Zest
+        return this;
+    };
+
+    /**
+     * getAttribute
+     * Getting attributes for the first element
+     *
+     * @public
+     *
+     * @param { string } [ attribute ] The name of the attribute to get
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.getAttribute = function(attribute) {
+        // Return Zest if attributes / data is not valid / defined
+        if( !attribute || typeof attribute !== 'string')
+        {
+            return this;
+        }
+
+        // Returning the attribute
+        return this._el[0].getAttribute(attribute);
+    };
+
+    /**
+     * innerHTML
+     * Returning the innerHTML of the first element
+     *
+     * @public
+     *
+     * @returns { string } Returns the innerHTML of the first El
+     */
+    Zest.prototype.innerHTML = function() {
+        // Return the innerHTML if the context is not defined
+        return this.firstEl().innerHTML;
+    };
+
+    /**
+     * inViewport
+     * Returns boolean (true/false) if the first dom element is visible in the viewport
+     *
+     * @public
+     *
+     * @returns { boolean } Returns true/false whether or not the first element of the Zest object is visible in the viewport
+     */
+    Zest.prototype.inViewport = function() {
+
+        // Returning true/false if element is visible
+        return this._visible();
+    };
+
+    /**
+     * hasClass
+     * Checking to see if the first element has a certain class
+     *
+     * @public
+     *
+     * @param { string } [ className ] Checking the el for this class
+     * @returns { boolean } Returns either true or false, whether or not the el has the class
+     */
+    Zest.prototype.hasClass = function(className) {
+        // Return Zest if className is not defined
+        if(!className || typeof className !== 'string') {
+            return this;
+        }
+
+        // Returning hasClass status (true or false)
+        return this._el[0].classList.contains(className);
+    };
+
+    /**
+     * hide
+     * Hiding all the elements in the DOM
+     *
+     * @public
+     *
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.hide = function() {
+        // Looping through all the els
+        this.each(function() {
+            // Setting all the els to display: block
+            this.style.display = 'none';
+        });
+
+        // Returning Zest
+        return this;
+    };
 
     /**
      * html
@@ -1067,16 +927,34 @@
     };
 
     /**
-     * innerHTML
-     * Returning the innerHTML of the first element
+     * last
+     * Returning the last element in _el is a Zest object
      *
      * @public
      *
-     * @returns { string } Returns the innerHTML of the first El
+     * @returns { object } Returns a new Zest object of the last El in _el
      */
-    Zest.prototype.innerHTML = function() {
-        // Return the innerHTML if the context is not defined
-        return this.firstEl().innerHTML;
+    Zest.prototype.last = function() {
+        // Creating a new Zest object with the last Node
+        var last = _z(this._el[this.length - 1]);
+        // Passing the selector to the last.Selector
+        last.selector = this.selector;
+
+        // Returning the new last Zest object
+        return last;
+    };
+
+    /**
+     * lastEl
+     * Returns the last element from the _el nodeList
+     *
+     * @public
+     *
+     * @return { DOM element }
+     */
+    Zest.prototype.lastEl = function() {
+        // Return the last item in the ._el array
+        return this._el[this.length - 1];
     };
 
     /**
@@ -1092,19 +970,30 @@
         return this.firstEl().outerHTML;
     };
 
-
     /**
-     * inViewport
-     * Returns boolean (true/false) if the first dom element is visible in the viewport
+     * parentEl
+     * Returning the parent node of the first Element as a new Zest object
      *
      * @public
      *
-     * @returns { boolean } Returns true/false whether or not the first element of the Zest object is visible in the viewport
+     * @returns { object } Returning the parent node elements as a new Zest object
      */
-    Zest.prototype.inViewport = function() {
+    Zest.prototype.parent = function() {
+        // Returning the new Zest object with parent Nodes
+        return _z(this.parentEl());
+    };
 
-        // Returning true/false if element is visible
-        return this._visible();
+    /**
+     * parents
+     * Returning the parent node elements of all elements as a new Zest object
+     *
+     * @public
+     *
+     * @returns { object } Returning the parent node elements as a new Zest object
+     */
+    Zest.prototype.parents = function() {
+        // Returning the new Zest object with parent Nodes
+        return _z(this.parentsEl());
     };
 
     /**
@@ -1141,32 +1030,6 @@
     };
 
     /**
-     * parentEl
-     * Returning the parent node of the first Element as a new Zest object
-     *
-     * @public
-     *
-     * @returns { object } Returning the parent node elements as a new Zest object
-     */
-    Zest.prototype.parent = function() {
-        // Returning the new Zest object with parent Nodes
-        return _z(this.parentEl());
-    };
-
-    /**
-     * parents
-     * Returning the parent node elements of all elements as a new Zest object
-     *
-     * @public
-     *
-     * @returns { object } Returning the parent node elements as a new Zest object
-     */
-    Zest.prototype.parents = function() {
-        // Returning the new Zest object with parent Nodes
-        return _z(this.parentsEl());
-    };
-
-    /**
      * remove
      * Removing the element(s) from the DOM
      *
@@ -1195,49 +1058,22 @@
         return this;
     };
 
-
     /**
-     * getAttribute
-     * Getting attributes for the first element
+     * removeAllEvent
+     * Removing all the events from the element(s)
      *
      * @public
      *
-     * @param { string } [ attribute ] The name of the attribute to get
      * @returns { object } Returns the Zest object class
      */
-    Zest.prototype.getAttribute = function(attribute) {
-        // Return Zest if attributes / data is not valid / defined
-        if( !attribute || typeof attribute !== 'string')
-        {
-            return this;
+    Zest.prototype.removeAllEvents = function() {
+        // Looping through events
+        for(var event in this._events) {
+            for(var key in this._events[event]) {
+                // Removing events
+                this.removeEvent(key);
+            }
         }
-
-        // Returning the attribute
-        return this._el[0].getAttribute(attribute);
-    };
-
-    /**
-     * setAttribute
-     * Setting attributes for the element(s)
-     *
-     * @public
-     *
-     * @param { string } [ attribute ] The name of the attribute to target
-     * @param { string } [ data ] The data to be set / updated
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype.setAttribute = function(attribute, data) {
-        // Return Zest if attributes / data is not valid / defined
-        if( !attribute || typeof attribute !== 'string' ||
-            !data || typeof data !== 'string')
-        {
-            return this;
-        }
-
-        // Looping through all the els
-        this.forEach(function(el) {
-            el.setAttribute(attribute, data);
-        });
 
         // Return Zest
         return this;
@@ -1261,6 +1097,125 @@
         // Looping through all the els
         this.forEach(function(el) {
             el.removeAttribute(attribute);
+        });
+
+        // Return Zest
+        return this;
+    };
+
+    /**
+     * removeClass
+     * Removing a class (or multiple classes) to the element(s) in _el
+     *
+     * @public
+     *
+     * @param { string } [ className ] The class to be removed to the element(s)
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.removeClass = function(className) {
+        // Return Zest if className is not defined
+        if(!className || typeof className !== 'string') {
+            return this;
+        }
+
+        // Parse: String to array if className contains a space
+        // This indicates that there are multiple classes to apply
+        if(/( )/i.test(className)) {
+            // redefine className with the parse [array] version
+            className = this.parseTo(className, "array");
+        }
+
+        // Looping through all the els
+        this.forEach(function(el) {
+            this._removeClass.call(el, className);
+        });
+
+        // Returning Zest
+        return this;
+    };
+
+    /**
+     * removeEvent
+     * Removing events from the element(s)
+     *
+     * @public
+     *
+     * @param  { event } [ event ] The name of the event (eg. 'click', 'mouseenter', etc..)
+     * @param  { string } [ handler ] The callback function for the event
+     * @param  { boolean } [ capture ] The capture status (true or false)
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.removeEvent = function(event, handler, capture) {
+        // Return Zest if event or handler is invalid
+        if(!event || typeof event !== 'string') {
+            return this;
+        }
+
+        // Defining self
+        var self = this;
+
+        // Looping through all the els
+        this.forEach(function(el){
+            // if the el is in _events
+            if(el in this._events) {
+                // Define events from _events of el
+                var events = this._events[el];
+                // if the event argument is in events(_events)
+                if(event in events) {
+                    // Define handlers from events
+                    var handlers = events[event];
+                    // Loop through all the handlers
+                    for(var i = handlers.length; i--;) {
+
+                        // Define the individual handler
+                        var eventHandler = handlers[i];
+
+                        // Defining handler from argument (or _events array)
+                        handler = handler ? handler: eventHandler[0];
+                        // Defining capture from argument (or _events array)
+                        capture = capture ? capture : eventHandler[1];
+
+                        // Remove the event eventHandler from the el node
+                        el.removeEventListener(event, handler, capture);
+
+                        // // Remove the handler from the event handlers list
+                        // handlers.splice(i, 1);
+
+                    }
+                    // Delete the event key from _events
+                    setTimeout(function(){
+                        delete self._events[el][event];
+                    }, 16);
+                }
+            }
+
+        });
+
+        // Return Zest
+        return this;
+    };
+
+    /**
+     * setAttribute
+     * Setting attributes for the element(s)
+     *
+     * @public
+     *
+     * @param { string } [ attribute ] The name of the attribute to target
+     * @param { string } [ data ] The data to be set / updated
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.setAttribute = function(attribute, data) {
+        // Return Zest if attributes / data is not valid / defined
+        if( !attribute || typeof attribute !== 'string' ||
+            !data || typeof data !== 'string')
+        {
+            return this;
+        }
+
+        // Looping through all the els
+        this.forEach(function(el) {
+            el.setAttribute(attribute, data);
         });
 
         // Return Zest
@@ -1292,6 +1247,25 @@
     };
 
     /**
+     * show
+     * Showing all the elements in the DOM
+     *
+     * @public
+     *
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.show = function() {
+        // Looping through all the els
+        this.each(function() {
+            // Setting all the els to display: block
+            this.style.display = 'block';
+        });
+
+        // Returning Zest
+        return this;
+    };
+
+    /**
      * text
      * Getting the text content of the first element
      *
@@ -1303,6 +1277,64 @@
         // Returning the textContent
         return this.firstEl().textContent;
     };
+
+    /**
+     * Toggle
+     * Toggling the visibility of the elements in the DOM
+     *
+     * @public
+     *
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.toggle = function() {
+        // Looping through all the els
+        this.forEach(function(el) {
+            // If the element is visible
+            if(el.clientHeight > 0) {
+                // Setting the element as display: none
+                el.style.display = 'none';
+            } else {
+                // Setting the element as display: block
+                el.style.display = 'block';
+            }
+        });
+
+        // Returning Zest
+        return this;
+    };
+
+    /**
+     * toggleClass
+     * Toggling a class for the element(s) in _el
+     *
+     * @public
+     *
+     * @param { string } [ className ] The class to be toggled
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.toggleClass = function(className) {
+        // Return Zest if className is not defined
+        if(!className || typeof className !== 'string') {
+            return this;
+        }
+
+        // Looping through all the els
+        this.each(function() {
+            // If the el has the class of className
+            if(this.classList.contains(className)) {
+                // remove the class
+                this.classList.remove(className);
+            } else {
+                // add the class
+                this.classList.add(className);
+            }
+        });
+
+        // Returning Zest
+        return this;
+    };
+
+
 
 
     /**
