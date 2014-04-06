@@ -602,6 +602,24 @@
         return this._el[0].getBoundingClientRect();
     };
 
+    /**
+     * clone
+     * Cloning the Zest object and returning a new one
+     *
+     * @public
+     *
+     * @return { object } Returns a cloned Zest object
+     */
+    Zest.prototype.clone = function() {
+        // Defining the cloned Zest object
+        var clone = _z(this._el);
+        // Cloning the selector
+        clone.selector = this.selector;
+
+        // Returning the new cloned object
+        return clone;
+    };
+
     // Public: Combining multiple nodeLists together
     /**
      * combine
