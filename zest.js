@@ -978,6 +978,32 @@
 
     };
 
+    /**
+     * scrollIntoView
+     * Scrolling the browser to the first element in _el
+     *
+     * @public
+     *
+     * @param { boolean } [ true / false ] Boolean to pass into the JS scrollIntoView method
+     * True: Scroll so that the element is at the top of the window
+     * False: scroll so that the lement is at the bottom of the window
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.scrollIntoView = function(alignment) {
+        // Setting the default value for aligment if not defined
+        if(alignment === undefined) {
+            alignment = true;
+        }
+
+        // Scroll into view for the first element
+        this._el[0].scrollIntoView(alignment);
+
+        // Return Zest
+        return this;
+
+    };
+
+
 
     /**
      * Global
