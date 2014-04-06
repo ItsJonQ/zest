@@ -309,6 +309,7 @@
      * @return { DOM element }
      */
     Zest.prototype.el = function() {
+        // Return the first item in the ._el array
         return this._el[0];
     };
 
@@ -321,9 +322,37 @@
      * @return { nodeList }
      */
     Zest.prototype.els = function() {
+        // Return the full ._el array
         return this._el;
     };
 
+    /**
+     * append
+     * Method to append/add elements to the element(s) in _e;
+     *
+     * @public
+     *
+     * @param { DOM element } [ element ] DOM element(s) to inject
+     * @return { nodeList }
+     */
+    Zest.prototype.append = function(element) {
+        // Return Zest if element is not defined or valid
+        if(!element || typeof element !== 'object') {
+            return this;
+        }
+
+        // Looping through all the els
+        this.each(function() {
+            // Clone the element (Necessary for injection multiple)
+            var child = element.cloneNode(true);
+            // Append the new child element to the parent (el)
+            this.appendChild(child);
+        });
+
+        // Returning Zest
+        return this;
+
+    };
 
     /**
      * addClass

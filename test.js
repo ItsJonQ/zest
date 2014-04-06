@@ -17,6 +17,9 @@
 window.x = _z('ul.column-list');
 console.log('OK',x.els());
 
+window.b = document.createElement('li');
+b.innerHTML = 'ENYA';
+
 // a.removeClass('bbbb');
 // console.log(a);
 // window.b = a.find('h2');
