@@ -40,7 +40,6 @@
 
         // Returning the Zest object
         return this;
-
     };
 
 
@@ -84,6 +83,10 @@
                 }
             }
         }
+        // Check to see if the selector is an individual Node/HTML element
+        if(selector instanceof HTMLElement || selector instanceof Node) {
+            this._el.push(selector);
+        }
 
         // Defining the length (count) of elements
         this.length = this._el.length;
@@ -92,7 +95,6 @@
 
         // Returning the Zest object
         return this;
-
     };
 
     /**
@@ -174,7 +176,6 @@
 
         // Returning the els
         return this._toArray.call(els);
-
     };
 
     /**
@@ -214,7 +215,6 @@
 
         // Return the output
         return output;
-
     };
 
     /**
@@ -246,7 +246,6 @@
 
         // Return "this" (el)
         return this;
-
     };
 
 
@@ -278,7 +277,6 @@
 
         // Return "this" (el)
         return this;
-
     };
 
     /**
@@ -380,7 +378,6 @@
 
         // Returning Zest
         return this;
-
     };
 
     /**
@@ -412,7 +409,6 @@
 
         // Returning Zest
         return this;
-
     };
 
     /**
@@ -463,7 +459,6 @@
 
         // Returning Zest
         return this;
-
     };
 
     /**
@@ -495,7 +490,6 @@
 
         // Returning Zest
         return this;
-
     };
 
     /**
@@ -515,7 +509,6 @@
 
         // Returning Zest
         return this;
-
     };
 
     /**
@@ -535,7 +528,6 @@
 
         // Returning Zest
         return this;
-
     };
 
     /**
@@ -561,7 +553,6 @@
 
         // Returning Zest
         return this;
-
     };
 
     /**
@@ -594,6 +585,7 @@
      *
      * @param { string } [ arguments ] Selectors used to grab elements from the DOM with
      * @returns { object } Returns the Zest object class
+     * @perf: array concat - http://jsperf.com/array-concat-vs-push-2/16
      */
     Zest.prototype.combine = function() {
         // Slicing arguments into workable array
@@ -607,7 +599,7 @@
                 continue;
             }
             // Get a nodeList of the argument
-            var nodes = _document.querySelectorAll(args[i]);
+            var nodes = this._parseSelector(args[i]);
             // Loop through the nodeList
             for(var index = 0, nodeLength = nodes.length; index < nodeLength; index++) {
                 // Adding the node to the combined array
@@ -616,13 +608,12 @@
         }
 
         // Updating Zest's _el with original elements concated with new combined node elements
-        this._el = this.asArray().concat(combined);
+        this._el = this._el.concat(combined);
         // Updating Zest's length (count)
         this.length = this._el.length;
 
         // Returning Zest
         return this;
-
     };
 
     /**
@@ -655,7 +646,6 @@
 
         // Returning Zest
         return this;
-
     };
 
     /**
@@ -688,7 +678,6 @@
 
         // Returning Zest
         return this;
-
     };
 
     /**
@@ -773,7 +762,6 @@
 
         // Return Zest
         return this;
-
     };
 
     /**
@@ -835,7 +823,6 @@
 
         // Return Zest
         return this;
-
     };
 
     /**
@@ -857,7 +844,6 @@
 
         // Return Zest
         return this;
-
     };
 
     /**
@@ -879,7 +865,6 @@
 
         // Return Zest
         return this;
-
     };
 
     /**
@@ -927,8 +912,44 @@
 
         // Return a new Zest() with the original selectors + find selectors
         return results;
-
     };
+
+    /**
+     * first
+     * Returning the first element in _el is a Zest object
+     *
+     * @public
+     *
+     * @returns { object } Returns a new Zest object of the first El in _el
+     */
+    Zest.prototype.first = function() {
+        // Creating a new Zest object with the first Node
+        var first = _z(this._el[0]);
+        // Passing the selector to the first.Selector
+        first.selector = this.selector;
+
+        // Returning the new first Zest object
+        return first;
+    };
+
+    /**
+     * last
+     * Returning the last element in _el is a Zest object
+     *
+     * @public
+     *
+     * @returns { object } Returns a new Zest object of the last El in _el
+     */
+    Zest.prototype.last = function() {
+        // Creating a new Zest object with the last Node
+        var last = _z(this._el[this.length - 1]);
+        // Passing the selector to the last.Selector
+        last.selector = this.selector;
+
+        // Returning the new last Zest object
+        return last;
+    };
+
 
     /**
      * html
@@ -953,7 +974,6 @@
 
         // Return Zest
         return this;
-
     };
 
 
@@ -969,7 +989,6 @@
 
         // Returning true/false if element is visible
         return this._visible();
-
     };
 
     /**
@@ -983,7 +1002,6 @@
     Zest.prototype.parent = function() {
         // Returning the parents array
         return this._el[0].parentNode;
-
     };
 
     /**
@@ -1004,7 +1022,6 @@
 
         // Returning the parents array
         return parents;
-
     };
 
     /**
@@ -1034,7 +1051,6 @@
 
         // Return Zest
         return this;
-
     };
 
 
@@ -1056,7 +1072,6 @@
 
         // Returning the attribute
         return this._el[0].getAttribute(attribute);
-
     };
 
     /**
@@ -1084,7 +1099,6 @@
 
         // Return Zest
         return this;
-
     };
 
     /**
@@ -1109,7 +1123,6 @@
 
         // Return Zest
         return this;
-
     };
 
     /**
@@ -1134,7 +1147,6 @@
 
         // Return Zest
         return this;
-
     };
 
 
