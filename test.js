@@ -23,6 +23,12 @@ console.log(y);
 window.b = document.createElement('li');
 b.innerHTML = 'ENYA';
 
+var notify = function() {
+    console.log('You just added a class');
+};
+
+x.listen('addClass', notify);
+
 // a.removeClass('bbbb');
 // console.log(a);
 // window.b = a.find('h2');

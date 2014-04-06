@@ -108,6 +108,9 @@
         // Defining the memoized info of the Zest object
         this._memo = {};
 
+        // Defining listeners for the Zest object
+        this._listeners = {};
+
         // Returning the Zest object
         return this;
     };
@@ -141,6 +144,31 @@
 
         // Return "this" (el)
         return this;
+    };
+
+    // TODO Add _onChange to all methods.. or find a way to auto add them to all methods. Probably would be best to auto add them.
+    /**
+     * _onChange
+     * Fires whenever a bounded method is triggered
+     *
+     * @param  { string } [method] The name of the method
+     * @return { object } Returns the Zest object
+     */
+    Zest.prototype._onChange = function(method) {
+        // Defining the method and the length
+        var fn = this._listeners[method];
+        var length = fn.length;
+        // If both are valid, loop through the _listers[method]
+        if(fn && length) {
+            for(var i = 0; i < length; i++) {
+                // Initiate the callback
+                fn[i]();
+            }
+        }
+
+        // Returning the Zest object
+        return this;
+
     };
 
     /**
@@ -393,6 +421,9 @@
         this.forEach(function(el) {
             this._addClass.call(el, className);
         });
+
+        // Fire on change
+        this._onChange('addClass');
 
         // Returning Zest
         return this;
@@ -947,6 +978,35 @@
     Zest.prototype.lastEl = function() {
         // Return the last item in the ._el array
         return this._el[this.length - 1];
+    };
+
+    /**
+     * listen
+     * Setting up callbacks to fire when Zest methods are triggered
+     *
+     * @public
+     *
+     * @param  { string } [ method ] The name of the method to listen to
+     * @param  { callback } [ function ] The callback function to fire when the method is triggered
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype.listen = function(method, callback) {
+        // Check that method and callback are defined and valid
+        if(!method || typeof method !== "string" ||
+            !callback || typeof callback !== "function") {
+            return this;
+        }
+        // If this method isn't defined under _listeners
+        if(!this._listeners[method]) {
+            // Add this method as an array
+            this._listeners[method] = [];
+        }
+        // Pushing this callback method to the _listeners[method] array
+        this._listeners[method].push(callback);
+
+        // Returning the Zest object
+        return this;
+
     };
 
     /**
