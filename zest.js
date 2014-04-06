@@ -87,11 +87,13 @@
         // Defining els to set/return
         var els;
         var firstEl = selector[0];
-        var hasId = selector.indexOf("#") !== -1;
-        var hasClass = selector.indexOf(".") !== -1;
+        var hasId = /(#)/i.test(selector);
+        var hasClass = /(\.)/i.test(selector);
+
+
 
         // Contains Spaces (More complicated selector query)
-        if(selector.indexOf(" ") !== -1) {
+        if(/( )/i.test(selector)) {
 
             // Return a querySelector
             els = _document.querySelectorAll(selector);
@@ -110,7 +112,7 @@
             }
             // Test for tagName
             // If string doesn't start with # or .
-            else if(firstEl.indexOf("#") !== -1 || firstEl.indexOf(".") !== -1) {
+            else if(firstEl !== '#' || firstEl !== '.') {
                 // But, if string contains # or .
                 if(hasId || hasClass) {
                     // Return a querySelector
@@ -340,7 +342,7 @@
 
         // Parse: String to array if className contains a space
         // This indicates that there are multiple classes to apply
-        if(className.indexOf(" ") !== -1) {
+        if(/( )/.test(className)) {
             // redefine className with the parse [array] version
             className = this._parseTo(className, "array");
         }
@@ -391,7 +393,7 @@
 
         // Parse: String to array if className contains a space
         // This indicates that there are multiple classes to apply
-        if(className.indexOf(" ") !== -1) {
+        if(/( )/i.test(className)) {
             // redefine className with the parse [array] version
             className = this.parseTo(className, "array");
         }

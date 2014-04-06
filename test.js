@@ -3,21 +3,24 @@
 
 // TEST STUFF
 
-window.a = _z('article');
-a.addClass('okay not-okay bbbb');
-a.toggleClass('okay');
+// window.a = _z('article');
+// a.addClass('okay not-okay bbbb');
+// a.toggleClass('okay');
 
-window.ul = _z('ul');
-console.log(ul.els());
-ul.filter(function(el){
-    return el.classList.contains('nav');
-});
-console.log(ul.els());
+// window.ul = _z('ul');
+// console.log(ul.els());
+// ul.filter(function(el){
+//     return el.classList.contains('nav');
+// });
+// console.log(ul.els());
 
-a.removeClass('bbbb');
-console.log(a);
-window.b = a.find('h2');
-b.addClass('oMg');
+window.x = _z('ul.column-list');
+console.log('OK',x.els());
+
+// a.removeClass('bbbb');
+// console.log(a);
+// window.b = a.find('h2');
+// b.addClass('oMg');
 
 // var eventtt = function() {
 //     console.log('Hovered');
