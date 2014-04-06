@@ -378,7 +378,7 @@
      */
     Zest.prototype.addClass = function(className) {
         // Return Zest if className is not defined
-        if(!className || typeof className !== 'string') {
+        if(!className || typeof className !== "string") {
             return this;
         }
 
@@ -411,8 +411,8 @@
      */
     Zest.prototype.addEvent = function(event, handler, capture) {
         // Return Zest if event or handler is invalid
-        if( !event || typeof event !== 'string' ||
-            !handler || typeof handler !== 'function')
+        if( !event || typeof event !== "string" ||
+            !handler || typeof handler !== "function")
         {
             return this;
         }
@@ -588,7 +588,7 @@
      */
     Zest.prototype.each = function(callback) {
         // Return Zest if callback is invalid
-        if(!callback || typeof callback !== 'function') {
+        if(!callback || typeof callback !== "function") {
             return this;
         }
 
@@ -598,10 +598,6 @@
         // Loop through the elements
         while( ++i < len ) {
             // Fire the callback
-            // Params: {
-            //     this._el[i]: the element as "this"
-            //     i: the index of the element within the loop
-            // }
             callback.call(this._el[i], i, this._el[i]);
         }
 
@@ -677,7 +673,7 @@
      */
     Zest.prototype.filter = function(callback) {
         // Return Zest if callback is invalid
-        if(!callback || typeof callback !== 'function') {
+        if(!callback || typeof callback !== "function") {
             return this;
         }
 
@@ -795,7 +791,7 @@
      */
     Zest.prototype.forEach = function(callback) {
         // Return Zest if callback is invalid
-        if(!callback || typeof callback !== 'function') {
+        if(!callback || typeof callback !== "function") {
             return this;
         }
 
@@ -805,10 +801,6 @@
         // Loop through the elements
         while( ++i < len ) {
             // Fire the callback
-            // Params: {
-            //     this._el[i]: the element as "this"
-            //     i: the index of the element within the loop
-            // }
             callback.call(this, this._el[i], i);
         }
 
@@ -827,7 +819,7 @@
      */
     Zest.prototype.getAttribute = function(attribute) {
         // Return Zest if attributes / data is not valid / defined
-        if( !attribute || typeof attribute !== 'string')
+        if( !attribute || typeof attribute !== "string")
         {
             return this;
         }
@@ -874,7 +866,7 @@
      */
     Zest.prototype.hasClass = function(className) {
         // Return Zest if className is not defined
-        if(!className || typeof className !== 'string') {
+        if(!className || typeof className !== "string") {
             return this;
         }
 
@@ -1090,7 +1082,7 @@
      */
     Zest.prototype.removeAttribute = function(attribute) {
         // Return Zest if attributes / data is not valid / defined
-        if( !attribute || typeof attribute !== 'string') {
+        if( !attribute || typeof attribute !== "string") {
             return this;
         }
 
@@ -1114,7 +1106,7 @@
      */
     Zest.prototype.removeClass = function(className) {
         // Return Zest if className is not defined
-        if(!className || typeof className !== 'string') {
+        if(!className || typeof className !== "string") {
             return this;
         }
 
@@ -1147,7 +1139,7 @@
      */
     Zest.prototype.removeEvent = function(event, handler, capture) {
         // Return Zest if event or handler is invalid
-        if(!event || typeof event !== 'string') {
+        if(!event || typeof event !== "string") {
             return this;
         }
 
@@ -1207,8 +1199,8 @@
      */
     Zest.prototype.setAttribute = function(attribute, data) {
         // Return Zest if attributes / data is not valid / defined
-        if( !attribute || typeof attribute !== 'string' ||
-            !data || typeof data !== 'string')
+        if( !attribute || typeof attribute !== "string" ||
+            !data || typeof data !== "string")
         {
             return this;
         }
@@ -1314,7 +1306,7 @@
      */
     Zest.prototype.toggleClass = function(className) {
         // Return Zest if className is not defined
-        if(!className || typeof className !== 'string') {
+        if(!className || typeof className !== "string") {
             return this;
         }
 
@@ -1334,6 +1326,34 @@
         return this;
     };
 
+    /**
+     * tojQuery
+     * Transforms the Zest object to a jQuery object
+     *
+     * @public
+     *
+     * @return { object } Returns a jQuery object
+     */
+    Zest.prototype.tojQuery = function() {
+        // Check to see if jQuery exists in the window
+        if(window.jQuery || typeof jQuery === "function") {
+            return $(this.els());
+        }
+    };
+
+    /**
+     * to$
+     * Transforms the Zest object to a jQuery object
+     *
+     * @alias of tojQuery
+     *
+     * @public
+     *
+     * @return { object } Returns a jQuery object
+     */
+    Zest.prototype.to$ = function() {
+        return this.tojQuery();
+    };
 
 
 

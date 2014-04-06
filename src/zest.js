@@ -1326,6 +1326,34 @@
         return this;
     };
 
+    /**
+     * tojQuery
+     * Transforms the Zest object to a jQuery object
+     *
+     * @public
+     *
+     * @return { object } Returns a jQuery object
+     */
+    Zest.prototype.tojQuery = function() {
+        // Check to see if jQuery exists in the window
+        if(window.jQuery || typeof jQuery === "function") {
+            return $(this.els());
+        }
+    };
+
+    /**
+     * to$
+     * Transforms the Zest object to a jQuery object
+     *
+     * @alias of tojQuery
+     *
+     * @public
+     *
+     * @return { object } Returns a jQuery object
+     */
+    Zest.prototype.to$ = function() {
+        return this.tojQuery();
+    };
 
 
 
