@@ -114,8 +114,6 @@
         var hasId = /(#)/i.test(selector);
         var hasClass = /(\.)/i.test(selector);
 
-
-
         // Contains Spaces (More complicated selector query)
         if(/( )/i.test(selector)) {
 
@@ -141,6 +139,8 @@
                 if(hasId || hasClass) {
                     // Return a querySelector
                     els = _document.querySelectorAll(selector);
+                } else {
+                    els = _document.getElementsByTagName(selector);
                 }
             }
             // Otherwise, good to go with _document.getElement(s)By method
@@ -159,6 +159,7 @@
 
                 // Get by TagName
                 else {
+
                     els = _document.getElementsByTagName(selector);
                 }
             }
