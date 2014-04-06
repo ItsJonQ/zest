@@ -1,0 +1,41 @@
+(function (undefined) { "use strict";
+
+
+// TEST STUFF
+
+window.a = _z('article');
+a.addClass('okay not-okay bbbb');
+a.toggleClass('okay');
+
+window.ul = _z('ul');
+console.log(ul.els());
+ul.filter(function(el){
+    return el.classList.contains('nav');
+});
+console.log(ul.els());
+
+a.removeClass('bbbb');
+console.log(a);
+window.b = a.find('h2');
+b.addClass('oMg');
+
+// var eventtt = function() {
+//     console.log('Hovered');
+// };
+
+
+// b.addEvent('mouseenter', eventtt);
+// b.removeEvent('mouseenter', eventtt);
+// b.addEvent('mouseenter', eventtt);
+// b.addEvent('click', eventtt);
+// b.removeAllEvents();
+// b.addEvent('click', eventtt);
+
+// b.setAttribute('data-okay', 'sured');
+
+// console.log(b.parent());
+
+
+// window.c = _z('#sticky');
+
+})();

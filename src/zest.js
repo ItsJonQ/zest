@@ -36,7 +36,7 @@
         }
 
         // Construct the Zest object with the defined selectors
-        this.construct(selectors);
+        this._construct(selectors);
 
         // Returning the Zest object
         return this;
@@ -45,7 +45,7 @@
 
 
     /**
-     * construct
+     * _construct
      *
      * @private
      * @category util
@@ -53,11 +53,11 @@
      * @param { string } [ selectors ] Selector to retrieve from the DOM
      * @returns { object } Returns the Zest object class
      */
-    Zest.prototype.construct = function(selectors) {
+    Zest.prototype._construct = function(selectors) {
         // Defining the Zest object's original selectors
         this.selectors = selectors;
         // Defining Zest's _el (elements)
-        this._el = this.parseSelector(selectors);
+        this._el = this._parseSelector(selectors);
         // Defining the length (count) of elements
         this.length = this._el.length;
 
@@ -69,7 +69,7 @@
     };
 
     /**
-     * parseSelector
+     * _parseSelector
      * Parsing selector to see if we can use getElementsBy methods instead of querySelector (performance)
      *
      * @private
@@ -78,7 +78,7 @@
      * @param { string } [ selectors ] Selector to retrieve from the DOM
      * @returns { object } Returns a nodeList
      */
-    Zest.prototype.parseSelector = function(selector) {
+    Zest.prototype._parseSelector = function(selector) {
         // Return if the selector is not defined
         if(!selector) {
             return false;
@@ -140,12 +140,12 @@
         }
 
         // Returning the els
-        return els;
+        return this._toArray.call(els);
 
     };
 
     /**
-     * parseTo
+     * _parseTo
      * Parsing an item to something else
      *
      * @public
@@ -155,7 +155,7 @@
      * @param { string } [ type ] Type of item to convert to
      * @returns { object } Returns whatever is specified by the type @param
      */
-    Zest.prototype.parseTo = function(item, type) {
+    Zest.prototype._parseTo = function(item, type) {
         // Return false if item or type is not defined
         if(!item || !type || typeof type !== "string") {
             return false;
@@ -251,6 +251,30 @@
     };
 
     /**
+     * _toArray
+     * @Private method to convert a nodeList into an array
+     *
+     * @private
+     *
+     * @return { array } Returns an array (converted from a nodeList)
+     */
+    Zest.prototype._toArray = function() {
+        // Defining the array to push to
+        var array = [];
+        // Defining the loop variables
+        var i = -1;
+        var len = this.length;
+        // Loop through the elements
+        while( ++i < len ) {
+            // Pushing the element to the array
+            array.push(this[i]);
+        }
+        // Returning the array
+        return array;
+    };
+
+
+    /**
      * _visible
      * Private method to check if an element is visible in the DOM
      *
@@ -300,51 +324,6 @@
 
 
     /**
-     * asArray
-     * Returns the _el nodeList as an array
-     *
-     * @public
-     *
-     * @return { array } Returns the _el nodeList as an array
-     */
-    Zest.prototype.asArray = function() {
-        // Creating an empty array to return
-        var els = [];
-        // Looping through the _el nodeList
-        this.each(function(i) {
-            els[i] = this;
-        });
-        // Returning the els array
-        return els;
-    };
-
-    /**
-     * toArray
-     * @alias of the asArray method
-     *
-     * @public
-     *
-     * @return { array } Returns the _el nodeList as an array
-     */
-    Zest.prototype.toArray = function() {
-        return this.asArray();
-    };
-
-    /**
-     * array
-     * @alias of the asArray method
-     *
-     * @public
-     *
-     * @return { array } Returns the _el nodeList as an array
-     */
-    Zest.prototype.array = function() {
-        return this.asArray();
-    };
-
-
-
-    /**
      * addClass
      * Adding a class (or multiple classes) to the element(s) in _el
      *
@@ -363,7 +342,7 @@
         // This indicates that there are multiple classes to apply
         if(className.indexOf(" ") !== -1) {
             // redefine className with the parse [array] version
-            className = this.parseTo(className, "array");
+            className = this._parseTo(className, "array");
         }
 
         // Looping through all the els
@@ -653,6 +632,46 @@
     };
 
     /**
+     * filter
+     * Looping through each element and returning a filtered Zest object
+     *
+     * @public
+     *
+     * @param  { function } [ callback ] The callback function
+     * @returns { object } Returns a filtered Zest object class
+     */
+    Zest.prototype.filter = function(callback) {
+        // Return Zest if callback is invalid
+        if(!callback || typeof callback !== 'function') {
+            return this;
+        }
+
+        // Defining a results array to contain the filtered results
+        var result = [];
+        // Defining variables for loop
+        var i = -1;
+        var len = this.length;
+        // Loop through the elements
+        while( ++i < len ) {
+            // Defining the value from the _el collection
+            var value = this._el[i];
+            // If the callback returns something
+            if(callback(value, i, this._el)) {
+                // Push the value (element) into the results array
+                result.push(value);
+            }
+        }
+
+        // Update the _el with the results array
+        this._el = result;
+        // Update the length of the Zest object
+        this.length = this._el.length;
+
+        // Returning Zest
+        return this;
+    };
+
+    /**
      * addEvent
      * Adding events to the element(s)
      *
@@ -914,7 +933,8 @@
             // Remove all events from the Zest object
             this.removeAllEvents();
             // Removing the el from the DOM
-            el.parentNode.removeChild(el);
+            // el.parentNode.removeChild(el);
+            console.log(this._el);
         });
 
         // Updating the length
@@ -1045,31 +1065,3 @@
     return _z;
 
 })();
-
-// TEST STUFF
-
-window.a = _z('article');
-a.addClass('okay not-okay bbbb');
-a.toggleClass('okay');
-// a.removeClass('bbbb');
-// console.log(a.asArray());
-// window.b = a.find('h2');
-// b.addClass('oMg');
-
-// var eventtt = function() {
-//     console.log('Hovered');
-// };
-
-
-// b.addEvent('mouseenter', eventtt);
-// b.removeEvent('mouseenter', eventtt);
-// b.addEvent('mouseenter', eventtt);
-// b.removeAllEvents();
-// b.addEvent('mouseenter', eventtt);
-
-// b.setAttribute('data-okay', 'sured');
-
-// console.log(b.parent());
-
-
-// window.c = _z('#sticky');
