@@ -1035,7 +1035,7 @@
     Zest.prototype.html = function(context) {
         // Return the innerHTML if the context is not defined
         if(!context) {
-            return this._el[0].innerHTML;
+            this.innerHTML();
         }
 
         // Looping through the element(s)
@@ -1046,6 +1046,32 @@
 
         // Return Zest
         return this;
+    };
+
+    /**
+     * innerHTML
+     * Returning the innerHTML of the first element
+     *
+     * @public
+     *
+     * @returns { string } Returns the innerHTML of the first El
+     */
+    Zest.prototype.innerHTML = function() {
+        // Return the innerHTML if the context is not defined
+        return this.firstEl().innerHTML;
+    };
+
+    /**
+     * outerHTML
+     * Returning the outerHTML of the first element
+     *
+     * @public
+     *
+     * @returns { string } Returns the outerHTML of the first El
+     */
+    Zest.prototype.outerHTML = function() {
+        // Return the outerHTML if the context is not defined
+        return this.firstEl().outerHTML;
     };
 
 
