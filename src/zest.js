@@ -333,9 +333,14 @@
      *
      * @public
      *
+     * @param { number } [ index ] If defined, return the specific el within the _els array
      * @return { DOM element }
      */
-    Zest.prototype.el = function() {
+    Zest.prototype.el = function(index) {
+        // If index is defined and valid
+        if(index && typeof index === "number" && index <= this.length - 1) {
+            return this._el[index];
+        }
         // Return the first item in the ._el array
         return this._el[0];
     };
@@ -372,9 +377,14 @@
      *
      * @public
      *
+     * @param { number } [ index ] If defined, return the specific el within the _els array
      * @return { nodeList }
      */
-    Zest.prototype.els = function() {
+    Zest.prototype.els = function(index) {
+        // If index is defined and valid
+        if(index && typeof index === "number" && index <= this.length - 1) {
+            return this._el[index];
+        }
         // Return the full ._el array
         return this._el;
     };
