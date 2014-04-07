@@ -1050,7 +1050,6 @@
 
         // Returning the Zest object
         return this;
-
     };
 
     /**
@@ -1386,6 +1385,36 @@
         this._onChange('listenable');
 
         // Returning Zest
+        return this;
+    };
+
+    /**
+     * stopListening
+     * Removing the callbacks of the methods bounded to the Zest via .listen()
+     *
+     * @public
+     *
+     * @param  { string } [ method ] The name of the method to stop listening to
+     * @return { object } Returning the Zest object
+     */
+    Zest.prototype.stopListening = function(method) {
+        // Check that method and callback are defined and valid
+        if(!method || typeof method !== "string") {
+            return this;
+        }
+
+        // Defining the method
+        var fn = this._listeners[method];
+
+        // If the _listeners contains the method
+        if(fn) {
+            // Empty the array (of callback)
+            fn.length = 0;
+            // Delete the method from the _listeners object
+            delete this._listeners[method];
+        }
+
+        // Returning the Zest object
         return this;
     };
 
