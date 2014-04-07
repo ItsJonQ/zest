@@ -157,9 +157,13 @@
     Zest.prototype._onChange = function(method) {
         // Defining the method and the length
         var fn = this._listeners[method];
+        // Return the object if the method is not defined
+        if(!fn) {
+            return this;
+        }
         var length = fn.length;
         // If both are valid, loop through the _listers[method]
-        if(fn && length) {
+        if(length) {
             for(var i = 0; i < length; i++) {
                 // Initiate the callback
                 fn[i]();
@@ -653,6 +657,7 @@
         // Defining variables for loop
         var i = -1;
         var len = this.length;
+
         // Loop through the elements
         while( ++i < len ) {
             // Fire the callback
