@@ -419,8 +419,8 @@
      * 'addClass', 'addEvent', append', 'clone', 'combine', 'each', 'empty',
      * 'filter', 'find', 'first', 'hide', 'last', 'listen', 'parent',
      * 'parents', 'remove', 'removeAllEvents', 'removeAttribute',
-     * 'removeClass', 'removeEvent', 'show', 'stopListening', 'style',
-     * 'toggle', 'toggleClass'
+     * 'removeClass', 'removeEvent', 'show', 'siblings', stopListening',
+     * 'style', 'toggle', 'toggleClass'
      *
      * ------------
      *
@@ -430,8 +430,9 @@
      * within the DOM.
      *
      * 'clientRect', 'contains', el', 'els', 'firstEl', 'getAttribute',
-     * 'innerHTML', 'inViewport', 'hasClass', 'html', 'lastEl', 'outerHTML',
-     * 'parentEl', 'parentsEl', 'setAttribute', 'scrollIntoView', 'text'
+     * 'innerHTML', 'inViewport', 'hasClass', 'html', 'lastEl', 'next',
+     * 'nextEl', 'outerHTML', 'parentEl', 'parentsEl', 'setAttribute',
+     * 'scrollIntoView', 'text'
      *
      * ------------
      *
@@ -1086,6 +1087,44 @@
 
         // Returning the Zest object
         return this;
+    };
+
+    /**
+     * next
+     * Returning the next sibling element as a new Zest object
+     *
+     * @public
+     *
+     * @returns { object } Returns a new Zest object class
+     */
+    Zest.prototype.next = function() {
+        // Getting the next sibling
+        var nextSibling = this.nextEl();
+        // If the sibling exists
+        if(nextSibling) {
+            // Create a new Zest object of the next sibling
+            var sib = _Z(nextSibling);
+            // Updating the selector
+            sib.selector = this.selector;
+            // Return the new Zest object of the sibling
+            return sib;
+        } else {
+            // Return current Zest object
+            return this;
+        }
+    };
+
+    /**
+     * next
+     * Returning the next sibling element
+     *
+     * @public
+     *
+     * @returns { DOM element } Returns the sibling DOM element
+     */
+    Zest.prototype.nextEl = function() {
+        // Return element using .nextElementSibling
+        return this.firstEl().nextElementSibling;
     };
 
     /**
