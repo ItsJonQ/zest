@@ -130,23 +130,39 @@
             return this;
         }
 
+        // Defining self for use in classList fn
+        var self = this;
+        // Creating fn to prevent support for IE9
+        var fn;
+        // If this element contains .classList (modern browsers)
+        if (this.classList) {
+            // Use the .classList.add() method
+            fn = function(c) {
+                self.classList.add(c);
+            };
+        } else {
+            // Use the classList concat method
+            fn = function(c) {
+                self.className += ' ' + c;
+            };
+        }
+
         // If classes are an array (multiple classes)
         if(className instanceof Array) {
             // Loop through the classNames
             for(var i = 0, len = className.length; i < len; i++) {
                 // Add the classNames to "this" (el)
-                this.classList.add(className[i]);
+                fn(className[i]);
             }
         } else {
             // Add the individual className to "this" (el)
-            this.classList.add(className);
+            fn(className);
         }
 
         // Return "this" (el)
         return this;
     };
 
-    // TODO Add _onChange to all methods.. or find a way to auto add them to all methods. Probably would be best to auto add them.
     /**
      * _onChange
      * Fires whenever a bounded method is triggered
@@ -302,6 +318,7 @@
      * @private
      *
      * @param { string } [ className ] The class name to be removed from the element
+     * @source: http://youmightnotneedjquery.com/
      */
     Zest.prototype._removeClass = function(className) {
         // Return "this" if className is not defined
@@ -309,16 +326,34 @@
             return this;
         }
 
+        // Defining self to use this in the classList remove fn
+        var self = this;
+        // Defining the fn used to remove classes (IE9 support)
+        var fn;
+
+        // If classList exists (modern browsers)
+        if(this.classList) {
+            // Use classList.remove() method
+            fn = function(c) {
+                self.classList.remove(c);
+            };
+        } else {
+            // Use replace/regex method
+            fn = function(c) {
+                self.className = self.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+            };
+        }
+
         // If classes are an array (multiple classes)
         if(className instanceof Array) {
             // Loop through the classNames
             for(var i = 0, len = className.length; i < len; i++) {
                 // Add the classNames to "this" (el)
-                this.classList.remove(className[i]);
+                fn(className[i]);
             }
         } else {
             // Add the individual className to "this" (el)
-            this.classList.remove(className);
+            fn(className);
         }
 
         // Return "this" (el)
