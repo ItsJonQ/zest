@@ -417,9 +417,10 @@
      * object (depending on the method)
      *
      * 'addClass', 'addEvent', append', 'clone', 'combine', 'each', 'empty',
-     * 'filter', 'find', 'first', 'hide', 'last', 'parent', 'parents', 'remove',
-     * 'removeAllEvents', 'removeAttribute', 'removeClass', 'removeEvent',
-     * 'show', 'toggle', 'toggleClass'
+     * 'filter', 'find', 'first', 'hide', 'last', 'listen', 'parent',
+     * 'parents', 'remove', 'removeAllEvents', 'removeAttribute',
+     * 'removeClass', 'removeEvent', 'show', 'stopListening', 'style',
+     * 'toggle', 'toggleClass'
      *
      * ------------
      *
@@ -1450,6 +1451,35 @@
         }
 
         // Returning the Zest object
+        return this;
+    };
+
+    /**
+     * style
+     * Setting the style of the elements
+     *
+     * @public
+     *
+     * @param { string } [ style ] The style that needs to be updated
+     * @param { value } [ value ] The value to update with
+     * @return { object } Returning the Zest object
+     */
+    Zest.prototype.style = function(style, value) {
+        // Return the object if style or value is invalid
+        if(!style || typeof style !== "string" || !value) {
+            return this;
+        }
+
+        // If the style is a valid style
+        if(this.el().style[style] !== undefined) {
+            // Loop through all the elements
+            this.each(function() {
+                // Apply the style
+                this.style[style] = value;
+            });
+        }
+
+        // Return the Zest object
         return this;
     };
 
