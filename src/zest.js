@@ -16,7 +16,10 @@
 
 
     /**
+     * -------------
      * ZEST
+     * -------------
+     *
      * Create a new "Zest" class
      *
      * @category class
@@ -408,6 +411,8 @@
 
 
     /**
+     * ------------
+     *
      * Public Methods
      *
      * ------------
@@ -431,8 +436,8 @@
      *
      * 'clientRect', 'contains', el', 'els', 'firstEl', 'getAttribute',
      * 'innerHTML', 'inViewport', 'hasClass', 'html', 'lastEl', 'next',
-     * 'nextEl', 'outerHTML', 'parentEl', 'parentsEl', 'setAttribute',
-     * 'scrollIntoView', 'text'
+     * 'nextEl', 'outerHTML', 'parentEl', 'parentsEl', 'previous',
+     * 'previousEl', 'setAttribute', 'scrollIntoView', 'text'
      *
      * ------------
      *
@@ -1197,6 +1202,44 @@
 
         // Returning the parents array
         return parents;
+    };
+
+    /**
+     * previous
+     * Returning the previous sibling element as a new Zest object
+     *
+     * @public
+     *
+     * @returns { object } Returns a new Zest object class
+     */
+    Zest.prototype.previous = function() {
+        // Getting the previous sibling
+        var previousSibling = this.previousEl();
+        // If the sibling exists
+        if(previousSibling) {
+            // Create a new Zest object of the previous sibling
+            var sib = _Z(previousSibling);
+            // Updating the selector
+            sib.selector = this.selector;
+            // Return the new Zest object of the sibling
+            return sib;
+        } else {
+            // Return current Zest object
+            return this;
+        }
+    };
+
+    /**
+     * previous
+     * Returning the previous sibling element
+     *
+     * @public
+     *
+     * @returns { DOM element } Returns the sibling DOM element
+     */
+    Zest.prototype.previousEl = function() {
+        // Return element using .previousElementSibling
+        return this.firstEl().previousElementSibling;
     };
 
     /**
