@@ -400,6 +400,7 @@
      * Adding a class (or multiple classes) to the element(s) in _el
      *
      * @public
+     * @listenable
      *
      * @param { string } [ className ] The class to be added to the element(s)
      * @returns { object } Returns the Zest object class
@@ -434,6 +435,7 @@
      * Adding events to the element(s)
      *
      * @public
+     * @listenable
      *
      * @param  { event } [ event ] The name of the event (eg. 'click', 'mouseenter', etc..)
      * @param  { string } [ handler ] The callback function for the event
@@ -469,6 +471,9 @@
 
         });
 
+        // Fire on change
+        this._onChange('addEvent');
+
         // Return Zest
         return this;
     };
@@ -478,6 +483,7 @@
      * Method to append/add elements to the element(s) in _e;
      *
      * @public
+     * @listenable
      *
      * @param { DOM element } [ element ] DOM element(s) to inject
      * @return { nodeList }
@@ -495,6 +501,9 @@
             // Append the new child element to the parent (el)
             this.appendChild(child);
         });
+
+        // Fire on change
+        this._onChange('append');
 
         // Returning Zest
         return this;
@@ -526,6 +535,7 @@
      * Cloning the Zest object and returning a new one
      *
      * @public
+     * @listenable
      *
      * @return { object } Returns a cloned Zest object
      */
@@ -534,6 +544,9 @@
         var clone = _Z(this._el);
         // Cloning the selector
         clone.selector = this.selector;
+
+        // Fire on change
+        this._onChange('clone');
 
         // Returning the new cloned object
         return clone;
@@ -544,6 +557,7 @@
      * Combining multiple nodeLists together
      *
      * @public
+     * @listenable
      *
      * @param { string } [ arguments ] Selectors used to grab elements from the DOM with
      * @returns { object } Returns the Zest object class
@@ -573,6 +587,9 @@
         this._el = this._el.concat(combined);
         // Updating Zest's length (count)
         this.length = this._el.length;
+
+        // Fire on change
+        this._onChange('combine');
 
         // Returning Zest
         return this;
@@ -677,6 +694,7 @@
      * Empty / remove all the elements from the _el node elements
      *
      * @public
+     * @listenable
      *
      * @returns { object } Returns the Zest object class
      */
@@ -689,6 +707,9 @@
             }
         });
 
+        // Fire on change
+        this._onChange('empty');
+
         // Return Zest
         return this;
     };
@@ -698,6 +719,7 @@
      * Looping through each element and returning a filtered Zest object
      *
      * @public
+     * @listenable
      *
      * @param  { function } [ callback ] The callback function
      * @returns { object } Returns a filtered Zest object class
@@ -728,6 +750,9 @@
         this._el = result;
         // Update the length of the Zest object
         this.length = this._el.length;
+
+        // Fire on change
+        this._onChange('filter');
 
         // Returning Zest
         return this;
@@ -910,6 +935,7 @@
      * Hiding all the elements in the DOM
      *
      * @public
+     * @listenable
      *
      * @returns { object } Returns the Zest object class
      */
@@ -919,6 +945,9 @@
             // Setting all the els to display: block
             this.style.display = 'none';
         });
+
+        // Fire on change
+        this._onChange('hide');
 
         // Returning Zest
         return this;
@@ -1086,6 +1115,7 @@
      * Removing the element(s) from the DOM
      *
      * @public
+     * @listenable
      *
      * @returns { object } Returns the Zest object class
      * @perf: while loop with shift method - http://jsperf.com/array-destroy/32
@@ -1106,6 +1136,9 @@
         // Updating the length
         this.length = 0;
 
+        // Fire on change
+        this._onChange('remove');
+
         // Return Zest
         return this;
     };
@@ -1115,6 +1148,7 @@
      * Removing all the events from the element(s)
      *
      * @public
+     * @listenable
      *
      * @returns { object } Returns the Zest object class
      */
@@ -1127,6 +1161,9 @@
             }
         }
 
+        // Fire on change
+        this._onChange('removeAllEvents');
+
         // Return Zest
         return this;
     };
@@ -1136,6 +1173,7 @@
      * Removing attributes for the element(s)
      *
      * @public
+     * @listenable
      *
      * @param { string } [ attribute ] The name of the attribute to target
      * @returns { object } Returns the Zest object class
@@ -1151,6 +1189,9 @@
             el.removeAttribute(attribute);
         });
 
+        // Fire on change
+        this._onChange('removeAttribute');
+
         // Return Zest
         return this;
     };
@@ -1160,6 +1201,7 @@
      * Removing a class (or multiple classes) to the element(s) in _el
      *
      * @public
+     * @listenable
      *
      * @param { string } [ className ] The class to be removed to the element(s)
      * @returns { object } Returns the Zest object class
@@ -1182,6 +1224,9 @@
             this._removeClass.call(el, className);
         });
 
+        // Fire on change
+        this._onChange('removeClass');
+
         // Returning Zest
         return this;
     };
@@ -1191,6 +1236,7 @@
      * Removing events from the element(s)
      *
      * @public
+     * @listenable
      *
      * @param  { event } [ event ] The name of the event (eg. 'click', 'mouseenter', etc..)
      * @param  { string } [ handler ] The callback function for the event
@@ -1243,6 +1289,9 @@
 
         });
 
+        // Fire on change
+        this._onChange('removeEvent');
+
         // Return Zest
         return this;
     };
@@ -1252,6 +1301,7 @@
      * Setting attributes for the element(s)
      *
      * @public
+     * @listenable
      *
      * @param { string } [ attribute ] The name of the attribute to target
      * @param { string } [ data ] The data to be set / updated
@@ -1269,6 +1319,9 @@
         this.forEach(function(el) {
             el.setAttribute(attribute, data);
         });
+
+        // Fire on change
+        this._onChange('setAttribute');
 
         // Return Zest
         return this;
@@ -1303,6 +1356,7 @@
      * Showing all the elements in the DOM
      *
      * @public
+     * @listenable
      *
      * @returns { object } Returns the Zest object class
      */
@@ -1312,6 +1366,9 @@
             // Setting all the els to display: block
             this.style.display = 'block';
         });
+
+        // Fire on change
+        this._onChange('listenable');
 
         // Returning Zest
         return this;
@@ -1335,6 +1392,7 @@
      * Toggling the visibility of the elements in the DOM
      *
      * @public
+     * @listenable
      *
      * @returns { object } Returns the Zest object class
      */
@@ -1351,6 +1409,9 @@
             }
         });
 
+        // Fire on change
+        this._onChange('toggle');
+
         // Returning Zest
         return this;
     };
@@ -1360,6 +1421,7 @@
      * Toggling a class for the element(s) in _el
      *
      * @public
+     * @listenable
      *
      * @param { string } [ className ] The class to be toggled
      * @returns { object } Returns the Zest object class
@@ -1381,6 +1443,9 @@
                 this.classList.add(className);
             }
         });
+
+        // Fire on change
+        this._onChange('toggleClass');
 
         // Returning Zest
         return this;
