@@ -666,18 +666,13 @@
         if(!selector || typeof selector !== "string") {
             return false;
         }
-
         // Defining the status
         var status = false;
-
-        // TODO: Update method to check for all els, not just first
-        // TODO: Don't rely on querySelector
         // Check the el for the selector
-        if(this.firstEl().querySelector(selector)) {
+        if(this._parseSelector(selector, this.firstEl()).length > 0) {
             // if true, update the status
             status = true;
         }
-
         // Returning the status
         return status;
     };
