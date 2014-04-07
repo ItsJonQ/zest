@@ -20,7 +20,7 @@ console.log('OK',x.els());
 window.y = x.find('li');
 console.log(y);
 
-window.b = document.createElement('li');
+window.b = document.createElement('span');
 b.innerHTML = 'ENYA';
 
 var hideY = function() {

@@ -423,7 +423,7 @@
      *
      * 'addClass', 'addEvent', append', 'clone', 'combine', 'each', 'empty',
      * 'filter', 'find', 'first', 'hide', 'last', 'listen', 'parent',
-     * 'parents', 'remove', 'removeAllEvents', 'removeAttribute',
+     * 'parents', 'prepend', remove', 'removeAllEvents', 'removeAttribute',
      * 'removeClass', 'removeEvent', 'show', 'siblings', stopListening',
      * 'style', 'toggle', 'toggleClass'
      *
@@ -446,8 +446,9 @@
      * bounded to the method
      *
      * 'addClass', 'append', 'clone', 'combine', 'empty', 'filter', 'hide',
-     * 'remove', 'removeAllEvents', 'removeAttribute', 'removeClass',
-     * 'removeEvent', 'setAttribute', 'show', 'toggle', 'toggleClass'
+     * 'prepend', remove', 'removeAllEvents', 'removeAttribute',
+     * 'removeClass', 'removeEvent', 'setAttribute', 'show', 'toggle',
+     * 'toggleClass'
      *
      */
 
@@ -1202,6 +1203,37 @@
 
         // Returning the parents array
         return parents;
+    };
+
+    /**
+     * prepend
+     * Method to prepend/add elements to the element(s) in _e;
+     *
+     * @public
+     * @listenable
+     *
+     * @param { DOM element } [ element ] DOM element(s) to inject
+     * @return { nodeList }
+     */
+    Zest.prototype.prepend = function(element) {
+        // Return Zest if element is not defined or valid
+        if(!element || typeof element !== 'object') {
+            return this;
+        }
+
+        // Looping through all the els
+        this.each(function() {
+            // Clone the element (Necessary for injection multiple)
+            var child = element.cloneNode(true);
+            // prepend the new child element to the parent (el)
+            this.insertBefore(child, this.firstChild);
+        });
+
+        // Fire on change
+        this._onChange('prepend');
+
+        // Returning Zest
+        return this;
     };
 
     /**
