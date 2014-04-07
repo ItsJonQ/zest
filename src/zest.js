@@ -1402,6 +1402,35 @@
     };
 
     /**
+     * siblings
+     * Returning the siblings of the current El as a new Zest object (if applicable)
+     *
+     * @public
+     * @return { object } New Zest object with siblings / Current Zest object
+     * @source: http://youmightnotneedjquery.com/
+     */
+    Zest.prototype.siblings = function() {
+        // Defining the first el
+        var el = this.firstEl();
+        // Getting the siblings
+        var siblings = Array.prototype.filter.call(el.parentNode.children, function(child) {
+            // Return if the child is not el
+            return child !== el;
+        });
+
+        // If siblings exist
+        if(siblings.length) {
+            // Transfer the selector to new siblings object
+            var sibs = _Z(siblings);
+            sibs.selector = this.selector;
+            // Return siblings as a new Zest object
+            return sibs;
+        }
+        // Else, return this Zest object
+        return this;
+    };
+
+    /**
      * show
      * Showing all the elements in the DOM
      *
