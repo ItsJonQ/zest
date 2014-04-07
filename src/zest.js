@@ -71,8 +71,6 @@
         // Defining Zest's _el array
         this._el = [];
 
-        console.log(selector instanceof Node);
-
         // Defining Zest's _el (elements)
         if(typeof selector === "string") {
             // Parse the selector
@@ -99,10 +97,12 @@
                 }
             }
         }
-        // Check to see if the selector is an individual Node/HTML element
-        if( selector instanceof HTMLElement ||
-            selector instanceof Node ||
-            selector instanceof HTMLCollection) {
+        // Check to see if the selector is an individual element
+        if( selector instanceof HTMLElement || selector instanceof Node) {
+            this._el.push(selector);
+        }
+        // Check to see if the selector is an HTML collection
+        if(selector instanceof HTMLCollection) {
             this._el = this._toArray.call(selector);
         }
 
@@ -425,7 +425,7 @@
      * These methods return either the same Zest object, or a new Zest
      * object (depending on the method)
      *
-     * 'addClass', 'addEvent', append', 'children', 'clone', 'combine',
+     * 'addClass', 'addEvent', append', 'child', 'children', 'clone', 'combine',
      * 'each', 'empty', 'filter', 'find', 'first', 'hide', 'last', 'listen',
      * 'parent', 'parents', 'prepend', remove', 'removeAllEvents',
      * 'removeAttribute', 'removeClass', 'removeEvent', 'show', 'siblings',
@@ -568,6 +568,34 @@
 
         // Returning Zest
         return this;
+    };
+
+    /**
+     * child
+     * Returns a new Zest object contain the first child of the element
+     *
+     * @public
+     *
+     * @return { object } Returns Zest object with a child el
+     */
+    Zest.prototype.child = function() {
+        // Defining the children elements
+        var children = this.firstEl().children;
+        // If children exist
+        if(children) {
+            var child = children[0];
+            // Get the tag of the first child
+            var tag = child.tagName.toLowerCase();
+            // Create a new Zest object
+            var kid = _Z(child);
+            // Update the newly created Zest object
+            kid.selector = this.selector + " " + tag;
+            // Returning the children elements as a Zest object
+            return kid;
+        } else {
+            // Return the original Zest object
+            return this;
+        }
     };
 
     /**
