@@ -3,7 +3,7 @@
 
 // TEST STUFF
 
-// window.a = _Z('article');
+window.a = _Z('article');
 // a.addClass('okay not-okay bbbb');
 // a.toggleClass('okay');
 
@@ -32,15 +32,15 @@ x.listen('addClass', hideY);
 
 // a.removeClass('bbbb');
 // console.log(a);
-// window.b = a.find('h2');
-// b.addClass('oMg');
+window.b = a.find('h2');
+b.addClass('oMg');
 
-// var eventtt = function() {
-//     console.log('Hovered');
-// };
+var eventtt = function() {
+    console.log('Hovered');
+};
 
 
-// b.addEvent('mouseenter', eventtt);
+b.addEvent('mouseenter', eventtt);
 // b.removeEvent('mouseenter', eventtt);
 // b.addEvent('mouseenter', eventtt);
 // b.addEvent('click', eventtt);

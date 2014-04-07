@@ -425,7 +425,7 @@
      * 'filter', 'find', 'first', 'hide', 'last', 'listen', 'parent',
      * 'parents', 'prepend', remove', 'removeAllEvents', 'removeAttribute',
      * 'removeClass', 'removeEvent', 'show', 'siblings', stopListening',
-     * 'style', 'toggle', 'toggleClass'
+     * 'style', 'toggle', 'toggleClass', 'trigger'
      *
      * ------------
      *
@@ -1740,6 +1740,37 @@
         return this.tojQuery();
     };
 
+    /**
+     * trigger
+     * Triggering HTML events from the elements
+     *
+     * @public
+     *
+     * @param { string } [ evt ] HTML event to trigger
+     * @return { object } Returns the Zest obkect
+     *
+     * @note Does NOT detect whether or not event is supported.
+     * The below method has not been implemented
+     * http://perfectionkills.com/detecting-event-support-without-browser-sniffing/
+     *
+     */
+    Zest.prototype.trigger = function(evt) {
+        // Return the Zest object if the event is not valid
+        if(!evt || typeof evt !== "string") {
+            return this;
+        }
+        // Creating the event
+        var event = document.createEvent('HTMLEvents');
+        // Initializing the event
+        event.initEvent(evt, true, false);
+        // Looping through the elements
+        this.each(function() {
+            // Dispatching the event
+            this.dispatchEvent(event);
+        });
+        // Returning the Zest object
+        return this;
+    };
 
 
     /**
