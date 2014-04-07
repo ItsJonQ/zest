@@ -1489,11 +1489,19 @@
      *
      * @public
      *
-     * @returns { string } Returns the text content
+     * @param { string } [ replacement ] Replacement text
+     * @returns { string } Returns the text content (or the Zest object if
+     * replacement is defined)
      */
-    Zest.prototype.text = function() {
-        // Returning the textContent
-        return this.firstEl().textContent;
+    Zest.prototype.text = function(replacement) {
+        if(replacement && typeof replacement === "string") {
+            this.firstEl().textContent = replacement;
+            // Return the Zest object
+            return this;
+        } else {
+            // Returning the textContent
+            return this.firstEl().textContent;
+        }
     };
 
     /**

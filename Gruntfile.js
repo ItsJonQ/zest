@@ -35,7 +35,7 @@ module.exports = function(grunt) {
         watch: {
             scripts: {
                 files: ['src/**/*.js'],
-                tasks: ['jshint', 'concat']
+                tasks: ['jshint', 'concat', 'uglify']
             }
         }
     });
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
 
 
     // Define your tasks here
-    grunt.registerTask('default', ['jshint', 'concat', 'watch']);
+    grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'watch']);
 
     grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
 
