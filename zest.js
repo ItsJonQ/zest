@@ -393,6 +393,16 @@
      * 'innerHTML', 'inViewport', 'hasClass', 'html', 'lastEl', 'outerHTML',
      * 'parentEl', 'parentsEl', 'setAttribute', 'scrollIntoView', 'text'
      *
+     * ------------
+     *
+     * Listenable Methods
+     * These methods execute the _onChange() method, which fire callbacks if
+     * bounded to the method
+     *
+     * 'addClass', 'append', 'clone', 'combine', 'empty', 'filter', 'hide',
+     * 'remove', 'removeAllEvents', 'removeAttribute', 'removeClass',
+     * 'removeEvent', 'setAttribute', 'show', 'toggle', 'toggleClass'
+     *
      */
 
     /**
