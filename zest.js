@@ -435,7 +435,7 @@
      * within the DOM.
      *
      * 'clientRect', 'contains', el', 'els', 'firstEl', 'getAttribute',
-     * 'innerHTML', 'inViewport', 'hasClass', 'html', 'lastEl', 'next',
+     * 'innerHTML', 'inViewport', 'is', 'hasClass', 'html', 'lastEl', 'next',
      * 'nextEl', 'outerHTML', 'parentEl', 'parentsEl', 'previous',
      * 'previousEl', 'setAttribute', 'scrollIntoView', 'text'
      *
@@ -967,6 +967,25 @@
 
         // Returning true/false if element is visible
         return this._visible();
+    };
+
+    /**
+     * is
+     * Returns boolean (true/false) if the object in question is this object
+     *
+     * @public
+     *
+     * @returns { boolean } Returns true/false
+     */
+    Zest.prototype.is = function(object) {
+
+        // Return false if object is invalid
+        if(!object || typeof object !== "object" || !object instanceof Zest) {
+            return false;
+        }
+
+        // Return boolean comparison between this and the object
+        return this === object;
     };
 
     /**
