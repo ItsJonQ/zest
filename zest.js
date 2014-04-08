@@ -47,7 +47,7 @@
         }
 
         // Construct the Zest object with the defined selector
-        this._construct(selector);
+        this._create(selector);
 
         // Returning the Zest object
         return this;
@@ -60,7 +60,7 @@
      */
 
     /**
-     * _construct
+     * _create
      *
      * @private
      * @category util
@@ -68,7 +68,7 @@
      * @param { string } [ selector ] Selector to retrieve from the DOM
      * @returns { object } Returns the Zest object class
      */
-    Zest.prototype._construct = function(selector) {
+    Zest.prototype._create = function(selector) {
 
         // Defining Zest's _el array
         this._el = [];
