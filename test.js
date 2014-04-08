@@ -3,18 +3,18 @@
 
 // TEST STUFF
 
-window.a = _Z('article');
+window.a = Z$('article');
 // a.addClass('okay not-okay bbbb');
 // a.toggleClass('okay');
 
-// window.ul = _Z('ul');
+// window.ul = Z$('ul');
 // console.log(ul.els());
 // ul.filter(function(el){
 //     return el.classList.contains('nav');
 // });
 // console.log(ul.els());
 
-window.x = _Z('ul.column-list');
+window.x = Z$('ul.column-list');
 console.log('OK',x.els());
 
 window.y = x.find('li');
@@ -52,6 +52,6 @@ b.addEvent('mouseenter', eventtt);
 // console.log(b.parent());
 
 
-// window.c = _Z('#sticky');
+// window.c = Z$('#sticky');
 
 })();

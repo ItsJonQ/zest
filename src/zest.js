@@ -24,11 +24,11 @@
      *
      * @category class
      *
-     * @namespace  _Z
+     * @namespace Z$
      *
      * @param { string } [ selector ] Selector(s) to be used to retrieve elements with from the DOM
      */
-    var _Z = function(selector) {
+    var Z$ = function(selector) {
         // Creates and returns a new Zest object
         return new Zest(selector);
     };
@@ -52,6 +52,8 @@
         // Returning the Zest object
         return this;
     };
+
+    Zest.fn = Zest.prototype;
 
     /**
      * Private(ish) Methods
@@ -587,7 +589,7 @@
             // Get the tag of the first child
             var tag = child.tagName.toLowerCase();
             // Create a new Zest object
-            var kid = _Z(child);
+            var kid = Z$(child);
             // Update the newly created Zest object
             kid.selector = this.selector + " " + tag;
             // Returning the children elements as a Zest object
@@ -614,7 +616,7 @@
             // Get the tag of the first child
             var tag = children[0].tagName.toLowerCase();
             // Create a new Zest object
-            var kids = _Z(children);
+            var kids = Z$(children);
             // Update the newly created Zest object
             kids.selector = this.selector + " " + tag;
             // Returning the children elements as a Zest object
@@ -657,7 +659,7 @@
      */
     Zest.prototype.clone = function() {
         // Defining the cloned Zest object
-        var clone = _Z(this._el);
+        var clone = Z$(this._el);
         // Cloning the selector
         clone.selector = this.selector;
 
@@ -905,7 +907,7 @@
         });
 
         // Defining the results with a new Zest object containing the findings
-        var results = _Z(findings);
+        var results = Z$(findings);
         // Updating the results.selector
         if(parentSelector) {
             results.selector = parentSelector + " " + selectors;
@@ -927,7 +929,7 @@
      */
     Zest.prototype.first = function() {
         // Creating a new Zest object with the first Node
-        var first = _Z(this._el[0]);
+        var first = Z$(this._el[0]);
         // Passing the selector to the first.Selector
         first.selector = this.selector;
 
@@ -1119,7 +1121,7 @@
      */
     Zest.prototype.last = function() {
         // Creating a new Zest object with the last Node
-        var last = _Z(this._el[this.length - 1]);
+        var last = Z$(this._el[this.length - 1]);
         // Passing the selector to the last.Selector
         last.selector = this.selector;
 
@@ -1182,7 +1184,7 @@
         // If the sibling exists
         if(nextSibling) {
             // Create a new Zest object of the next sibling
-            var sib = _Z(nextSibling);
+            var sib = Z$(nextSibling);
             // Updating the selector
             sib.selector = this.selector;
             // Return the new Zest object of the sibling
@@ -1229,7 +1231,7 @@
      */
     Zest.prototype.parent = function() {
         // Returning the new Zest object with parent Nodes
-        return _Z(this.parentEl());
+        return Z$(this.parentEl());
     };
 
     /**
@@ -1242,7 +1244,7 @@
      */
     Zest.prototype.parents = function() {
         // Returning the new Zest object with parent Nodes
-        return _Z(this.parentsEl());
+        return Z$(this.parentsEl());
     };
 
     /**
@@ -1323,7 +1325,7 @@
         // If the sibling exists
         if(previousSibling) {
             // Create a new Zest object of the previous sibling
-            var sib = _Z(previousSibling);
+            var sib = Z$(previousSibling);
             // Updating the selector
             sib.selector = this.selector;
             // Return the new Zest object of the sibling
@@ -1608,7 +1610,7 @@
         // If siblings exist
         if(siblings.length) {
             // Transfer the selector to new siblings object
-            var sibs = _Z(siblings);
+            var sibs = Z$(siblings);
             sibs.selector = this.selector;
             // Return siblings as a new Zest object
             return sibs;
@@ -1851,9 +1853,9 @@
      * Adding Zest to the global window
      */
 
-    // Adding Zest's _Z namespace to global window
-    if(!window._Z) {
-        window._Z = _Z;
+    // Adding Zest's Z$ namespace to global window
+    if(!window.Z$) {
+        window.Z$ = Z$;
     }
 
     // Adding Zest to global window
@@ -1861,6 +1863,6 @@
         window.Zest = Zest;
     }
 
-    return _Z;
+    return Z$;
 
 })();
