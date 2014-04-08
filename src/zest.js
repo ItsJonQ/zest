@@ -6,7 +6,7 @@
  * Available underMIT license
  */
 
-(function (undefined) { "use strict";
+(function (window, document, undefined) { "use strict";
 
     /**
      * @constants
@@ -53,6 +53,7 @@
         return this;
     };
 
+    // Pushing Zest.prototypes to Zest.fn
     Zest.fn = Zest.prototype;
 
     /**
@@ -1865,4 +1866,4 @@
 
     return Z$;
 
-})();
+})(this, document);
