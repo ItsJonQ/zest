@@ -389,11 +389,12 @@
      * These methods return either the same Zest object, or a new Zest
      * object (depending on the method)
      *
-     * 'addClass', 'addEvent', append', 'child', 'children', 'clone', 'combine',
-     * 'each', 'empty', 'filter', 'find', 'first', 'hide', 'last', 'listen',
-     * 'parent', 'parents', 'prepend', remove', 'removeAllEvents',
-     * 'removeAttribute', 'removeClass', 'removeEvent', 'show', 'siblings',
-     * 'stopListening', 'style', 'toggle', 'toggleClass', 'trigger'
+     * 'addClass', 'addEvent', 'after', 'append', 'child', 'children',
+     * 'clone', 'combine', 'each', 'empty', 'filter', 'find', 'first',
+     * 'hide', 'last', 'listen', 'parent', 'parents', 'prepend', remove',
+     * 'removeAllEvents', 'removeAttribute', 'removeClass', 'removeEvent',
+     * 'show', 'siblings', 'stopListening', 'style', 'toggle',
+     * 'toggleClass', 'trigger'
      *
      * ------------
      *
@@ -413,9 +414,10 @@
      * These methods execute the _onChange() method, which fire callbacks if
      * bounded to the method
      *
-     * 'addClass', 'append', 'clone', 'combine', 'empty', 'filter', 'hide',
-     * 'prepend', remove', 'removeAllEvents', 'removeAttribute',
-     * 'removeClass', 'removeEvent', 'setAttribute', 'show'
+     * 'addClass', 'append', 'after', 'clone', 'combine', 'empty', 'filter',
+     * 'hide', 'prepend', remove', 'removeAllEvents', 'removeAttribute',
+     * 'removeClass', 'removeEvent', 'setAttribute', 'show', 'toggle',
+     * 'toggleClass'
      *
      */
 
