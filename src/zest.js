@@ -389,11 +389,11 @@
      * These methods return either the same Zest object, or a new Zest
      * object (depending on the method)
      *
-     * 'addClass', 'addEvent', 'after', 'append', 'child', 'children',
-     * 'clone', 'combine', 'each', 'empty', 'filter', 'find', 'first',
-     * 'hide', 'last', 'listen', 'parent', 'parents', 'prepend', remove',
-     * 'removeAllEvents', 'removeAttribute', 'removeClass', 'removeEvent',
-     * 'show', 'siblings', 'stopListening', 'style', 'toggle',
+     * 'addClass', 'addEvent', 'after', 'append', 'before', 'child',
+     * 'children', 'clone', 'combine', 'each', 'empty', 'filter', 'find',
+     * 'first', 'hide', 'last', 'listen', 'parent', 'parents', 'prepend',
+     * 'remove', 'removeAllEvents', 'removeAttribute', 'removeClass',
+     * 'removeEvent', 'show', 'siblings', 'stopListening', 'style', 'toggle',
      * 'toggleClass', 'trigger'
      *
      * ------------
@@ -414,10 +414,10 @@
      * These methods execute the _onChange() method, which fire callbacks if
      * bounded to the method
      *
-     * 'addClass', 'append', 'after', 'clone', 'combine', 'empty', 'filter',
-     * 'hide', 'prepend', remove', 'removeAllEvents', 'removeAttribute',
-     * 'removeClass', 'removeEvent', 'setAttribute', 'show', 'toggle',
-     * 'toggleClass'
+     * 'addClass', 'append', 'after', 'before', 'clone', 'combine', 'empty',
+     * 'filter', 'hide', 'prepend', remove', 'removeAllEvents',
+     * 'removeAttribute', 'removeClass', 'removeEvent', 'setAttribute',
+     * 'show', 'toggle', 'toggleClass'
      *
      */
 
@@ -560,6 +560,34 @@
         this._onChange('append');
 
         // Returning Zest
+        return this;
+    };
+
+    /**
+     * before
+     * Adding HTML before the elements
+     *
+     * @public
+     *
+     * @param  { string } [ html ] HTML String to be injected
+     * @return { object } Returning the Zest object
+     */
+    Zest.prototype.before = function(html) {
+        // Return the Zest object if html is not valid
+        if(!html || typeof html !== "string") {
+            return this;
+        }
+
+        // Loop through all the elements
+        this.each(function() {
+            // Insert the html before the end of the element
+            this.insertAdjacentHTML('beforebegin', html);
+        });
+
+        // Fire on change
+        this._onChange('before');
+
+        // Return Zest
         return this;
     };
 
