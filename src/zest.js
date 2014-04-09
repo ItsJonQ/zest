@@ -238,7 +238,7 @@
         }
         // "." MATCH - Class Selector
         if( match[3] ) {
-            return [_dom.getElementsByClassName(match[3])];
+            return this._toArray.call(_dom.getElementsByClassName(match[3]));
         }
         // Else, return an empty object
         return [];
@@ -497,6 +497,34 @@
 
         // Fire on change
         this._onChange('addEvent');
+
+        // Return Zest
+        return this;
+    };
+
+    /**
+     * after
+     * Adding HTML after the elements
+     *
+     * @public
+     *
+     * @param  { string } [ html ] HTML String to be injected
+     * @return { object } Returning the Zest object
+     */
+    Zest.prototype.after = function(html) {
+        // Return the Zest object if html is not valid
+        if(!html || typeof html !== "string") {
+            return this;
+        }
+
+        // Loop through all the elements
+        this.each(function() {
+            // Insert the html after the end of the element
+            this.insertAdjacentHTML('afterend', html);
+        });
+
+        // Fire on change
+        this._onChange('after');
 
         // Return Zest
         return this;

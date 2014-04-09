@@ -6,7 +6,7 @@
 window.a = Z$('#sticky');
 window.b = Z$('article');
 window.c = Z$('.brand');
-window.d = Z$('#logo.brand');
+window.d = Z$('ul li');
 window.e = Z$('.article h1');
 window.f = Z$('#header span');
 // window.c = Z$('article');
