@@ -13,7 +13,11 @@
      */
     var _window = window;
     var _document = document;
-
+    /**
+     * @source jQuery
+     * @type { RegExp }
+     */
+    var _selectorRegex = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/;
 
     /**
      * -------------
@@ -48,78 +52,6 @@
 
         // Construct the Zest object with the defined selector
         this._create(selector);
-
-        // Returning the Zest object
-        return this;
-    };
-
-    // Pushing Zest.prototypes to Zest.fn
-    Zest.fn = Zest.prototype;
-
-    /**
-     * Private(ish) Methods
-     */
-
-    /**
-     * _create
-     *
-     * @private
-     * @category util
-     *
-     * @param { string } [ selector ] Selector to retrieve from the DOM
-     * @returns { object } Returns the Zest object class
-     */
-    Zest.prototype._create = function(selector) {
-
-        // Defining Zest's _el array
-        this._el = [];
-
-        // Defining Zest's _el (elements)
-        if(typeof selector === "string") {
-            // Parse the selector
-            this._el = this._parseSelector(selector);
-            // Defining the Zest object's original selector
-            this.selector = selector;
-        }
-        // Check to see if the selector is an instance of Zest
-        if(selector instanceof Zest) {
-            // Get the els from the Zest object
-            this._el = selector.els();
-        }
-        // Check to see if the selector is an array of DOM elements
-        if(selector instanceof Array) {
-            // Define the loop variables
-            var i = -1;
-            var length = selector.length;
-            // Loop through the array
-            while(++i < length){
-                // If the selector is a node object
-                if(selector[i].nodeType === 1) {
-                    // Push it to the _el array
-                    this._el.push(selector[i]);
-                }
-            }
-        }
-        // Check to see if the selector is an individual element
-        if( selector instanceof HTMLElement || selector instanceof Node) {
-            this._el.push(selector);
-        }
-        // Check to see if the selector is an HTML collection
-        if(selector instanceof HTMLCollection) {
-            this._el = this._toArray.call(selector);
-        }
-
-        // Defining the length (count) of elements
-        this.length = this._el.length;
-
-        // Defining the events of the Zest object
-        this._events = {};
-
-        // Defining the memoized info of the Zest object
-        this._memo = {};
-
-        // Defining listeners for the Zest object
-        this._listeners = {};
 
         // Returning the Zest object
         return this;
@@ -174,6 +106,77 @@
     };
 
     /**
+     * _create
+     *
+     * @private
+     * @category util
+     *
+     * @param { string } [ selector ] Selector to retrieve from the DOM
+     * @returns { object } Returns the Zest object class
+     */
+    Zest.prototype._create = function(selector) {
+        // Return false if selector is not defined
+        if(!selector) {
+            return false;
+        }
+
+        // Defining the events of the Zest object
+        this._events = {};
+        // Defining the memoized info of the Zest object
+        this._memo = {};
+        // Defining listeners for the Zest object
+        this._listeners = {};
+
+        // Defining Zest's _el (elements)
+        if(typeof selector === "string") {
+            // Construct the Zest object with the defined selector
+            this._el = this._parseSelector(selector);
+            this.length = this._el.length;
+            return this;
+        }
+        // Check to see if the selector is an instance of Zest
+        if(selector instanceof Zest) {
+            // Get the els from the Zest object
+            this._el = [selector.els()];
+            this.length = this._el.length;
+            return this;
+        }
+        // Check to see if the selector is an array of DOM elements
+        if(selector instanceof Array) {
+            // Define the loop variables
+            var i = -1;
+            var length = selector.length;
+            var els = [];
+            // Loop through the array
+            while(++i < length){
+                // If the selector is a node object
+                if(selector[i].nodeType === 1) {
+                    // Push it to the _el array
+                    els.push(selector[i]);
+                }
+            }
+            this._el = els;
+            this.length = this._el.length;
+            return this;
+        }
+        // Check to see if the selector is an individual element
+        if( selector instanceof HTMLElement || selector instanceof Node) {
+            this._el = [selector];
+            this.length = this._el.length;
+            return this;
+        }
+        // Check to see if the selector is an HTML collection
+        if(selector instanceof HTMLCollection) {
+            this._el = this._toArray.call(selector);
+            this.length = this._el.length;
+            return this;
+        }
+
+        // Returning the Zest object
+        return this;
+    };
+
+    /**
      * _onChange
      * Fires whenever a bounded method is triggered
      *
@@ -209,77 +212,35 @@
      * @category util
      *
      * @param { string } [ selector ] Selector to retrieve from the DOM
-     * @param { string } [ parent ] Parent node element to search
-     * @returns { object } Returns a nodeList
+     * @param { string } [ context ] Context node element to search
+     * @returns { array } Returns an empty array
+     *
+     * @note Avoided using if/else for performance
      */
-    Zest.prototype._parseSelector = function(selector, parent) {
-        // Return if the selector is not defined
-        if(!selector) {
-            return false;
+    Zest.prototype._parseSelector = function(selector, context) {
+        // Defining the _dom object to grab the element(s) from
+        var _dom = context ? context : _document;
+        // Regex'ing the selector to catch for match type
+        var match = _selectorRegex.exec( selector );
+
+        // NO MATCH - Complex Selector
+        if ( !match ) {
+            return [_dom.querySelectorAll(selector)];
         }
-
-        var _dom = parent ? parent : _document;
-
-        // Defining els to set/return
-        var els;
-        var firstEl = selector[0];
-        var hasId = /(#)/i.test(selector);
-        var hasClass = /(\.)/i.test(selector);
-
-        // Contains Spaces (More complicated selector query)
-        if(/( )/i.test(selector)) {
-
-            // Return a querySelector
-            els = _dom.querySelectorAll(selector);
-
-        // Does not contain spaces. Might qualify for the fast _dom.getElement method
-        } else {
-
-            // Check if the selector contains combined selectors
-            // Example: #id-of-element.class-of-element
-
-            // Test for #id.class-name
-            // If string contains "#" or "."
-            if(hasId && hasClass) {
-                // Return a querySelector
-                els = _dom.querySelectorAll(selector);
-            }
-            // Test for tagName
-            // If string doesn't start with # or .
-            else if(firstEl !== '#' || firstEl !== '.') {
-                // But, if string contains # or .
-                if(hasId || hasClass) {
-                    // Return a querySelector
-                    els = _dom.querySelectorAll(selector);
-                } else {
-                    els = _dom.getElementsByTagName(selector);
-                }
-            }
-            // Otherwise, good to go with _dom.getElement(s)By method
-            else {
-                // Get by ID (#)
-                if(hasId) {
-                    selector = selector.replace("#", "");
-                    els = _dom.getElementById(selector);
-                }
-
-                // Get by ClassName
-                else if(hasClass) {
-                    selector = selector.replace(".", "");
-                    els = _dom.getElementsByClassName(selector);
-                }
-
-                // Get by TagName
-                else {
-
-                    els = _dom.getElementsByTagName(selector);
-                }
-            }
-
+        // "#" MATCH - ID Selector
+        if( match[1] ) {
+            return [_dom.getElementById(match[1])];
         }
-
-        // Returning the els
-        return this._toArray.call(els);
+        // "" MATCH - Tag Selector
+        if( match[2] ) {
+            return [_dom.getElementsByTagName(selector)];
+        }
+        // "." MATCH - Class Selector
+        if( match[3] ) {
+            return [_dom.getElementsByClassName(match[3])];
+        }
+        // Else, return an empty object
+        return [];
     };
 
     /**
@@ -414,7 +375,6 @@
             coordinates.right <= (_window.innerWidth || _document.documentElement.clientWidth)
         );
     };
-
 
 
     /**

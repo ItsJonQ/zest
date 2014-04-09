@@ -2628,6 +2628,8 @@ jQuery.fn.extend({
             ret = [],
             self = this;
 
+            console.log(selector);
+
         if ( typeof selector !== "string" ) {
             return this.pushStack( jQuery( selector ).filter(function() {
                 for ( i = 0; i < len; i++ ) {
@@ -2639,6 +2641,7 @@ jQuery.fn.extend({
         }
 
         for ( i = 0; i < len; i++ ) {
+            console.log('loop');
             jQuery.find( selector, self[ i ], ret );
         }
 
@@ -2697,6 +2700,8 @@ var rootjQuery,
                 match = rquickExpr.exec( selector );
             }
 
+            console.log(match);
+
             // Match html or make sure no context is specified for #id
             if ( match && (match[1] || !context) ) {
 
@@ -2747,6 +2752,7 @@ var rootjQuery,
 
             // HANDLE: $(expr, $(...))
             } else if ( !context || context.jquery ) {
+                console.log(context, rootjQuery);
                 return ( context || rootjQuery ).find( selector );
 
             // HANDLE: $(expr, context)
