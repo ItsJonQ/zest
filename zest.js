@@ -1623,11 +1623,11 @@
         // Looping through all the els
         this.each(function() {
             // Setting all the els to display: inherit
-            this.style.display = 'inherit';
+            this.style.display = '';
         });
 
         // Fire on change
-        this._onChange('listenable');
+        this._onChange('show');
 
         // Returning Zest
         return this;
@@ -1657,6 +1657,24 @@
             fn.length = 0;
             // Delete the method from the _listeners object
             delete this._listeners[method];
+        }
+
+        // Returning the Zest object
+        return this;
+    };
+
+    /**
+     * stopListeningAll
+     * Removing all the callbacks of the methods bounded to the Zest via .listen()
+     *
+     * @public
+     *
+     * @return { object } Returning the Zest object
+     */
+    Zest.prototype.stopListeningAll = function() {
+
+        for(var fn in this._listeners) {
+            delete this._listeners[fn];
         }
 
         // Returning the Zest object
@@ -1733,7 +1751,7 @@
                 this._onChange('hide');
             } else {
                 // Setting the element as display: inherit
-                el.style.display = 'inherit';
+                el.style.display = '';
                 // Fire on change
                 this._onChange('show');
             }
