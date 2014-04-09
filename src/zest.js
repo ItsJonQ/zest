@@ -225,7 +225,7 @@
 
         // NO MATCH - Complex Selector
         if ( !match ) {
-            return [_dom.querySelectorAll(selector)];
+            return this._toArray.call(_dom.querySelectorAll(selector));
         }
         // "#" MATCH - ID Selector
         if( match[1] ) {
@@ -233,7 +233,7 @@
         }
         // "" MATCH - Tag Selector
         if( match[2] ) {
-            return [_dom.getElementsByTagName(selector)];
+            return this._toArray.call(_dom.getElementsByTagName(selector));
         }
         // "." MATCH - Class Selector
         if( match[3] ) {
