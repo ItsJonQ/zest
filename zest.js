@@ -143,12 +143,13 @@
         }
         // Check to see if the selector is an array of DOM elements
         if(selector instanceof Array) {
-            // Define the loop variables
-            var i = -1;
-            var length = selector.length;
+            // Defining the els array
             var els = [];
-            // Loop through the array
-            while(++i < length){
+            // Defining variables for loop
+            var i = 0;
+            var len = selector.length;
+            // Loop through the elements
+            for( ; i < len; i++) {
                 // If the selector is a node object
                 if(selector[i].nodeType === 1) {
                     // Push it to the _el array
@@ -342,11 +343,11 @@
     Zest.prototype._toArray = function() {
         // Defining the array to push to
         var array = [];
-        // Defining the loop variables
-        var i = -1;
+        // Defining variables for loop
+        var i = 0;
         var len = this.length;
         // Loop through the elements
-        while( ++i < len ) {
+        for( ; i < len; i++) {
             // Pushing the element to the array
             array.push(this[i]);
         }
@@ -715,11 +716,10 @@
         }
 
         // Defining variables for loop
-        var i = -1;
+        var i = 0;
         var len = this.length;
-
         // Loop through the elements
-        while( ++i < len ) {
+        for( ; i < len; i++) {
             // Fire the callback
             callback.call(this._el[i], i, this._el[i]);
         }
@@ -808,10 +808,10 @@
         // Defining a results array to contain the filtered results
         var result = [];
         // Defining variables for loop
-        var i = -1;
+        var i = 0;
         var len = this.length;
         // Loop through the elements
-        while( ++i < len ) {
+        for( ; i < len; i++) {
             // Defining the value from the _el collection
             var value = this._el[i];
             // If the callback returns something
@@ -859,9 +859,10 @@
             // Finding the children elements of the element
             var children = this._parseSelector(selectors, el);
             // Looping through all the children
-            var i = -1;
-            var length = children.length;
-            while( ++i < length ) {
+            var i = 0;
+            var len = children.length;
+            // Loop through the elements
+            for( ; i < len; i++) {
                 // Adding them to the findings array
                 findings.push(children[i]);
             }
@@ -927,10 +928,10 @@
         }
 
         // Defining variables for loop
-        var i = -1;
+        var i = 0;
         var len = this.length;
         // Loop through the elements
-        while( ++i < len ) {
+        for( ; i < len; i++) {
             // Fire the callback
             callback.call(this, this._el[i], i);
         }
