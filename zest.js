@@ -415,8 +415,7 @@
      *
      * 'addClass', 'append', 'clone', 'combine', 'empty', 'filter', 'hide',
      * 'prepend', remove', 'removeAllEvents', 'removeAttribute',
-     * 'removeClass', 'removeEvent', 'setAttribute', 'show', 'toggle',
-     * 'toggleClass'
+     * 'removeClass', 'removeEvent', 'setAttribute', 'show'
      *
      */
 
@@ -1700,15 +1699,15 @@
             if(el.clientHeight > 0) {
                 // Setting the element as display: none
                 el.style.display = 'none';
+                // Fire on change
+                this._onChange('hide');
             } else {
                 // Setting the element as display: inherit
                 el.style.display = 'inherit';
+                // Fire on change
+                this._onChange('show');
             }
         });
-
-        // Fire on change
-        this._onChange('toggle');
-
         // Returning Zest
         return this;
     };
@@ -1735,14 +1734,15 @@
             if(this.classList.contains(className)) {
                 // remove the class
                 this.classList.remove(className);
+                // Fire on change
+                this._onChange('removeClass');
             } else {
                 // add the class
                 this.classList.add(className);
+                // Fire on change
+                this._onChange('addClass');
             }
         });
-
-        // Fire on change
-        this._onChange('toggleClass');
 
         // Returning Zest
         return this;
