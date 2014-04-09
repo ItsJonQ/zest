@@ -1592,8 +1592,8 @@
     Zest.prototype.show = function() {
         // Looping through all the els
         this.each(function() {
-            // Setting all the els to display: block
-            this.style.display = 'block';
+            // Setting all the els to display: inherit
+            this.style.display = 'inherit';
         });
 
         // Fire on change
@@ -1700,8 +1700,8 @@
                 // Setting the element as display: none
                 el.style.display = 'none';
             } else {
-                // Setting the element as display: block
-                el.style.display = 'block';
+                // Setting the element as display: inherit
+                el.style.display = 'inherit';
             }
         });
 
