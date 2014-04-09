@@ -485,7 +485,7 @@
             }
 
             // Add "event" to _events if not present (as an array)
-            if(!(event in this._events[el])) {
+            if(!(event in this._events[el]) || (this._events[el] && this._events[el][event] === undefined)) {
                 this._events[el][event] = [];
             }
 
@@ -1178,7 +1178,7 @@
             return this;
         }
         // If this method isn't defined under _listeners
-        if(!this._listeners[method]) {
+        if(!this._listeners[method] || this._listeners[method] === undefined) {
             // Add this method as an array
             this._listeners[method] = [];
         }
@@ -1540,7 +1540,7 @@
                     }
                     // Delete the event key from _events
                     setTimeout(function(){
-                        delete self._events[el][event];
+                        self._events[el][event] = undefined;
                     }, 16);
                 }
             }
@@ -1680,11 +1680,11 @@
         var fn = this._listeners[method];
 
         // If the _listeners contains the method
-        if(fn) {
+        if(fn || fn !== undefined) {
             // Empty the array (of callback)
             fn.length = 0;
             // Delete the method from the _listeners object
-            delete this._listeners[method];
+            this._listeners[method] = undefined;
         }
 
         // Returning the Zest object
@@ -1701,8 +1701,10 @@
      */
     Zest.prototype.stopListeningAll = function() {
 
+        // Loop through all the listeners
         for(var fn in this._listeners) {
-            delete this._listeners[fn];
+            // Set the listener method to undefined
+            this._listeners[fn] = undefined;
         }
 
         // Returning the Zest object
