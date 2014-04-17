@@ -365,16 +365,12 @@
      * @source: http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
      */
     Zest.prototype._visible = function() {
-        // Defining the coordinates of the element
-        var coordinates = this.getBoundingClientRect();
 
-        // Returning the calculations
-        return (
-            coordinates.top >= 0 &&
-            coordinates.left >= 0 &&
-            coordinates.bottom <= (_window.innerHeight || _document.documentElement.clientHeight) &&
-            coordinates.right <= (_window.innerWidth || _document.documentElement.clientWidth)
-        );
+        var htmlDoc = _document.documentElement;
+        var coords = this.clientRect();
+
+        // Returning true/false if element is visible
+        return (!!coords && coords.bottom > 0 && coords.right > 0 && coords.top < htmlDoc.clientHeight && coords.left < htmlDoc.clientWidth);
     };
 
 
