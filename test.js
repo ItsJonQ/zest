@@ -4,11 +4,20 @@
 // TEST STUFF
 
 window.a = Z$('#sticky');
-window.b = Z$('article');
+window.b = Z$('body');
 window.c = Z$('.brand');
 window.d = Z$('ul li');
 window.e = Z$('.article h1');
 window.f = Z$('#header span');
+
+window.ping = function() { console.log('ECHO!'); };
+
+b.on('click', 'h1', ping);
+a.on('click', function() {
+    console.log('sticky');
+
+});
+
 // window.c = Z$('article');
 // a.addClass('okay not-okay bbbb');
 // a.toggleClass('okay');

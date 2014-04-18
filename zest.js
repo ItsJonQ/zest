@@ -178,6 +178,46 @@
     };
 
     /**
+     * _delegateEvent
+     * This method helps delegate event callbacks for Zest.prototype.on. It initializes the callback if the event.target matches the selector
+     * @param  { event }        e           [ the event]
+     * @param  { string / DOM } selector    [ the selector to delegate event to ]
+     * @param  { function }     callback    [ the callback method ]
+     * @return { function }                 [ returns the callback method if valid]
+     */
+    Zest.prototype._delegateEvent = function(e, selector, callback) {
+        // Return if event or callback is invalid
+        if(!e || !selector || !callback || typeof callback !== "function") {
+            return this;
+        }
+
+        /**
+         * compare the event's target vs the selector from the DOM using querySeletor.
+         *
+         * There's most likely a better method of comparing the elements, but querySelector appears to be the simplest - and it's pretty fast.
+         */
+        if(this._getEventTarget(e) === _document.querySelector(selector)) {
+            // Return the callback, passing the event
+            return callback(e);
+        } else {
+            // Return false
+            return false;
+        }
+
+    };
+
+    /**
+     * _getEventTarget
+     * Returns the event target. Uses srcElement as a fallback for IE
+     * @param  { event } e [ the event ]
+     * @return { DOM object }   [ the target]
+     */
+    Zest.prototype._getEventTarget = function(e) {
+        e = e || window.event;
+        return e.target || e.srcElement;
+    };
+
+    /**
      * _onChange
      * Fires whenever a bounded method is triggered
      *
@@ -1221,6 +1261,57 @@
     Zest.prototype.nextEl = function() {
         // Return element using .nextElementSibling
         return this.firstEl().nextElementSibling;
+    };
+
+
+    /**
+     * on
+     * Assigns / delegates events to the element(s)
+     * TODO: Will definintely need to see if there's a way to refine this.
+     * But, for the most part, it's working as expected :).
+     *
+     * @param  { string }   events   [ The event name]
+     * @param  { string }   selector [ The selector to delegate the event to (or the callback) ]
+     * @param  { function } callback [ The callback method for the event ]
+     * @return { object }            [ Returns the Zest object]
+     */
+    Zest.prototype.on = function(events, selector, callback) {
+        var self = this;
+
+        // Return if events or selector is not defined
+        if(!events || !selector) {
+            return self;
+        }
+
+        // Put events in array if not in array
+        if(!(events instanceof Array)) {
+            events = [events];
+        }
+
+        // Defining the eventFn to pass to addEvent
+        var eventFn;
+
+        // Set the callback if the selector is a function (aka. callback)
+        if(typeof selector === "function" && !callback) {
+            eventFn = selector;
+            // Reassign the selector as the document
+            selector = _document;
+        } else {
+            eventFn = function(e) {
+                return self._delegateEvent(e, selector, callback);
+            };
+        }
+
+        // Looping through all the events
+        var i = 0;
+        var len = events.length;
+        for( ; i < len; i++ ) {
+            // Adding the event
+            self.addEvent(events[i], eventFn);
+        }
+
+        // Returning the Zest object
+        return self;
     };
 
     /**
