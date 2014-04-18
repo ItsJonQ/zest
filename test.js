@@ -8,7 +8,7 @@ window.b = Z$('body');
 window.c = Z$('.brand');
 window.d = Z$('ul li');
 window.e = Z$('.article h1');
-window.f = Z$('#header span');
+// window.f = Z$('#header span');
 
 window.ping = function() { console.log('Clicked the H1'); };
 
