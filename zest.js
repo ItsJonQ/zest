@@ -180,30 +180,33 @@
     /**
      * _delegateEvent
      * This method helps delegate event callbacks for Zest.prototype.on. It initializes the callback if the event.target matches the selector
+     *
+     * UPDATE: This method is disabled for now. See Zest.prototype.on
+     *
      * @param  { event }        e           [ the event]
      * @param  { string / DOM } selector    [ the selector to delegate event to ]
      * @param  { function }     callback    [ the callback method ]
      * @return { function }                 [ returns the callback method if valid]
      */
-    Zest.prototype._delegateEvent = function(e, selector, callback) {
-        var self = this;
-        // Return if event or callback is invalid
-        if(!e || !selector || !callback || typeof callback !== "function") {
-            return self;
-        }
+    // Zest.prototype._delegateEvent = function(e, selector, callback) {
+    //     var self = this;
+    //     // Return if event or callback is invalid
+    //     if(!e || !selector || !callback || typeof callback !== "function") {
+    //         return self;
+    //     }
 
-        // Defining the target
-        var target = self._getEventTarget(e);
-        // Initialize the callback if the target matches the selector
-        if(self._getMatcher(target).call(target, selector)) {
-            // Return the callback, passing the event
-            callback(e);
-        } else {
-            // Return false
-            return false;
-        }
+    //     // Defining the target
+    //     var target = self._getEventTarget(e);
+    //     // Initialize the callback if the target matches the selector
+    //     if(self._getMatcher(target).call(target, selector)) {
+    //         // Return the callback, passing the event
+    //         callback(e);
+    //     } else {
+    //         // Return false
+    //         return false;
+    //     }
 
-    };
+    // };
 
     /**
      * _getEventTarget
@@ -537,7 +540,7 @@
      * @param  { boolean } [ capture ] The capture status (true or false)
      * @returns { object } Returns the Zest object class
      */
-    Zest.prototype.addEvent = function(event, handler, capture) {
+    Zest.prototype.addEvent = function(event, handler, capture, delegate) {
         // Return Zest if event or handler is invalid
         if( !event || typeof event !== "string" ||
             !handler || typeof handler !== "function")
@@ -1300,53 +1303,53 @@
     /**
      * on
      * Assigns / delegates events to the element(s)
+     * UPDATE: Removing this method for now. Handling events via jQuery's .on / .off is scary complex! Haha.
      * TODO: Will definintely need to see if there's a way to refine this.
-     * But, for the most part, it's working as expected :).
      *
      * @param  { string }   events   [ The event name]
      * @param  { string }   selector [ The selector to delegate the event to (or the callback) ]
      * @param  { function } callback [ The callback method for the event ]
      * @return { object }            [ Returns the Zest object]
      */
-    Zest.prototype.on = function(events, selector, callback) {
-        var self = this;
+    // Zest.prototype.on = function(events, selector, callback) {
+    //     var self = this;
 
-        // Return if events or selector is not defined
-        if(!events || !selector) {
-            return self;
-        }
+    //     // Return if events or selector is not defined
+    //     if(!events || !selector) {
+    //         return self;
+    //     }
 
-        // Put events in array if not in array
-        if(!(events instanceof Array)) {
-            events = [events];
-        }
+    //     // Put events in array if not in array
+    //     if(!(events instanceof Array)) {
+    //         events = [events];
+    //     }
 
-        // Defining the eventFn to pass to addEvent
-        var eventFn;
+    //     // Defining the eventFn to pass to addEvent
+    //     var eventFn;
 
-        // Set the callback if the selector is a function (aka. callback)
-        if(typeof selector === "function" && !callback) {
-            eventFn = selector;
-            // Reassign the selector as the document
-            selector = _document;
-        } else {
-            eventFn = function(e) {
-                // Delegate the event
-                return self._delegateEvent(e, selector, callback);
-            };
-        }
+    //     // Set the callback if the selector is a function (aka. callback)
+    //     if(typeof selector === "function" && !callback) {
+    //         eventFn = selector;
+    //         // Reassign the selector as the document
+    //         selector = _document;
+    //     } else {
+    //         eventFn = function(e) {
+    //             // Delegate the event
+    //             return self._delegateEvent(e, selector, callback);
+    //         };
+    //     }
 
-        // Looping through all the events
-        var i = 0;
-        var len = events.length;
-        for( ; i < len; i++ ) {
-            // Adding the event
-            self.addEvent(events[i], eventFn);
-        }
+    //     // Looping through all the events
+    //     var i = 0;
+    //     var len = events.length;
+    //     for( ; i < len; i++ ) {
+    //         // Adding the event
+    //         self.addEvent(events[i], eventFn, false, true);
+    //     }
 
-        // Returning the Zest object
-        return self;
-    };
+    //     // Returning the Zest object
+    //     return self;
+    // };
 
     /**
      * outerHTML

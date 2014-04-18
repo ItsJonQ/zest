@@ -20,8 +20,17 @@ a.on('click', function(e) {
 
 b.on('click', 'a', function(e) {
     e.preventDefault();
+    e.stopPropagation();
     console.log('dsa');
 });
+
+jQuery('body').on('click', 'a', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+});
+
+jQuery('body').on('click', ping);
+
 
 // window.c = Z$('article');
 // a.addClass('okay not-okay bbbb');
