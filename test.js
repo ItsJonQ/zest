@@ -20,6 +20,7 @@ a.on('click', function(e) {
 
 b.on('click', 'a', function(e) {
     e.preventDefault();
+    e.stopPropagation();
     console.log('dsa');
 });
 

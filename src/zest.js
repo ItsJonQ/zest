@@ -1372,7 +1372,7 @@
         var len = events.length;
         for( ; i < len; i++ ) {
             // Adding the event
-            self.addEvent(events[i], eventFn);
+            self.addEvent(events[i], eventFn, true);
         }
 
         // Returning the Zest object
