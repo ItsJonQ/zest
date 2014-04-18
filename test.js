@@ -13,9 +13,14 @@ window.f = Z$('#header span');
 window.ping = function() { console.log('ECHO!'); };
 
 b.on('click', 'h1', ping);
-a.on('click', function() {
+a.on('click', function(e) {
     console.log('sticky');
 
+});
+
+b.on('click', 'a', function(e) {
+    e.preventDefault();
+    console.log('dsa');
 });
 
 // window.c = Z$('article');

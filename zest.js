@@ -186,19 +186,18 @@
      * @return { function }                 [ returns the callback method if valid]
      */
     Zest.prototype._delegateEvent = function(e, selector, callback) {
+        var self = this;
         // Return if event or callback is invalid
         if(!e || !selector || !callback || typeof callback !== "function") {
-            return this;
+            return self;
         }
 
-        /**
-         * compare the event's target vs the selector from the DOM using querySeletor.
-         *
-         * There's most likely a better method of comparing the elements, but querySelector appears to be the simplest - and it's pretty fast.
-         */
-        if(this._getEventTarget(e) === _document.querySelector(selector)) {
+        // Defining the target
+        var target = self._getEventTarget(e);
+        // Initialize the callback if the target matches the selector
+        if(self._getMatcher(target).call(target, selector)) {
             // Return the callback, passing the event
-            return callback(e);
+            callback(e);
         } else {
             // Return false
             return false;
@@ -215,6 +214,40 @@
     Zest.prototype._getEventTarget = function(e) {
         e = e || window.event;
         return e.target || e.srcElement;
+    };
+
+    /**
+     * _getMatcher
+     * Returns a element.matches method
+     * @param  { DOM element } element  [ DOM node element ]
+     * @return { method }               [ Return appropriate match method]
+     *
+     * @source: https://github.com/ccampbell/gator/blob/master/gator.js
+     */
+    Zest.prototype._getMatcher = function(element) {
+        var _matcher;
+
+        if (element.matches) {
+            _matcher = element.matches;
+        }
+
+        if (element.webkitMatchesSelector) {
+            _matcher = element.webkitMatchesSelector;
+        }
+
+        if (element.mozMatchesSelector) {
+            _matcher = element.mozMatchesSelector;
+        }
+
+        if (element.msMatchesSelector) {
+            _matcher = element.msMatchesSelector;
+        }
+
+        if (element.oMatchesSelector) {
+            _matcher = element.oMatchesSelector;
+        }
+
+        return _matcher;
     };
 
     /**
@@ -1298,6 +1331,7 @@
             selector = _document;
         } else {
             eventFn = function(e) {
+                // Delegate the event
                 return self._delegateEvent(e, selector, callback);
             };
         }
