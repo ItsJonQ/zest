@@ -1,11 +1,3 @@
-/**
- * @license
- * Zest 0.0.1
- * Copyright 2014 Jon Q
- * https://github.com/ItsJonQ/Zest
- * Available underMIT license
- */
-
 (function (window, document, undefined) { "use strict";
 
     /**

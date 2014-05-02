@@ -1,9 +1,9 @@
-/**
- * @license
- * Zest 0.0.1
+/*!
+ * Zest
+ * A light-weight DOM library
+ * v0.0.1 (https://github.com/ItsJonQ/Zest)
  * Copyright 2014 Jon Q
- * https://github.com/ItsJonQ/Zest
- * Available underMIT license
+ * Licensed under MIT (https://github.com/itsjonq/zest/blob/master/LICENSE)
  */
 
 (function (window, document, undefined) { "use strict";
