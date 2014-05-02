@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 src: ['src/zest.js'],
-                dest: 'zest.js'
+                dest: 'dist/zest.js'
             }
         },
         jshint: {
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
             },
             script: {
                 files: {
-                    'zest.min.js': ['zest.js']
+                    'dist/zest.min.js': ['zest.js']
                 }
             }
         },
