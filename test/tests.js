@@ -14,9 +14,9 @@ test("jQuery is loaded", function() {
 });
 
 test("Zest is loaded", function() {
-    ok( Z$,
-        "Z$ is defined." );
+    ok( zest,
+        "zest is defined." );
 
-    equal( typeof Z$, "function",
-        "Z$ is a function." );
+    equal( typeof zest, "function",
+        "zest is a function." );
 });

@@ -2054,9 +2054,9 @@
         window.Z$ = Z$;
     }
 
-    // Adding Zest to global window
-    if(!window.Zest) {
-        window.Zest = Zest;
+    // Adding zest to global window
+    if(!window.zest) {
+        window.zest = Z$;
     }
 
     return Z$;
