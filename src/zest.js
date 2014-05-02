@@ -15,21 +15,8 @@
      * -------------
      * ZEST
      * -------------
-     *
      * Create a new "Zest" class
      *
-     * @category class
-     *
-     * @namespace Z$
-     *
-     * @param { string } [ selector ] Selector(s) to be used to retrieve elements with from the DOM
-     */
-    var Z$ = function(selector) {
-        // Creates and returns a new Zest object
-        return new Zest(selector);
-    };
-
-    /**
      * @category constructor
      *
      * @namespace  Zest
@@ -37,6 +24,34 @@
      * @param { string } [ selector ] Selector(s) to be used to retrieve elements with from the DOM
      */
     var Zest = function(selector) {
+        return new Zest.fn.init(selector);
+    };
+
+    // Creating an alias for Zest, using the Z$ namespace
+    var Z$ = Zest;
+
+    /**
+     * Initialization Process
+     *
+     * These series of methods were inspired by the setup method in jQuery.
+     * This allows for the checking (object instanceof Zest)
+     *
+     */
+    // Passing Zest prototypes into Zest.fn
+    Zest.fn = Zest.prototype;
+
+    // Defining and setting the initialization method
+
+    /**
+     * init
+     * Intializes and creates the Zest object
+     *
+     * @category util
+     *
+     * @param { string } [ selector ] Selector to retrieve from the DOM
+     * @returns { object } Returns the Zest object class
+     */
+    var init = Zest.fn.init = function(selector) {
         // Return false if selector is not defined
         if(!selector) {
             return false;
@@ -48,6 +63,11 @@
         // Returning the Zest object
         return this;
     };
+
+    // Passing the Zest prototypes into init
+    init.prototype = Zest.fn;
+
+
 
     /**
      * _addClass
@@ -2043,14 +2063,14 @@
 
     // Adding Zest's Z$ namespace to global window
     if(!window.Z$) {
-        window.Z$ = Z$;
+        window.Z$ = Zest;
     }
 
     // Adding zest to global window
-    if(!window.zest) {
-        window.zest = Z$;
+    if(!window.Zest) {
+        window.Zest = Zest;
     }
 
-    return Z$;
+    return Zest;
 
 })(this, document);
