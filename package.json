@@ -8,13 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ItsJonQ/Zest.git"
+    "url": "git://github.com/ItsJonQ/zest.git"
   },
   "keywords": [
     "zest, zestjs, javascript, jquery, alternative, DOM, fast"
   ],
   "author": "Jon Q",
-  "license": "MIT",
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/itsjonq/zest/blob/master/LICENSE"
+  },
   "bugs": {
     "url": "https://github.com/ItsJonQ/Zest/issues"
   },
