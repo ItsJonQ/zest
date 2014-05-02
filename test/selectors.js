@@ -1,4 +1,0 @@
-/**
- * Selector Parsing
- */
-
