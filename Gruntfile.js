@@ -63,7 +63,7 @@ module.exports = function(grunt) {
             },
             tests: {
                 files: ['test/**/*.js'],
-                tasks: ['qunit']
+                tasks: ['browserify:tests', 'qunit']
             }
         }
 
