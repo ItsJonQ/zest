@@ -1650,7 +1650,7 @@
         // This indicates that there are multiple classes to apply
         if(/( )/i.test(className)) {
             // redefine className with the parse [array] version
-            className = this.parseTo(className, "array");
+            className = this._parseTo(className, "array");
         }
 
         // Looping through all the els

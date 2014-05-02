@@ -2,8 +2,94 @@
 require('../units/pretest.js');
 require('../units/setup.js');
 require('../units/selectors.js');
+require('../units/classes.js');
 
-},{"../units/pretest.js":2,"../units/selectors.js":3,"../units/setup.js":4}],2:[function(require,module,exports){
+},{"../units/classes.js":2,"../units/pretest.js":3,"../units/selectors.js":4,"../units/setup.js":5}],2:[function(require,module,exports){
+/**
+ * Classes
+ */
+
+// .addClass
+test("Zest().addClass should be able to add a single class", function() {
+    ok( Zest('span').addClass('new-guy'),
+        "Zest().addClass worked correctly." );
+
+    equal(
+        $('span').hasClass('new-guy'),
+        true,
+        "Zest().addClass added a new class correctly." );
+});
+
+test("Zest().addClass should be able to add multiple classes", function() {
+    ok( Zest('span').addClass('the new-guy is-cool'),
+        "Zest().addClass worked correctly." );
+
+    var $span = $('span');
+
+    equal(
+        $span.hasClass('the'),
+        true,
+        "Zest().addClass added a new class correctly." );
+
+    equal(
+        $span.hasClass('new-guy'),
+        true,
+        "Zest().addClass added a new class correctly." );
+
+    equal(
+        $span.hasClass('is-cool'),
+        true,
+        "Zest().addClass added a new class correctly." );
+});
+
+
+// .hasClass
+test("Zest().rhasClass should be able detect classes", function() {
+    ok( Zest('span').hasClass('new-guy'),
+        "Zest().hasClass worked correctly." );
+
+    var $span = $('span');
+
+    equal(
+        $span.hasClass('new-guy'),
+        true,
+        "Zest().hasClass can detect a class correctly." );
+
+    equal(
+        $span.hasClass('fake-guy'),
+        false,
+        "Zest().hasClass can detect a class is not present correctly." );
+});
+
+
+// .removeClass
+test("Zest().removeClass should be able to remove a single class", function() {
+    ok( Zest('span').removeClass('the'),
+        "Zest().removeClass worked correctly." );
+
+    equal(
+        $('span').hasClass('the'),
+        false,
+        "Zest().removeClass removed a class correctly." );
+});
+
+test("Zest().removeClass should be able to remove multiple classes", function() {
+    ok( Zest('span').removeClass('new-guy is-cool'),
+        "Zest().removeClass worked correctly." );
+
+    var $span = $('span');
+
+    equal(
+        $span.hasClass('new-guy'),
+        false,
+        "Zest().removeClass removed a class correctly." );
+
+    equal(
+        $span.hasClass('is-cool'),
+        false,
+        "Zest().removeClass removed a class correctly." );
+});
+},{}],3:[function(require,module,exports){
 /**
  * Pre Tests
  * Check to make sure jQuery and Zest are loaded
@@ -27,7 +113,7 @@ test("Zest is loaded", function() {
     equal( typeof Zest, "function",
         "Zest is a function." );
 });
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /**
  * Selector Parsing
  */
@@ -82,7 +168,7 @@ test("Zest('selector') should be grabbing the correct selectors", function() {
         "Zest's pseudo selector element is correct.");
 
 });
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * Test Setup
  */
