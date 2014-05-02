@@ -3,15 +3,26 @@ module.exports = function(grunt) {
     // Configuration goes here
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+
+        banner: '/*!\n' +
+        ' * Zest\n' +
+        ' * A light-weight DOM library\n' +
+        ' * v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+        ' * Copyright <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+        ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
+        ' */\n\n',
+
         concat: {
             options: {
-                separator: ';'
+              banner: '<%= banner %>',
+              separator: '\n\n',
             },
             dist: {
                 src: ['src/zest.js'],
                 dest: 'dist/zest.js'
             }
         },
+
         jshint: {
             files: ['src/**/*.js'],
             options: {
@@ -21,26 +32,29 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         qunit: {
             files: ['test/**/*.html']
         },
+
         uglify: {
             options: {
-                banner: '/**\n * Zest v<%= pkg.version %>\n * Copyright 2014. <%= pkg.author %>\n * <%= pkg.homepage %>\n' +
-        ' * <%= grunt.template.today("yyyy-mm-dd") %>\n */\n'
+                banner: '<%= banner %>'
             },
             script: {
                 files: {
-                    'dist/zest.min.js': ['zest.js']
+                    'dist/zest.min.js': ['src/zest.js']
                 }
             }
         },
+
         watch: {
             scripts: {
                 files: ['src/**/*.js'],
                 tasks: ['jshint', 'concat', 'uglify']
             }
         }
+
     });
 
     // Load plugins here
