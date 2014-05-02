@@ -21,41 +21,58 @@ test("jQuery is loaded", function() {
 });
 
 test("Zest is loaded", function() {
-    ok( zest,
-        "zest is defined." );
+    ok( Zest,
+        "Zest is defined." );
 
-    equal( typeof zest, "function",
-        "zest is a function." );
+    equal( typeof Zest, "function",
+        "Zest is a function." );
 });
 },{}],3:[function(require,module,exports){
 /**
  * Selector Parsing
  */
-test("zest('selector') should be grabbing the correct selectors", function() {
 
-    ok( zest('article'),
-        "zest() tag elector is working.");
+test("Zest('selector') should be an instance of Zest", function() {
 
-    equal( zest('article')._el[0], $('article')[0],
-        "zest's selector element is correct.");
+    // Zest() instanceof Zest
+    equal( Zest('span') instanceof Zest, true,
+        "Zest('selector') is an instanceof Zest" );
 
-    ok( zest('#post-1'),
-        "zest() #selector is working." );
+    // Z$ instanceof Zest
+    equal( Z$('span') instanceof Zest, true,
+        "Z$('selector') is an instanceof Zest" );
 
-    equal( zest('#post-1')._el[0], $('#post-1')[0],
-        "zest's #selector element is correct.");
+});
 
-    ok( zest('.spanzy'),
-        "zest() #selector is working." );
+test("Zest('selector') should be grabbing the correct selectors", function() {
 
-    equal( zest('.spanzy')._el[0], $('.spanzy')[0],
-        "zest's .selector element is correct.");
+    // Selectors by ID
+    ok( Zest('#post-1'),
+        "Zest() #selector is working." );
 
-    ok( zest('article span.spanzy'),
-        "zest() complex selector parsing is working." );
+    equal( Zest('#post-1')._el[0], $('#post-1')[0],
+        "Zest's #selector element is correct.");
 
-    equal( zest('article span.spanzy')._el[0], $('article span.spanzy')[0],
-        "zest's complex selector element is correct.");
+    // Selectors by className
+    ok( Zest('.spanzy'),
+        "Zest() #selector is working." );
+
+    equal( Zest('.spanzy')._el[0], $('.spanzy')[0],
+        "Zest's .selector element is correct.");
+
+    // Selectors by tagName
+    ok( Zest('article'),
+        "Zest() tag elector is working.");
+
+    equal( Zest('article')._el[0], $('article')[0],
+        "Zest's selector element is correct.");
+
+    // Selectors (complex) (example: #id div a.link-class)
+    ok( Zest('article span.spanzy'),
+        "Zest() complex selector parsing is working." );
+
+    equal( Zest('article span.spanzy')._el[0], $('article span.spanzy')[0],
+        "Zest's complex selector element is correct.");
 
 });
 },{}],4:[function(require,module,exports){
