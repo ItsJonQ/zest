@@ -2,6 +2,7 @@
  * Pre Tests
  * Check to make sure jQuery and Zest are loaded
  */
+
 test("jQuery is loaded", function() {
     ok( jQuery,
         "jQuery is defined." );

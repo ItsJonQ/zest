@@ -1,6 +1,7 @@
 /**
  * Test Setup
  */
+
 // Creating a test div
 var div = document.createElement('div');
 // Adding elements into the DIV

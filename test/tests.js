@@ -8,6 +8,7 @@ require('../units/selectors.js');
  * Pre Tests
  * Check to make sure jQuery and Zest are loaded
  */
+
 test("jQuery is loaded", function() {
     ok( jQuery,
         "jQuery is defined." );
@@ -36,6 +37,7 @@ test("Zest is loaded", function() {
 /**
  * Test Setup
  */
+
 // Creating a test div
 var div = document.createElement('div');
 // Adding elements into the DIV
