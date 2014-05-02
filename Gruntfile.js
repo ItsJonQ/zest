@@ -12,6 +12,14 @@ module.exports = function(grunt) {
         ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
         ' */\n\n',
 
+        browserify: {
+            tests: {
+                files: {
+                    'test/tests.js': ['test/build/**/*.js'],
+                }
+            }
+        },
+
         concat: {
             options: {
               banner: '<%= banner %>',
@@ -62,6 +70,7 @@ module.exports = function(grunt) {
     });
 
     // Load plugins here
+    grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -76,7 +85,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
 
     // Test
-    grunt.registerTask('test', ['qunit']);
+    grunt.registerTask('test', ['browserify:tests', 'qunit']);
 
     // Watch
     grunt.registerTask('spy', ['watch']);
