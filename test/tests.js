@@ -42,6 +42,11 @@ test("Zest().addClass should be able to add multiple classes", function() {
         "Zest().addClass added a new class correctly." );
 });
 
+test("Zest().addClass is chainable", function() {
+    ok( Zest('span').addClass('new-class').removeClass('new-class'),
+        "Zest().addClass chaining is working." );
+});
+
 
 // .hasClass
 test("Zest().rhasClass should be able detect classes", function() {
@@ -88,6 +93,13 @@ test("Zest().removeClass should be able to remove multiple classes", function() 
         $span.hasClass('is-cool'),
         false,
         "Zest().removeClass removed a class correctly." );
+});
+
+test("Zest().removeClass is chainable", function() {
+    ok( Zest('span').addClass('new-class-one new-class-two')
+        .removeClass('new-class-one')
+        .removeClass('new-class-two'),
+        "Zest().removeClass chaining is working." );
 });
 },{}],3:[function(require,module,exports){
 /**
