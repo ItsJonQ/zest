@@ -21,6 +21,9 @@ module.exports = function(grunt) {
                 }
             }
         },
+        qunit: {
+            files: ['test/**/*.html']
+        },
         uglify: {
             options: {
                 banner: '/**\n * Zest v<%= pkg.version %>\n * Copyright 2014. <%= pkg.author %>\n * <%= pkg.homepage %>\n' +
@@ -43,13 +46,21 @@ module.exports = function(grunt) {
     // Load plugins here
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
 
     // Define your tasks here
-    grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'watch']);
+    grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
 
+    // Build
     grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
+
+    // Test
+    grunt.registerTask('test', ['qunit']);
+
+    // Watch
+    grunt.registerTask('watch', ['watch']);
 
 };
