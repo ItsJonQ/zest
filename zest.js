@@ -179,6 +179,9 @@
 
     /**
      * _delegateEvent
+     *
+     * @private
+     *
      * This method helps delegate event callbacks for Zest.prototype.on. It initializes the callback if the event.target matches the selector
      *
      * UPDATE: This method is disabled for now. See Zest.prototype.on
@@ -211,6 +214,9 @@
     /**
      * _getEventTarget
      * Returns the event target. Uses srcElement as a fallback for IE
+     *
+     * @private
+     *
      * @param  { event } e [ the event ]
      * @return { DOM object }   [ the target]
      */
@@ -222,6 +228,9 @@
     /**
      * _getMatcher
      * Returns a element.matches method
+     *
+     * @private
+     *
      * @param  { DOM element } element  [ DOM node element ]
      * @return { method }               [ Return appropriate match method]
      *
@@ -257,6 +266,8 @@
      * _onChange
      * Fires whenever a bounded method is triggered
      *
+     * @private
+     *
      * @param  { string } [method] The name of the method
      * @return { object } Returns the Zest object
      */
@@ -278,7 +289,6 @@
 
         // Returning the Zest object
         return this;
-
     };
 
     /**
@@ -463,7 +473,7 @@
      *
      * 'addClass', 'addEvent', 'after', 'append', 'before', 'child',
      * 'children', 'clone', 'combine', 'each', 'empty', 'filter', 'find',
-     * 'first', 'hide', 'last', 'listen', 'parent', 'parents', 'prepend',
+     * 'first', 'hide', 'last', 'listen', 'on', parent', 'parents', 'prepend',
      * 'remove', 'removeAllEvents', 'removeAttribute', 'removeClass',
      * 'removeEvent', 'show', 'siblings', 'stopListening', 'style', 'toggle',
      * 'toggleClass', 'trigger'
@@ -476,9 +486,9 @@
      * within the DOM.
      *
      * 'clientRect', 'contains', el', 'els', 'firstEl', 'getAttribute',
-     * 'innerHTML', 'inViewport', 'is', 'hasClass', 'html', 'lastEl', 'next',
-     * 'nextEl', 'outerHTML', 'parentEl', 'parentsEl', 'previous',
-     * 'previousEl', 'setAttribute', 'scrollIntoView', 'text'
+     * 'innerHTML', 'inViewport', 'is', 'hasClass', 'html', 'lastEl',
+     * 'matches', 'next', 'nextEl', 'outerHTML', 'parentEl', 'parentsEl',
+     * 'previous', 'previousEl', 'setAttribute', 'scrollIntoView', 'text'
      *
      * ------------
      *
@@ -1262,6 +1272,27 @@
     };
 
     /**
+     * matches
+     * Returns a boolean based on whether a selector matches the first
+     * element in the Zest object
+     *
+     * @public
+     *
+     * @param  { string } selector [ the selector to check ]
+     * @return { boolean }         [ returning true/false depending on whether or not the selector matches]
+     */
+    Zest.prototype.matches = function(selector) {
+        // Return if string is invalid
+        if(!selector || typeof selector !== "string") {
+            return this;
+        }
+        // Defining the first element
+        var firstEl = this.firstEl();
+        // Return the matches result
+        return this._getMatcher(firstEl).call(firstEl, selector);
+    };
+
+    /**
      * next
      * Returning the next sibling element as a new Zest object
      *
@@ -1311,6 +1342,7 @@
      * @param  { function } callback [ The callback method for the event ]
      * @return { object }            [ Returns the Zest object]
      */
+
     // Zest.prototype.on = function(events, selector, callback) {
     //     var self = this;
 
