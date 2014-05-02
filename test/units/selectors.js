@@ -44,4 +44,11 @@ test("Zest('selector') should be grabbing the correct selectors", function() {
     equal( Zest('article span.spanzy')._el[0], $('article span.spanzy')[0],
         "Zest's complex selector element is correct.");
 
+    // Selectors with pseudo (example: .class:not(.another-class))
+    ok( Zest('span:not(.inactive)'),
+        "Zest() with pseudo selectors is working." );
+
+    equal( Zest('span:not(.inactive)')._el[0], $('span:not(.inactive)')[0],
+        "Zest's pseudo selector element is correct.");
+
 });
