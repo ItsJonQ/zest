@@ -75,6 +75,6 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['qunit']);
 
     // Watch
-    grunt.registerTask('watch', ['watch']);
+    grunt.registerTask('spy', ['watch']);
 
 };
