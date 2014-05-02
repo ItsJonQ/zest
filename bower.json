@@ -2,10 +2,13 @@
   "name": "zest",
   "main": "dist/zest.js",
   "version": "0.0.1",
-  "homepage": "https://github.com/ItsJonQ/Zest",
+  "homepage": "https://github.com/ItsJonQ/zest",
   "authors": [
     "ItsJonQ <itsjonq@gmail.com>"
   ],
+  "keywords": [
+    "zest, zestjs, javascript, jquery, alternative, DOM, fast"
+  ]
   "license": "MIT",
   "private": true,
   "ignore": [
