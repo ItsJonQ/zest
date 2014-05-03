@@ -142,6 +142,7 @@
         // Defining Zest's _el (elements)
         if(typeof selector === "string") {
             // Construct the Zest object with the defined selector
+            this.selector = selector;
             this._el = this._parseSelector(selector);
             this.length = this._el.length;
             return this;
@@ -149,6 +150,7 @@
         // Check to see if the selector is an instance of Zest
         if(selector instanceof Zest) {
             // Get the els from the Zest object
+            this.selector = selector.selector;
             this._el = [selector.els()];
             this.length = this._el.length;
             return this;

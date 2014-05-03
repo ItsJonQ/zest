@@ -311,4 +311,19 @@ test("Zest().find() should be able to locate selectors within", function() {
     equal( elFind instanceof Zest, true,
         ".find() should return a Zest object." );
 
+    equal( Zest('article span').length, elFind.length,
+        ".find() works as expected.");
+
+    ok( elFind.length,
+        ".find() should have a length attribute." );
+
+    ok( elFind.selector,
+        ".find() should have a selector attribute." );
+
+    equal( elFind.selector.indexOf(el.selector) >= 0, true,
+        ".find().selector contain the selector of the parent.");
+
+    equal( elFind.selector === el.selector, false,
+        ".find().selector should not be the same as the parent's.");
+
 });
