@@ -511,7 +511,7 @@ test("Zest().nextEl() should return the next element as a web node", function() 
 
 // parent
 test("Zest().parent() should return the first parent as a Zest object", function() {
-    // expect(6);
+    expect(8);
 
     el = Zest('span');
     var elParent = el.parent();
@@ -522,4 +522,21 @@ test("Zest().parent() should return the first parent as a Zest object", function
     equal( elParent instanceof Zest, true,
         ".parent() should return a Zest object." );
 
+    ok( elParent.length,
+        ".parent() should have a length attribute." );
+
+    equal( elParent.length, 1,
+        ".parent() length should only be 1.");
+
+    ok( elParent.selector,
+        ".parent() should have a selector attribute." );
+
+    equal( elParent.selector === el.selector, false,
+        ".parent().selector should not be the same as the child's.");
+
+    equal( elParent._el[0], el._el[0].parentNode,
+        ".parent() should contain the parent node.");
+
+    ok( elParent.addClass('new-class').removeClass('new-class'),
+        ".next() should be chainable." );
 });
