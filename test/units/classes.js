@@ -2,36 +2,35 @@
  * Classes
  */
 
+var span;
+
+module("Class Methods", {
+    setup: function() {
+        span = Zest('span');
+    },
+    teardown: function() {
+        span.setAttribute('class', '');
+    }
+});
+
 // .addClass
 test("Zest().addClass should be able to add a single class", function() {
-    ok( Zest('span').addClass('new-guy'),
+    ok( span.addClass('new-guy'),
         "Zest().addClass worked correctly." );
 
     equal(
-        $('span').hasClass('new-guy'),
-        true,
+        span.getAttribute('class'),
+        'new-guy',
         "Zest().addClass added a new class correctly." );
 });
 
 test("Zest().addClass should be able to add multiple classes", function() {
-    ok( Zest('span').addClass('the new-guy is-cool'),
+    ok( span.addClass('new-guy is-cool very-cool'),
         "Zest().addClass worked correctly." );
 
-    var $span = $('span');
-
     equal(
-        $span.hasClass('the'),
-        true,
-        "Zest().addClass added a new class correctly." );
-
-    equal(
-        $span.hasClass('new-guy'),
-        true,
-        "Zest().addClass added a new class correctly." );
-
-    equal(
-        $span.hasClass('is-cool'),
-        true,
+        span.getAttribute('class'),
+        'new-guy is-cool very-cool',
         "Zest().addClass added a new class correctly." );
 });
 

@@ -28,6 +28,15 @@ module.exports = function(grunt) {
             dist: {
                 src: ['src/zest.js'],
                 dest: 'dist/zest.js'
+            },
+            tests: {
+                src: [
+                    'test/units/setup.js',
+                    'test/units/pretest.js',
+                    'test/units/selectors.js',
+                    'test/units/classes.js'
+                ],
+                dest: 'test/tests.js'
             }
         },
 
@@ -63,14 +72,14 @@ module.exports = function(grunt) {
             },
             tests: {
                 files: ['test/**/*.js'],
-                tasks: ['browserify:tests', 'qunit']
+                tasks: ['concat:tests', 'qunit']
             }
         }
 
     });
 
     // Load plugins here
-    grunt.loadNpmTasks('grunt-browserify');
+    // grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -85,7 +94,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
 
     // Test
-    grunt.registerTask('test', ['browserify:tests', 'qunit']);
+    grunt.registerTask('test', ['concat:tests', 'qunit']);
 
     // Watch
     grunt.registerTask('spy', ['watch']);
