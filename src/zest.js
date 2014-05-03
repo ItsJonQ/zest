@@ -170,24 +170,28 @@
                     els.push(selector[i]);
                 }
             }
+            this._setSelector(selector);
             this._el = els;
             this.length = this._el.length;
             return this;
         }
         // Check to see if the selector is an nodeList
         if(selector instanceof NodeList) {
+            this._setSelector(selector);
             this._el = this._toArray.call(selector);
             this.length = this._el.length;
             return this;
         }
         // Check to see if the selector is an individual element
         if(selector instanceof HTMLElement || selector instanceof Node) {
+            this._setSelector(selector);
             this._el = [selector];
             this.length = this._el.length;
             return this;
         }
         // Check to see if the selector is an HTML collection
         if(selector instanceof HTMLCollection) {
+            this._setSelector(selector);
             this._el = this._toArray.call(selector);
             this.length = this._el.length;
             return this;
@@ -451,6 +455,14 @@
     Zest.prototype._setSelector = function(target) {
         var selector = "";
 
+        if(typeof target === "string") {
+            // Set the selector
+            this.selector = target;
+
+            // Returning the Zest object
+            return this;
+        }
+
         // If target is a Zest object
         if(target instanceof Zest) {
             // Define target with the first element from the Zest object
@@ -458,14 +470,32 @@
         }
 
         // If target is a nodelist
-        if(target instanceof NodeList) {
+        if(target instanceof NodeList && target[0]) {
+            // Define target with the first element from the nodeList
+            target = target[0];
+        }
 
+        // If target is an array
+        if(target instanceof Array) {
+            var arr = target;
+            // Defining variables for loop
+            var i = 0;
+            var len = arr.length;
+            // Loop through the elements
+            for( ; i < len; i++) {
+                // If the selector is a node object
+                if(arr[i].nodeType === 1) {
+                    // Set it as target, and break the loop
+                    target = arr[i];
+                    break;
+                }
+            }
         }
 
         // If target is a DOM element
         if(target.tagName && (target.className !== undefined)) {
+            // Define classes from className
             var classes = target.className;
-
             // Start off the selector with the tagName
             selector = target.tagName.toLowerCase();
             // If target has classes
@@ -474,7 +504,6 @@
                 // Add it to selector with a "." before the className
                 selector += "." + classes.split(" ")[0];
             }
-
         }
         // Set the selector
         this.selector = selector;
