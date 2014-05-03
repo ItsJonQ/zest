@@ -57,7 +57,7 @@
      * @category util
      *
      * @param { string } [ selector ] Selector to retrieve from the DOM
-     * @returns { object } Returns the Zest object class
+     * @returns { object } Returns the Zest object
      */
     var init = Zest.fn.init = function(selector) {
         // Return false if selector is not defined
@@ -75,7 +75,90 @@
     // Passing the Zest prototypes into init
     init.prototype = Zest.fn;
 
+    /**
+     * create
+     * Creates a DOM element and returns it as a Zest object
+     *
+     * @category util
+     *
+     * @param { string } [ tagName ] TagName of selectors
+     * @returns { object } Returns a Zest object
+     */
+    Zest.create = function(options) {
+        // Return if arguments are not supplied
+        if(!options) {
+            return false;
+        }
 
+        // Defining the els
+        var els = [];
+        // Defining variables for the loop
+        var i = 0;
+        var len;
+
+        // If options is a string
+        if(typeof options === "string") {
+            // Slicing arguments into workable array
+            var args = options.split(" ");
+
+            // Defining variables for the loop
+            i = 0;
+            len = args.length;
+            // Looping through the arguments
+            for( ; i < len; i++) {
+                // Create the element based off the tagName
+                // Push it to els array
+                els.push(document.createElement(args[i]));
+            }
+        }
+
+        // If options is an object
+        if(typeof options === "object" && options.tagName) {
+            // Defining the options and the defaults
+            var tagName = options.tagName ? options.tagName : "div";
+            var quantity = options.quantity ? options.quantity : 1;
+            var className = options.className ? options.className : false;
+            var id = options.id ? options.id : false;
+
+            // Provide the option to set quantity using options.length
+            if(options.length) {
+                quantity = options.length;
+            }
+
+            // Ensure that the quantity is a number
+            if(typeof quantity !== "number") {
+                quantity = 1;
+            }
+
+
+            // Defining the variables for the loop
+            i = 0;
+            len = quantity;
+            // Looping through to create elements
+            for( ; i < len; i++) {
+                // Creating the el
+                var el = document.createElement(tagName);
+                // Set the className
+                if(className) {
+                    el.className = className;
+                }
+                // Set the ID
+                if(id) {
+                    el.id = id;
+                }
+                // Push it to els array
+                els.push(el);
+            }
+        }
+
+        // Return Zest object if els array has elements in it
+        if(els.length > 0) {
+            // Return the Zest object with the newly created elements
+            return Z$(els);
+        } else {
+            return false;
+        }
+    };
 
     /**
      * _addClass
@@ -105,7 +188,7 @@
         } else {
             // Use the classList concat method
             fn = function(c) {
-                self.className += ' ' + c;
+                self.className += " " + c;
             };
         }
 
