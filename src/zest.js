@@ -111,6 +111,8 @@
             var quantity = options.quantity ? options.quantity : 1;
             var className = options.className ? options.className : false;
             var id = options.id ? options.id : false;
+            var startId = options.startId ? options.startId : 1;
+            var uniqueId = options.uniqueId ? options.uniqueId : true;
 
             // Provide the option to set quantity using options.length
             if(options.length) {
@@ -136,7 +138,11 @@
                 }
                 // Set the ID
                 if(id) {
-                    el.id = id;
+                    if(len > 1 && uniqueId) {
+                        el.id = id + "-" + (startId + i);
+                    } else {
+                        el.id = id;
+                    }
                 }
                 // Push it to els array
                 els.push(el);
