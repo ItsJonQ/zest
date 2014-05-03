@@ -538,5 +538,38 @@ test("Zest().parent() should return the first parent as a Zest object", function
         ".parent() should contain the parent node.");
 
     ok( elParent.addClass('new-class').removeClass('new-class'),
-        ".next() should be chainable." );
+        ".parents() should be chainable." );
+});
+
+
+// parents
+test("Zest().parents() should return all the parents as a Zest object", function() {
+    expect(8);
+
+    el = Zest('span');
+    var elParent = el.parents();
+
+    ok( elParent,
+        ".parents() method is working." );
+
+    equal( elParent instanceof Zest, true,
+        ".parents() should return a Zest object." );
+
+    ok( elParent.length,
+        ".parents() should have a length attribute." );
+
+    equal( elParent.length > 1, true,
+        ".parents() length should be more than 1.");
+
+    ok( elParent.selector,
+        ".parents() should have a selector attribute." );
+
+    equal( elParent.selector === el.selector, false,
+        ".parents().selector should not be the same as the child's.");
+
+    equal( elParent._el[0], el._el[0].parentNode,
+        ".parents() should contain the parent node.");
+
+    ok( elParent.addClass('new-class').removeClass('new-class'),
+        ".parents() should be chainable." );
 });
