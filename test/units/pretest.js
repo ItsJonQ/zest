@@ -3,6 +3,8 @@
  * Check to make sure jQuery and Zest are loaded
  */
 
+module("Setup");
+
 test("jQuery is loaded", function() {
     expect(3);
 

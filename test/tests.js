@@ -11,6 +11,8 @@
  * Check to make sure jQuery and Zest are loaded
  */
 
+module("Setup");
+
 test("jQuery is loaded", function() {
     expect(3);
 
@@ -40,6 +42,8 @@ test("Zest is loaded", function() {
 /**
  * Selector Parsing
  */
+
+module("Selector");
 
 test("Zest('selector') should be an instance of Zest", function() {
     expect(2);

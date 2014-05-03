@@ -2,6 +2,8 @@
  * Selector Parsing
  */
 
+module("Selector");
+
 test("Zest('selector') should be an instance of Zest", function() {
     expect(2);
 
