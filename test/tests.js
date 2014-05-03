@@ -464,4 +464,7 @@ test("Zest().next() should return the next sibling as a Zest object", function()
     el = Zest('span');
     var elNext = el.next();
 
+    ok( elNext,
+        ".next() method is working." );
+
 });
