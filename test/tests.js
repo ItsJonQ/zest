@@ -259,7 +259,7 @@ test("Zest().child() should be able to locate the first child", function() {
         ".child().selector should not be the same as the parent's.");
 
     ok( child.addClass('new-class').removeClass('new-class'),
-        ".child() is chainable." );
+        ".child() should be chainable." );
 });
 
 
@@ -295,12 +295,13 @@ test("Zest().children() should be able to locate the all child nodes", function(
         ".children().selector should not be the same as the parent's.");
 
     ok( children.addClass('new-class').removeClass('new-class'),
-        ".children() is chainable." );
+        ".children() should be chainable." );
 });
 
 
 // .find
 test("Zest().find() should be able to locate selectors within", function() {
+    expect(10);
 
     el = Zest('article');
     var elFind = el.find('span');
@@ -314,6 +315,12 @@ test("Zest().find() should be able to locate selectors within", function() {
     equal( Zest('article span').length, elFind.length,
         ".find() works as expected.");
 
+    equal( elFind.find('.fake-selector')._el.length, 0,
+        ".find()._el should be empty if nothing is found.");
+
+    equal( elFind.find('.fake-selector').length, 0,
+        ".find().length should be zero if nothing is found.");
+
     ok( elFind.length,
         ".find() should have a length attribute." );
 
@@ -325,5 +332,8 @@ test("Zest().find() should be able to locate selectors within", function() {
 
     equal( elFind.selector === el.selector, false,
         ".find().selector should not be the same as the parent's.");
+
+    ok( elFind.addClass('new-class').removeClass('new-class'),
+        ".find() should be chainable." );
 
 });
