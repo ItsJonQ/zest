@@ -371,5 +371,31 @@ test("Zest().find() should be able to locate selectors within", function() {
 
     ok( elFind.addClass('new-class').removeClass('new-class'),
         ".find() should be chainable." );
+});
 
+
+// .first
+test("Zest().first() should return the first element as a Zest object", function() {
+    expect(6);
+
+    el = Zest('span');
+    var elFirst = el.first();
+
+    ok( elFirst,
+        ".first() method is working." );
+
+    equal( elFirst instanceof Zest, true,
+        ".first() should return a Zest object." );
+
+    ok( elFirst.length,
+        ".first() should have a length attribute." );
+
+    ok( elFirst.selector,
+        ".first() should have a selector attribute." );
+
+    equal( elFirst._el[0], el._el[0],
+        ".first() should contain the first element.");
+
+    ok( elFirst.addClass('new-class').removeClass('new-class'),
+        ".first() should be chainable." );
 });
