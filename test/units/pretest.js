@@ -4,6 +4,8 @@
  */
 
 test("jQuery is loaded", function() {
+    expect(3);
+
     ok( jQuery,
         "jQuery is defined." );
 
@@ -15,8 +17,13 @@ test("jQuery is loaded", function() {
 });
 
 test("Zest is loaded", function() {
+    expect(3);
+
     ok( Zest,
         "Zest is defined." );
+
+    ok( Z$,
+        "Z$ is defined." );
 
     equal( typeof Zest, "function",
         "Zest is a function." );

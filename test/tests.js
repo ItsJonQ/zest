@@ -7,16 +7,13 @@
  */
 
 /**
- * Test Setup
- */
-
-
-/**
  * Pre Tests
  * Check to make sure jQuery and Zest are loaded
  */
 
 test("jQuery is loaded", function() {
+    expect(3);
+
     ok( jQuery,
         "jQuery is defined." );
 
@@ -28,8 +25,13 @@ test("jQuery is loaded", function() {
 });
 
 test("Zest is loaded", function() {
+    expect(3);
+
     ok( Zest,
         "Zest is defined." );
+
+    ok( Z$,
+        "Z$ is defined." );
 
     equal( typeof Zest, "function",
         "Zest is a function." );
@@ -40,6 +42,7 @@ test("Zest is loaded", function() {
  */
 
 test("Zest('selector') should be an instance of Zest", function() {
+    expect(2);
 
     // Zest() instanceof Zest
     equal( Zest('span') instanceof Zest, true,
@@ -52,40 +55,47 @@ test("Zest('selector') should be an instance of Zest", function() {
 });
 
 test("Zest('selector') should be grabbing the correct selectors", function() {
+    expect(10);
+
+    var byId = Zest('#post-1');
+    var byClass = Zest('.spanzy');
+    var bytagName = Zest('article');
+    var byQuery = Zest('article span.spanzy');
+    var byPseudo = Zest('span:not(.inactive)');
 
     // Selectors by ID
-    ok( Zest('#post-1'),
+    ok( byId,
         "Zest() #selector is working." );
 
-    equal( Zest('#post-1')._el[0], $('#post-1')[0],
+    equal( byId._el[0], $('#post-1')[0],
         "Zest's #selector element is correct.");
 
     // Selectors by className
-    ok( Zest('.spanzy'),
+    ok( byClass,
         "Zest() #selector is working." );
 
-    equal( Zest('.spanzy')._el[0], $('.spanzy')[0],
+    equal( byClass._el[0], $('.spanzy')[0],
         "Zest's .selector element is correct.");
 
     // Selectors by tagName
-    ok( Zest('article'),
+    ok( bytagName,
         "Zest() tag elector is working.");
 
-    equal( Zest('article')._el[0], $('article')[0],
+    equal( bytagName._el[0], $('article')[0],
         "Zest's selector element is correct.");
 
     // Selectors (complex) (example: #id div a.link-class)
-    ok( Zest('article span.spanzy'),
+    ok( byQuery,
         "Zest() complex selector parsing is working." );
 
-    equal( Zest('article span.spanzy')._el[0], $('article span.spanzy')[0],
+    equal( byQuery._el[0], $('article span.spanzy')[0],
         "Zest's complex selector element is correct.");
 
     // Selectors with pseudo (example: .class:not(.another-class))
-    ok( Zest('span:not(.inactive)'),
+    ok( byPseudo,
         "Zest() with pseudo selectors is working." );
 
-    equal( Zest('span:not(.inactive)')._el[0], $('span:not(.inactive)')[0],
+    equal( byPseudo._el[0], $('span:not(.inactive)')[0],
         "Zest's pseudo selector element is correct.");
 
 });
@@ -107,6 +117,8 @@ module("Class Methods", {
 
 // .addClass
 test("Zest().addClass should be able to add a single class", function() {
+    expect(2);
+
     ok( span.addClass('new-guy'),
         "Zest().addClass worked correctly." );
 
@@ -117,6 +129,8 @@ test("Zest().addClass should be able to add a single class", function() {
 });
 
 test("Zest().addClass should be able to add multiple classes", function() {
+    expect(2);
+
     ok( span.addClass('new-guy is-cool very-cool'),
         "Zest().addClass worked correctly." );
 
@@ -127,25 +141,31 @@ test("Zest().addClass should be able to add multiple classes", function() {
 });
 
 test("Zest().addClass is chainable", function() {
-    ok( Zest('span').addClass('new-class').removeClass('new-class'),
+    expect(1);
+
+    ok( span.addClass('new-class')
+        .removeClass('new-class'),
         "Zest().addClass chaining is working." );
 });
 
 
 // .hasClass
 test("Zest().rhasClass should be able detect classes", function() {
-    ok( Zest('span').hasClass('new-guy'),
+    expect(3);
+
+    // Adding a test class to the span to check for hasClass
+    span.addClass('new-guy');
+
+    ok( span.hasClass('new-guy'),
         "Zest().hasClass worked correctly." );
 
-    var $span = $('span');
-
     equal(
-        $span.hasClass('new-guy'),
+        span.hasClass('new-guy'),
         true,
         "Zest().hasClass can detect a class correctly." );
 
     equal(
-        $span.hasClass('fake-guy'),
+        span.hasClass('fake-guy'),
         false,
         "Zest().hasClass can detect a class is not present correctly." );
 });
@@ -153,34 +173,43 @@ test("Zest().rhasClass should be able detect classes", function() {
 
 // .removeClass
 test("Zest().removeClass should be able to remove a single class", function() {
-    ok( Zest('span').removeClass('the'),
+    expect(2);
+
+    // Adding a test class to the span to test for removeClass
+    span.addClass('the new-guy too-cool');
+
+    ok( span.removeClass('the'),
         "Zest().removeClass worked correctly." );
 
     equal(
-        $('span').hasClass('the'),
+        span.hasClass('the'),
         false,
         "Zest().removeClass removed a class correctly." );
 });
 
 test("Zest().removeClass should be able to remove multiple classes", function() {
-    ok( Zest('span').removeClass('new-guy is-cool'),
-        "Zest().removeClass worked correctly." );
+    expect(2);
 
-    var $span = $('span');
+    // Adding a test class to the span to test for removeClass
+    span.addClass('new-guy too-cool');
+    span.removeClass('new-guy too-cool');
 
     equal(
-        $span.hasClass('new-guy'),
+        span.hasClass('new-guy'),
         false,
         "Zest().removeClass removed a class correctly." );
 
     equal(
-        $span.hasClass('is-cool'),
+        span.hasClass('too-cool'),
         false,
         "Zest().removeClass removed a class correctly." );
 });
 
 test("Zest().removeClass is chainable", function() {
-    ok( Zest('span').addClass('new-class-one new-class-two')
+    expect(1);
+
+    ok( span
+        .addClass('new-class-one new-class-two')
         .removeClass('new-class-one')
         .removeClass('new-class-two'),
         "Zest().removeClass chaining is working." );
