@@ -155,7 +155,7 @@ test("Zest().find() should be able to locate selectors within", function() {
 
 // .first
 test("Zest().first() should return the first element as a Zest object", function() {
-    expect(6);
+    expect(8);
 
     el = Zest('span');
     var elFirst = el.first();
@@ -172,9 +172,48 @@ test("Zest().first() should return the first element as a Zest object", function
     ok( elFirst.selector,
         ".first() should have a selector attribute." );
 
+    equal( elFirst._el.length, 1,
+        ".first() only contain 1 element." );
+
+    equal( elFirst.selector === el.selector, true,
+        ".first().selector should be the same as the original's.");
+
     equal( elFirst._el[0], el._el[0],
         ".first() should contain the first element.");
 
     ok( elFirst.addClass('new-class').removeClass('new-class'),
         ".first() should be chainable." );
+});
+
+
+// .last
+test("Zest().last() should return the last element as a Zest object", function() {
+    expect(8);
+
+    el = Zest('span');
+    var elLast = el.last();
+
+    ok( elLast,
+        ".last() method is working." );
+
+    equal( elLast instanceof Zest, true,
+        ".last() should return a Zest object." );
+
+    ok( elLast.length,
+        ".last() should have a length attribute." );
+
+    ok( elLast.selector,
+        ".last() should have a selector attribute." );
+
+    equal( elLast._el.length, 1,
+        ".last() only contain 1 element." );
+
+    equal( elLast.selector === el.selector, true,
+        ".last().selector should be the same as the original's.");
+
+    equal( elLast._el[this.length - 1], el._el[this.length - 1],
+        ".last() should contain the last element.");
+
+    ok( elLast.addClass('new-class').removeClass('new-class'),
+        ".last() should be chainable." );
 });
