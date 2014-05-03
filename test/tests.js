@@ -438,3 +438,21 @@ test("Zest().last() should return the last element as a Zest object", function()
     ok( elLast.addClass('new-class').removeClass('new-class'),
         ".last() should be chainable." );
 });
+
+
+// .lastEl
+test("Zest().lastEl() should return the last element as a web node", function() {
+    expect(3);
+
+    el = Zest('span');
+    var elLast = el.lastEl();
+
+    ok( elLast,
+        ".lastEl() method is working." );
+
+    equal( elLast instanceof Zest, false,
+        ".lastEl() should not return a Zest object." );
+
+    equal( elLast, el._el[el.length - 1],
+        ".lastEl() should contain the last element.");
+});
