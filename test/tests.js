@@ -507,3 +507,15 @@ test("Zest().nextEl() should return the next element as a web node", function() 
     equal( elNext, el._el[0].nextElementSibling,
         ".nextEl() should contain the next node element.");
 });
+
+
+// parent
+test("Zest().parent() should return the first parent as a Zest object", function() {
+
+    el = Zest('span');
+    var elParent = el.parent();
+
+    ok( elParent,
+        ".parent() method is working." );
+
+});
