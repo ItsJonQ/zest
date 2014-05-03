@@ -433,8 +433,53 @@
     };
 
     /**
+     * _setSelector
+     * Private method that sets the selector attribute for the Zest
+     * object. If a string selector is not provided, this method should
+     * create one based on DOM element className and tagName.
+     *
+     * @private
+     *
+     * @return { object } Returns Zest object
+     */
+    Zest.prototype._setSelector = function(target) {
+        var selector = "";
+
+        // If target is a Zest object
+        if(target instanceof Zest) {
+            // Define target with the first element from the Zest object
+            target = target.firstEl();
+        }
+
+        // If target is an array or nodeList
+        if(target instanceof Array) {
+
+        }
+
+        // If target is a DOM element
+        if(target.tagName && (target.className !== undefined)) {
+            var classes = target.className;
+
+            // Start off the selector with the tagName
+            selector = target.tagName.toLowerCase();
+            // If target has classes
+            if(classes !== "") {
+                // Split the classes based on spacing, and use the first class
+                // Add it to selector with a "." before the className
+                selector += "." + classes.split(" ")[0];
+            }
+
+        }
+        // Set the selector
+        this.selector = selector;
+
+        // Returning the Zest object
+        return this;
+    };
+
+    /**
      * _toArray
-     * @Private method to convert a nodeList into an array
+     * Private method to convert a nodeList into an array
      *
      * @private
      *
