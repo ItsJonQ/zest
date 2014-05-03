@@ -1340,7 +1340,7 @@
     };
 
     /**
-     * next
+     * nextEl
      * Returning the next sibling element
      *
      * @public

@@ -235,3 +235,12 @@ test("Zest().lastEl() should return the last element as a web node", function() 
     equal( elLast, el._el[el.length - 1],
         ".lastEl() should contain the last element.");
 });
+
+
+// .next()
+test("Zest().next() should return the next sibling as a Zest object", function() {
+
+    el = Zest('span');
+    var elNext = el.next();
+
+});
