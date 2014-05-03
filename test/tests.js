@@ -299,6 +299,24 @@ test("Zest().children() should be able to locate the all child nodes", function(
 });
 
 
+// .el
+test("Zest().el should return the first element in the _el array", function() {
+    expect(3);
+
+    el = Zest('span');
+    var firstEl = el.el();
+
+    ok( firstEl,
+        ".el() is working." );
+
+    equal( firstEl instanceof Zest, false,
+        ".el() should not be an instance of Zest." );
+
+    equal( firstEl, el._el[0],
+        ".el() should be the first DOM element in the _el array." );
+});
+
+
 // .find
 test("Zest().find() should be able to locate selectors within", function() {
     expect(10);
