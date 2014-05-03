@@ -61,7 +61,7 @@ test("Zest().child should be able to locate the all child nodes", function() {
         ".children() object should have a .length attribute.");
 
     equal( children.length > 1, true,
-        ".children() length should only mroe than 1." );
+        ".children() length should only more than 1." );
 
     ok( children.selector,
         ".children() object should have a .selector attribute.");
