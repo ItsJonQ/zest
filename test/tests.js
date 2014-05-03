@@ -460,6 +460,7 @@ test("Zest().lastEl() should return the last element as a web node", function() 
 
 // .next()
 test("Zest().next() should return the next sibling as a Zest object", function() {
+    expect(8);
 
     el = Zest('span');
     var elNext = el.next();
@@ -467,4 +468,24 @@ test("Zest().next() should return the next sibling as a Zest object", function()
     ok( elNext,
         ".next() method is working." );
 
+    equal( elNext instanceof Zest, true,
+        ".next() should return a Zest object." );
+
+    ok( elNext.length,
+        ".next() should have a length attribute." );
+
+    ok( elNext.selector,
+        ".next() should have a selector attribute." );
+
+    equal( elNext._el.length, 1,
+        ".next() only contain 1 element." );
+
+    equal( elNext.selector === el.selector, true,
+        ".next().selector should be the same as the original's.");
+
+    equal( elNext._el[0], el._el[0].nextElementSibling,
+        ".next() should contain the next node element.");
+
+    ok( elNext.addClass('new-class').removeClass('new-class'),
+        ".next() should be chainable." );
 });
