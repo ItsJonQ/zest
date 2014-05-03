@@ -174,8 +174,14 @@
             this.length = this._el.length;
             return this;
         }
+        // Check to see if the selector is an nodeList
+        if(selector instanceof NodeList) {
+            this._el = this._toArray.call(selector);
+            this.length = this._el.length;
+            return this;
+        }
         // Check to see if the selector is an individual element
-        if( selector instanceof HTMLElement || selector instanceof Node) {
+        if(selector instanceof HTMLElement || selector instanceof Node) {
             this._el = [selector];
             this.length = this._el.length;
             return this;
@@ -451,8 +457,8 @@
             target = target.firstEl();
         }
 
-        // If target is an array or nodeList
-        if(target instanceof Array) {
+        // If target is a nodelist
+        if(target instanceof NodeList) {
 
         }
 
