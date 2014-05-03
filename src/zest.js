@@ -1411,7 +1411,7 @@
     };
 
     /**
-     * parentEl
+     * parent
      * Returning the parent node of the first Element as a new Zest object
      *
      * @public
