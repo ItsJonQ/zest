@@ -110,7 +110,7 @@ test("Zest('selector') should be grabbing the correct selectors", function() {
 
 var span;
 
-module("Class Methods", {
+module("Class", {
     setup: function() {
         span = Zest('span');
     },
@@ -225,7 +225,7 @@ test("Zest().removeClass is chainable", function() {
 
 var el;
 
-module("Transversing Methods");
+module("Transversing");
 
 // .child
 test("Zest().child() should be able to locate the first child", function() {
@@ -301,6 +301,24 @@ test("Zest().children() should be able to locate the all child nodes", function(
 
 // .el
 test("Zest().el should return the first element in the _el array", function() {
+    expect(3);
+
+    el = Zest('span');
+    var firstEl = el.el();
+
+    ok( firstEl,
+        ".el() is working." );
+
+    equal( firstEl instanceof Zest, false,
+        ".el() should not be an instance of Zest." );
+
+    equal( firstEl, el._el[0],
+        ".el() should be the first DOM element in the _el array." );
+});
+
+
+// .els
+test("Zest().els should return the elements in the _el array", function() {
     expect(3);
 
     el = Zest('span');

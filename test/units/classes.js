@@ -4,7 +4,7 @@
 
 var span;
 
-module("Class Methods", {
+module("Class", {
     setup: function() {
         span = Zest('span');
     },
