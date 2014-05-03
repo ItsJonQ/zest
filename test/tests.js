@@ -229,7 +229,7 @@ module("Transversing Methods");
 
 // .child
 test("Zest().child should be able to locate the first child", function() {
-    expect(6);
+    expect(7);
 
     el = Zest('article');
     var child = el.child();
@@ -251,5 +251,8 @@ test("Zest().child should be able to locate the first child", function() {
 
     equal( el.selector === child.selector, false,
         ".child().selector should not be the same as the parent's.");
+
+    ok( child.addClass('new-class').removeClass('new-class'),
+        ".child() is chainable." );
 
 });
