@@ -228,7 +228,7 @@ var el;
 module("Transversing Methods");
 
 // .child
-test("Zest().child should be able to locate the first child", function() {
+test("Zest().child() should be able to locate the first child", function() {
     expect(9);
 
     el = Zest('article');
@@ -262,8 +262,9 @@ test("Zest().child should be able to locate the first child", function() {
         ".child() is chainable." );
 });
 
+
 // .children
-test("Zest().child should be able to locate the all child nodes", function() {
+test("Zest().children() should be able to locate the all child nodes", function() {
     expect(9);
 
     el = Zest('article');
@@ -295,5 +296,19 @@ test("Zest().child should be able to locate the all child nodes", function() {
 
     ok( children.addClass('new-class').removeClass('new-class'),
         ".children() is chainable." );
+});
+
+
+// .find
+test("Zest().find() should be able to locate selectors within", function() {
+
+    el = Zest('article');
+    var elFind = el.find('span');
+
+    ok( elFind,
+        ".find() method is working." );
+
+    equal( elFind instanceof Zest, true,
+        ".find() should return a Zest object." );
 
 });
