@@ -268,3 +268,21 @@ test("Zest().next() should return the next sibling as a Zest object", function()
     ok( elNext.addClass('new-class').removeClass('new-class'),
         ".next() should be chainable." );
 });
+
+
+// .nextEl
+test("Zest().nextEl() should return the next element as a web node", function() {
+    expect(3);
+
+    el = Zest('span');
+    var elNext = el.nextEl();
+
+    ok( elNext,
+        ".nextEl() method is working." );
+
+    equal( elNext instanceof Zest, false,
+        ".nextEl() should not return a Zest object." );
+
+    equal( elNext, el._el[0].nextElementSibling,
+        ".nextEl() should contain the next node element.");
+});
