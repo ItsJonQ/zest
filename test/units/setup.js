@@ -1,6 +1,6 @@
 /**
  * Pre Tests
- * Check to make sure jQuery and Zest are loaded
+ * Check to make sure jQuery is loaded
  */
 
 module("Setup");
@@ -16,17 +16,4 @@ test("jQuery is loaded", function() {
 
     equal( typeof jQuery, "function",
         "jQuery is a function." );
-});
-
-test("Zest is loaded", function() {
-    expect(3);
-
-    ok( Zest,
-        "Zest is defined." );
-
-    ok( Z$,
-        "Z$ is defined." );
-
-    equal( typeof Zest, "function",
-        "Zest is a function." );
 });
