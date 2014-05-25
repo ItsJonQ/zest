@@ -13,16 +13,4 @@
       return false;
   }
 
-  /**
-   * $.combine
-   * This method allows you to combine multiple jQuery objects into a
-   * single jQuery object
-   */
-
-  var combine = function() {
-
-  };
-
-  $.combine = combine;
-
 })(jQuery);
