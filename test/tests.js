@@ -25,3 +25,17 @@ test("jQuery is loaded", function() {
     equal( typeof jQuery, "function",
         "jQuery is a function." );
 });
+
+/**
+ * Combine
+ * Tests for the $.combine method
+ */
+
+module("$.combine");
+
+test("$.combine is working", function() {
+
+  ok( $.combine,
+      "$.combine is defined" );
+
+});

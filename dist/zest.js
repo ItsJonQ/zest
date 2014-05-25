@@ -6,12 +6,23 @@
  * Licensed under MIT (https://github.com/itsjonq/zest/blob/master/LICENSE)
  */
 
-(function (window, document, $, undefined) { "use strict";
+(function ($, undefined) { "use strict";
 
-  if( !$ ) {
-    return false;
+  // Return false if jQuery is not defined or valid
+  if(!$ || typeof jQuery !== "function") {
+      return false;
   }
 
+  /**
+   * $.combine
+   * This method allows you to combine multiple jQuery objects into a
+   * single jQuery object
+   */
 
+  var combine = function() {
 
-})(this, document, jQuery);
+  };
+
+  $.combine = combine;
+
+})(jQuery);

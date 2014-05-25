@@ -32,9 +32,7 @@ module.exports = function(grunt) {
             tests: {
                 src: [
                     'test/units/setup.js',
-                    'test/units/selectors.js',
-                    'test/units/classes.js',
-                    'test/units/transversing.js'
+                    'test/units/combine.js'
                 ],
                 dest: 'test/tests.js'
             }
